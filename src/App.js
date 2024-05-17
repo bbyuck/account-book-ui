@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes, useLocation } from "react-router-dom";
+import "./App.css";
+import Login from "pages/Login";
+import AutoGridNoWrap from "pages/AutoGridNoWrap";
 
 function App() {
+  const location = useLocation();
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes location={location}>
+        <Route key={location.pathname} element={<Login />} path="/login" />
+        <Route
+          key={location.pathname}
+          element={<AutoGridNoWrap />}
+          path="/test"
+        />
+      </Routes>
     </div>
   );
 }
