@@ -1,0 +1,11 @@
+.carousel-wrapper {
+  width: 100vw;
+  height: calc(100vw + 20vh);
+  position: absolute;
+  top: 25vh;
+  margin-left: 0;
+}
+
+.carousel-wrapper * {
+  list-style: none;
+}

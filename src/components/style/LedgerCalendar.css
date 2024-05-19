@@ -1,3 +1,7 @@
+table.calendar-wrapper {
+  width: 100vw;
+}
+
 .month-indicator {
   position: absolute;
   display: inline-block;

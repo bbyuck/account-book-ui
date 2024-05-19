@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import "style/Calendar.css";
+import "components/style/LedgerCalendar.css";
 
-export default function Calendar(props) {
+export default function LedgerCalendar(props) {
   /**
    * props
    */

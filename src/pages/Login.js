@@ -1,6 +1,6 @@
 import { Button, Link, TextField } from "@mui/material";
 import "style/font.css";
-import "style/Login.css";
+import "pages/style/Login.css";
 
 export default function Login() {
   const toSignUp = () => {
