@@ -150,12 +150,14 @@ export default function Calendar(props) {
                     </div>
                     <div className="calendar-income">
                       {ledgers[day.day] && ledgers[day.day].dailyIncome
-                        ? `+${ledgers[day.day].dailyIncome}`
+                        ? `+${ledgers[day.day].dailyIncome.toLocaleString()}`
                         : null}
                     </div>
                     <div className="calendar-expenditure">
                       {ledgers[day.day] && ledgers[day.day].dailyExpenditure
-                        ? `-${ledgers[day.day].dailyExpenditure}`
+                        ? `-${ledgers[
+                            day.day
+                          ].dailyExpenditure.toLocaleString()}`
                         : null}
                     </div>
                   </td>
