@@ -10,7 +10,7 @@ export default function Login() {
   };
 
   return (
-    <div className="login-page-wrapper">
+    <div className="page-wrapper">
       <div className="login-page-wrapper">
         <div className="poetsen-one-regular">
           <h1>Login</h1>

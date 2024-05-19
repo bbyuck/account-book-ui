@@ -2,6 +2,14 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import Login from "pages/Login";
 import Calendar from "components/Calendar";
+import Main from "pages/Main";
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import FolderIcon from "@mui/icons-material/Folder";
+import RestoreIcon from "@mui/icons-material/Restore";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { useState } from "react";
 
 const testData = {
   year: 2024,
@@ -83,7 +91,7 @@ const testData = {
           description: "M월급",
         },
       ],
-      dailyIncome: 4000000,
+      dailyIncome: 4000000000,
       dailyExpenditure: 4000000,
     },
     5: {
@@ -133,11 +141,17 @@ const testData = {
 
 function App() {
   const location = useLocation();
+  const [selectedTab, setSelectedTab] = useState("recents");
+
+  const handleChangeBottomNavigation = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
 
   return (
     <div className="App">
       <Routes location={location}>
         <Route key={location.pathname} element={<Login />} path="/login" />
+        <Route key={location.pathname} element={<Main />} path="/main" />
         <Route
           key={location.pathname}
           element={
@@ -150,6 +164,32 @@ function App() {
           path="/test"
         />
       </Routes>
+      <BottomNavigation
+        sx={{ width: "100%", position: "fixed", bottom: 0 }}
+        value={selectedTab}
+        onChange={handleChangeBottomNavigation}
+      >
+        <BottomNavigationAction
+          label="Recents"
+          value="recents"
+          icon={<RestoreIcon />}
+        />
+        <BottomNavigationAction
+          label="Favorites"
+          value="favorites"
+          icon={<FavoriteIcon />}
+        />
+        <BottomNavigationAction
+          label="Nearby"
+          value="nearby"
+          icon={<LocationOnIcon />}
+        />
+        <BottomNavigationAction
+          label="Folder"
+          value="folder"
+          icon={<FolderIcon />}
+        />
+      </BottomNavigation>
     </div>
   );
 }

@@ -9,17 +9,28 @@ tr.calendar-day-name-of-the-week {
 }
 
 td.calendar-date-cell {
-  width: 12vw;
-  height: 80px;
+  max-width: 14vw;
+  width: 14vw;
+  height: 70px;
   vertical-align: top;
 }
 
-.calendar-income {
+.calendar-money {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+
   font-size: 10px;
+  width: 100%;
+  position: relative;
+  top: 25px;
+}
+
+.calendar-income {
   color: red;
 }
 
 .calendar-expenditure {
-  font-size: 10px;
   color: blue;
 }
