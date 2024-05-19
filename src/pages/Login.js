@@ -34,7 +34,7 @@ export default function Login() {
               variant="standard"
             />
           </div>
-          <div className="login-input-box">
+          <div className="login-input-box login-input-button">
             <Button fullWidth variant="contained" size={"large"}>
               Login in
             </Button>

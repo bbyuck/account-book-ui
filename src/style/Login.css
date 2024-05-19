@@ -19,9 +19,12 @@
 
 .login-input-form .login-input-box {
   text-align: center;
-  width: 50vw;
+  width: 300px;
   margin-bottom: 20px;
   margin-top: 20px;
+}
+.login-input-form .login-input-button {
+  margin-top: 40px;
 }
 
 .anchor-button {

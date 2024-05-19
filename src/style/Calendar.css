@@ -1,0 +1,25 @@
+.month-indicator {
+  position: absolute;
+  display: inline-block;
+  left: 0;
+}
+
+tr.calendar-day-name-of-the-week {
+  height: 50px;
+}
+
+td.calendar-date-cell {
+  width: 12vw;
+  height: 80px;
+  vertical-align: top;
+}
+
+.calendar-income {
+  font-size: 10px;
+  color: red;
+}
+
+.calendar-expenditure {
+  font-size: 10px;
+  color: blue;
+}
