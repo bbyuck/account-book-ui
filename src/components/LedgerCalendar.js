@@ -33,7 +33,7 @@ export default function LedgerCalendar(props) {
   const getLastDayOfTheMonth = (year, month) => {
     // 1. date 객체에서 month + 1
     const lastDate = new Date(year, month);
-    lastDate.setMonth(lastDate.getMonth() + 1);
+    lastDate.setMonth(lastDate.getMonth());
     lastDate.setDate(lastDate.getDate() - 1);
     return lastDate;
   };

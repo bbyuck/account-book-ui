@@ -6,7 +6,6 @@ import LedgerCalendar from "./LedgerCalendar";
 
 export default function CalendarCarousel({ initialYear, initialMonth }) {
   const initial = { year: initialYear, month: initialMonth };
-
   const getPrev = (current) => {
     return {
       year: current.month === 1 ? current.year - 1 : current.year,
@@ -26,6 +25,7 @@ export default function CalendarCarousel({ initialYear, initialMonth }) {
     initial,
     getNext(initial),
   ]);
+
   const [selectedMonth, setSelectedMonth] = useState(1);
   const [selectedDate, setSelectedDate] = useState();
   const [touchingDate, setTouchingDate] = useState();
@@ -68,7 +68,7 @@ export default function CalendarCarousel({ initialYear, initialMonth }) {
           emulateTouch={true}
           autoFocus={false}
           renderIndicator={false}
-          selectedItem={0}
+          selectedItem={1}
           interval={2000}
           transitionTime={350}
           swipeScrollTolerance={50}
