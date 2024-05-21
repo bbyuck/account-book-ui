@@ -1,11 +1,20 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import "components/style/LedgerCalendar.css";
 
 export default function LedgerCalendar(props) {
   /**
    * props
    */
-  const { year, month, ledgers } = props;
+  const {
+    year,
+    month,
+    ledgers,
+    selectedDate,
+    onDateSelect,
+    touchingDate,
+    onDateTouching,
+    swiping,
+  } = props;
   const daysOfTheWeek = useMemo(
     () => ["일", "월", "화", "수", "목", "금", "토"],
     []
@@ -46,18 +55,29 @@ export default function LedgerCalendar(props) {
     data: [],
     weeks: Number,
   });
-  const [selectedDate, setSelectedDate] = useState();
 
   /**
    * ============== event handler ==============
    */
   const selectDate = ({ day, isHoliday, nameOfTheDay, week }) => {
     if (day === null) {
-      setSelectedDate(undefined);
+      onDateSelect(undefined);
       return;
     }
-    setSelectedDate(day);
+    onDateSelect(day);
   };
+
+  const touchDate = ({ day, isHoliday, nameOfTheDay, week }) => {
+    if (day === null) {
+      onDateTouching(undefined);
+      return;
+    }
+    onDateTouching(day);
+  };
+
+  const touchDateEnd = useCallback(() => {
+    onDateTouching(undefined);
+  }, [onDateTouching]);
 
   /**
    * ============== useEffet ==============
@@ -109,6 +129,12 @@ export default function LedgerCalendar(props) {
     setCalendarInfo(getCalendarInfo());
   }, [daysOfTheWeek, month, year]);
 
+  useEffect(() => {
+    if (swiping) {
+      touchDateEnd();
+    }
+  }, [swiping, touchDateEnd]);
+
   return (
     <>
       <table className="calendar-wrapper">
@@ -128,23 +154,32 @@ export default function LedgerCalendar(props) {
               {week.map((day, dayIndex) => {
                 return (
                   <td
-                    className={"calendar-date-cell"}
-                    onClick={() => {
-                      selectDate(day);
+                    className={`calendar-date-cell${
+                      selectedDate === day.day
+                        ? " calendar-date-cell-selected"
+                        : ""
+                    }`}
+                    onTouchStart={() => {
+                      touchDate(day);
                     }}
-                    style={{
-                      backgroundColor:
-                        selectedDate === day.day ? "#fefd48" : "transparent",
+                    onTouchEnd={() => {
+                      if (!swiping) {
+                        touchDateEnd();
+                        selectDate(day);
+                      }
                     }}
                     key={`calendar-day-of-${weekIndex}-${dayIndex}`}
                   >
                     <div
-                      style={{
-                        color:
-                          day.nameOfTheDay === "일" || day.isHoliday
-                            ? "red"
-                            : "black",
-                      }}
+                      className={`${
+                        day.nameOfTheDay === "일"
+                          ? "calendar-date-cell-holiday"
+                          : ""
+                      }${
+                        touchingDate === day.day
+                          ? " calendar-date-cell-touching"
+                          : ""
+                      }`}
                     >
                       {day.day}
                     </div>

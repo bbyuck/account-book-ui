@@ -1,5 +1,9 @@
 table.calendar-wrapper {
   width: 100vw;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .month-indicator {
@@ -37,4 +41,16 @@ td.calendar-date-cell {
 
 .calendar-expenditure {
   color: blue;
+}
+
+.calendar-date-cell-touching {
+  color: rgba(147, 147, 147, 0.4);
+}
+
+.calendar-date-cell-selected {
+  background-color: #fefd48;
+}
+
+.calendar-date-cell-holiday {
+  color: red;
 }
