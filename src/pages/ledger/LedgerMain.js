@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { setSelectedMonth } from "store/slice/ledgerInfo";
 import { IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import { useNavigate } from "react-router-dom";
 
 const monthlyData = {
   year: 2024,
@@ -135,7 +136,8 @@ const monthlyData = {
   },
 };
 
-export default function Ledger() {
+export default function LedgerMain() {
+  const navigate = useNavigate();
   const getPrev = (current) => {
     return {
       year: current.month === 1 ? current.year - 1 : current.year,
@@ -186,7 +188,11 @@ export default function Ledger() {
           <h2>{`${ledgerInfo.selectedMonth.year}년 ${ledgerInfo.selectedMonth.month}월`}</h2>
         }
         right={
-          <IconButton>
+          <IconButton
+            onClick={() => {
+              navigate("/ledger/register");
+            }}
+          >
             <AddIcon color="primary" style={{ fontSize: "35px" }} />
           </IconButton>
         }
