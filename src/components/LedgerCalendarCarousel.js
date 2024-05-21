@@ -2,22 +2,30 @@ import { Carousel } from "react-responsive-carousel";
 import "components/style/CalendarCarousel.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useState } from "react";
-import LedgerCalendar from "./LedgerCalendar";
+import LedgerCalendar from "components/LedgerCalendar";
+import LedgerCalendarHeader from "components/LedgerCalendarHeader";
+import { useDispatch } from "react-redux";
+import { setSelectedMonth } from "store/slice/ledgerInfo";
 
 export default function CalendarCarousel({
   monthlyData,
   monthBuffer,
   buffering,
-  selectedMonth,
   selectedDate,
   onDateSelect,
 }) {
   const [touchingDate, setTouchingDate] = useState();
   const [swiping, setSwiping] = useState(false);
 
+  const dispatch = useDispatch();
+
   return (
     <>
       <div className="carousel-wrapper">
+        <LedgerCalendarHeader
+          income={monthlyData.income}
+          expenditure={monthlyData.expenditure}
+        />
         <Carousel
           showArrows={false}
           showStatus={false}
@@ -38,6 +46,12 @@ export default function CalendarCarousel({
           swipeScrollTolerance={50}
           onChange={(newValue) => {
             buffering(newValue);
+            dispatch(
+              setSelectedMonth({
+                year: monthBuffer[newValue].year,
+                month: monthBuffer[newValue].month,
+              })
+            );
           }}
           onSwipeMove={() => {
             setSwiping(true);
@@ -56,8 +70,8 @@ export default function CalendarCarousel({
                   <LedgerCalendar
                     year={ym.year}
                     month={ym.month}
-                    selectedDate={selectedDate}
                     onDateSelect={onDateSelect}
+                    selectedDate={selectedDate}
                     onDateTouching={setTouchingDate}
                     touchingDate={touchingDate}
                     swiping={swiping}

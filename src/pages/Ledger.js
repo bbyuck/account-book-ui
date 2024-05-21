@@ -1,6 +1,10 @@
-import CalendarCarousel from "components/CalendarCarousel";
-import LedgerSubHeader from "components/LedgerSubHeader";
+import AppHeader from "components/AppHeader";
+import LedgerCalendarCarousel from "components/LedgerCalendarCarousel";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { setSelectedMonth } from "store/slice/ledgerInfo";
+import { IconButton } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 
 const monthlyData = {
   year: 2024,
@@ -162,33 +166,35 @@ export default function Ledger() {
 
     setMonthBuffer(tmp);
   };
-  const [today, setToday] = useState(new Date());
-  const [thisMonth, setThisMonth] = useState({
-    year: today.getFullYear(),
-    month: today.getMonth(),
-  });
+
+  const ledgerInfo = useSelector((state) => state.ledgerInfo);
   const [monthBuffer, setMonthBuffer] = useState([
-    getPrev(thisMonth),
-    thisMonth,
-    getNext(thisMonth),
+    getPrev(ledgerInfo.selectedMonth),
+    ledgerInfo.selectedMonth,
+    getNext(ledgerInfo.selectedMonth),
   ]);
-  const [selectedMonth, setSelectedMonth] = useState(1);
-  const [selectedDate, setSelectedDate] = useState();
+  const [selectedDate, setSelectedDate] = useState(undefined);
 
   useEffect(() => {
     /* TODO -> 월별 가계부 조회 API 호출 */
-  }, [selectedMonth]);
+  }, [ledgerInfo.selectedMonth]);
 
   return (
     <div className="page-wrapper">
-      <h2>{`${monthBuffer[selectedMonth].year}년 ${monthBuffer[selectedMonth].month}월`}</h2>
-      <LedgerSubHeader
-        income={monthlyData.income}
-        expenditure={monthlyData.expenditure}
+      <AppHeader
+        center={
+          <h2>{`${ledgerInfo.selectedMonth.year}년 ${ledgerInfo.selectedMonth.month}월`}</h2>
+        }
+        right={
+          <IconButton>
+            <AddIcon color="primary" style={{ fontSize: "35px" }} />
+          </IconButton>
+        }
       />
-      <CalendarCarousel
+      <LedgerCalendarCarousel
         monthlyData={monthlyData}
         monthBuffer={monthBuffer}
+        selectedMonth={ledgerInfo.selectedMonth}
         selectedDate={selectedDate}
         onDateSelect={setSelectedDate}
         buffering={buffering}

@@ -1,0 +1,24 @@
+.app-header {
+  width: 100vw;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-header-item {
+  width: 40vw;
+  text-align: center;
+}
+
+.app-header-item-right {
+  text-align: right;
+  width: 25vw;
+  right: 3vw;
+}
+
+.app-header-item-left {
+  text-align: left;
+  width: 25vw;
+  margin-left: 3vw;
+}

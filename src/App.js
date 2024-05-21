@@ -5,9 +5,12 @@ import AppNavigation from "components/AppNavigation";
 import Ledger from "pages/Ledger";
 import Schedule from "pages/Schedule";
 import Setting from "pages/Setting";
+import AppHeader from "components/AppHeader";
+import { useSelector } from "react-redux";
 
 function App() {
   const location = useLocation();
+  const ledgerInfo = useSelector((state) => state.ledgerInfo);
 
   return (
     <div className="App">
@@ -20,17 +23,6 @@ function App() {
           path="/schedule"
         />
         <Route key={location.pathname} element={<Setting />} path="/setting" />
-        {/* <Route
-          key={location.pathname}
-          element={
-            <Calendar
-              year={testData.year}
-              month={testData.month}
-              ledgers={testData.ledgersPerDay}
-            />
-          }
-          path="/test"
-        /> */}
       </Routes>
       <AppNavigation />
     </div>
