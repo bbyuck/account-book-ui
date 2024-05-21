@@ -1,10 +1,12 @@
 import CalendarCarousel from "components/CalendarCarousel";
-import { useState } from "react";
+import LedgerSubHeader from "components/LedgerSubHeader";
+import { useEffect, useState } from "react";
 
 const monthlyData = {
   year: 2024,
   month: 4,
-  totalAmount: 6960000,
+  income: 8000000,
+  expenditure: 1140000,
   ledgersPerDay: {
     1: {
       ledgers: [
@@ -171,13 +173,24 @@ export default function Ledger() {
     getNext(thisMonth),
   ]);
   const [selectedMonth, setSelectedMonth] = useState(1);
+  const [selectedDate, setSelectedDate] = useState();
+
+  useEffect(() => {
+    /* TODO -> 월별 가계부 조회 API 호출 */
+  }, [selectedMonth]);
 
   return (
     <div className="page-wrapper">
+      <h2>{`${monthBuffer[selectedMonth].year}년 ${monthBuffer[selectedMonth].month}월`}</h2>
+      <LedgerSubHeader
+        income={monthlyData.income}
+        expenditure={monthlyData.expenditure}
+      />
       <CalendarCarousel
         monthlyData={monthlyData}
         monthBuffer={monthBuffer}
-        selectedMonth={selectedMonth}
+        selectedDate={selectedDate}
+        onDateSelect={setSelectedDate}
         buffering={buffering}
       />
     </div>

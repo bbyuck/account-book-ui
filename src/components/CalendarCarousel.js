@@ -9,14 +9,14 @@ export default function CalendarCarousel({
   monthBuffer,
   buffering,
   selectedMonth,
+  selectedDate,
+  onDateSelect,
 }) {
-  const [selectedDate, setSelectedDate] = useState();
   const [touchingDate, setTouchingDate] = useState();
   const [swiping, setSwiping] = useState(false);
 
   return (
     <>
-      <h1>{`${monthBuffer[selectedMonth].year}년 ${monthBuffer[selectedMonth].month}월`}</h1>
       <div className="carousel-wrapper">
         <Carousel
           showArrows={false}
@@ -57,7 +57,7 @@ export default function CalendarCarousel({
                     year={ym.year}
                     month={ym.month}
                     selectedDate={selectedDate}
-                    onDateSelect={setSelectedDate}
+                    onDateSelect={onDateSelect}
                     onDateTouching={setTouchingDate}
                     touchingDate={touchingDate}
                     swiping={swiping}
