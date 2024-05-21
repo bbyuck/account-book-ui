@@ -1,7 +1,7 @@
-import LedgerCalendar from "components/LedgerCalendar";
-import * as React from "react";
+import CalendarCarousel from "components/CalendarCarousel";
+import { useState } from "react";
 
-const testData = {
+const monthlyData = {
   year: 2024,
   month: 4,
   totalAmount: 6960000,
@@ -130,13 +130,56 @@ const testData = {
 };
 
 export default function Ledger() {
+  const getPrev = (current) => {
+    return {
+      year: current.month === 1 ? current.year - 1 : current.year,
+      month: current.month === 1 ? 12 : current.month - 1,
+    };
+  };
+  const getNext = (current) => {
+    return {
+      year: current.month === 12 ? current.year + 1 : current.year,
+      month: current.month === 12 ? 1 : current.month + 1,
+    };
+  };
+  const buffering = (newIdx) => {
+    setSelectedMonth(newIdx);
+
+    let tmp = [];
+    const current = monthBuffer[newIdx];
+    const prev = getPrev(current);
+    const next = getNext(current);
+
+    if (newIdx === 0) {
+      tmp = [current, next, prev];
+    } else if (newIdx === 1) {
+      tmp = [prev, current, next];
+    } else if (newIdx === 2) {
+      tmp = [next, prev, current];
+    }
+
+    setMonthBuffer(tmp);
+  };
+  const [today, setToday] = useState(new Date());
+  const [thisMonth, setThisMonth] = useState({
+    year: today.getFullYear(),
+    month: today.getMonth(),
+  });
+  const [monthBuffer, setMonthBuffer] = useState([
+    getPrev(thisMonth),
+    thisMonth,
+    getNext(thisMonth),
+  ]);
+  const [selectedMonth, setSelectedMonth] = useState(1);
+
   return (
     <div className="page-wrapper">
-      <LedgerCalendar
-        year={testData.year}
-        month={testData.month}
-        ledgers={testData.ledgersPerDay}
-      />{" "}
+      <CalendarCarousel
+        monthlyData={monthlyData}
+        monthBuffer={monthBuffer}
+        selectedMonth={selectedMonth}
+        buffering={buffering}
+      />
     </div>
   );
 }
