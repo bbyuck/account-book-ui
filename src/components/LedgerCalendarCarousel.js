@@ -4,21 +4,20 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useState } from "react";
 import LedgerCalendar from "components/LedgerCalendar";
 import LedgerCalendarHeader from "components/LedgerCalendarHeader";
-import { useDispatch } from "react-redux";
+import { getLastDayOfTheMonth } from "util/calendarUtil";
 import { setSelectedMonth } from "store/slice/ledgerInfo";
 
 export default function CalendarCarousel({
   monthlyData,
   monthBuffer,
   buffering,
-  selectedDate,
-  onDateSelect,
+  selectedMonth,
+  onMonthSelect,
+  selectedDay,
+  onDaySelect,
 }) {
   const [touchingDate, setTouchingDate] = useState();
   const [swiping, setSwiping] = useState(false);
-
-  const dispatch = useDispatch();
-
   return (
     <>
       <div className="carousel-wrapper">
@@ -43,15 +42,28 @@ export default function CalendarCarousel({
           selectedItem={1}
           interval={2000}
           transitionTime={350}
-          swipeScrollTolerance={50}
+          swipeScrollTolerance={150}
           onChange={(newValue) => {
             buffering(newValue);
-            dispatch(
-              setSelectedMonth({
-                year: monthBuffer[newValue].year,
-                month: monthBuffer[newValue].month,
-              })
+            const newMonth = {
+              year: monthBuffer[newValue].year,
+              month: monthBuffer[newValue].month,
+            };
+
+            onMonthSelect(newMonth);
+
+            /**
+             * 24.05.22 31일 선택 후 다른 달로 변경시 1일 자동 선택
+             */
+            const lastDayOfNewMonth = getLastDayOfTheMonth(
+              newMonth.year,
+              newMonth.month
             );
+            const lastDay = lastDayOfNewMonth.getDate();
+
+            if (selectedDay > lastDay) {
+              onDaySelect(1);
+            }
           }}
           onSwipeMove={() => {
             setSwiping(true);
@@ -70,11 +82,15 @@ export default function CalendarCarousel({
                   <LedgerCalendar
                     year={ym.year}
                     month={ym.month}
-                    onDateSelect={onDateSelect}
-                    selectedDate={selectedDate}
+                    onDaySelect={onDaySelect}
+                    selectedDay={selectedDay}
                     onDateTouching={setTouchingDate}
                     touchingDate={touchingDate}
                     swiping={swiping}
+                    selected={
+                      ym.year === selectedMonth.year &&
+                      ym.month === selectedMonth.month
+                    }
                     ledgers={
                       monthlyData.year === ym.year &&
                       monthlyData.month === ym.month

@@ -1,11 +1,9 @@
-import AppHeader from "components/AppHeader";
 import LedgerCalendarCarousel from "components/LedgerCalendarCarousel";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { setSelectedMonth } from "store/slice/ledgerInfo";
 import { IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
+import Page from "components/Page";
 
 const monthlyData = {
   year: 2024,
@@ -168,45 +166,53 @@ export default function LedgerMain() {
 
     setMonthBuffer(tmp);
   };
+  const today = new Date();
 
-  const ledgerInfo = useSelector((state) => state.ledgerInfo);
+  const [selectedMonth, setSelectedMonth] = useState({
+    year: today.getFullYear(),
+    month: today.getMonth(),
+  });
   const [monthBuffer, setMonthBuffer] = useState([
-    getPrev(ledgerInfo.selectedMonth),
-    ledgerInfo.selectedMonth,
-    getNext(ledgerInfo.selectedMonth),
+    getPrev(selectedMonth),
+    selectedMonth,
+    getNext(selectedMonth),
   ]);
-  const [selectedDate, setSelectedDate] = useState(undefined);
+  const [selectedDay, setSelectedDay] = useState(today.getDate());
 
   useEffect(() => {
     /* TODO -> 월별 가계부 조회 API 호출 */
-  }, [ledgerInfo.selectedMonth]);
+  }, [selectedMonth]);
+
+  const headerInfo = {
+    center: <h2>{`${selectedMonth.year}년 ${selectedMonth.month}월`}</h2>,
+    right: (
+      <IconButton
+        onClick={() => {
+          navigate("/ledger/register", {
+            state: {
+              push: true,
+              selectedMonth: selectedMonth,
+              selectedDay: selectedDay,
+            },
+          });
+        }}
+      >
+        <AddIcon color="primary" />
+      </IconButton>
+    ),
+  };
 
   return (
-    <div className="page-wrapper">
-      <AppHeader
-        center={
-          <h2>{`${ledgerInfo.selectedMonth.year}년 ${ledgerInfo.selectedMonth.month}월`}</h2>
-        }
-        right={
-          <IconButton
-            onClick={() => {
-              navigate("/ledger/register", {
-                state: "stack-push",
-              });
-            }}
-          >
-            <AddIcon color="primary" style={{ fontSize: "35px" }} />
-          </IconButton>
-        }
-      />
+    <Page headerInfo={headerInfo}>
       <LedgerCalendarCarousel
         monthlyData={monthlyData}
         monthBuffer={monthBuffer}
-        selectedMonth={ledgerInfo.selectedMonth}
-        selectedDate={selectedDate}
-        onDateSelect={setSelectedDate}
+        selectedMonth={selectedMonth}
+        onMonthSelect={setSelectedMonth}
+        selectedDay={selectedDay}
+        onDaySelect={setSelectedDay}
         buffering={buffering}
       />
-    </div>
+    </Page>
   );
 }

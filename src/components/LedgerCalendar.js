@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { getLastDayOfTheMonth } from "util/calendarUtil";
 import "components/style/LedgerCalendar.css";
 
 export default function LedgerCalendar(props) {
@@ -9,34 +10,20 @@ export default function LedgerCalendar(props) {
     year,
     month,
     ledgers,
-    selectedDate,
-    onDateSelect,
+    selectedDay,
+    onDaySelect,
     touchingDate,
     onDateTouching,
     swiping,
+    selected,
   } = props;
   const daysOfTheWeek = useMemo(
     () => ["일", "월", "화", "수", "목", "금", "토"],
     []
   );
-
   /**
    * ============== util methods ==============
    */
-
-  /**
-   * year-month인 달의 마지막 날 Date객체 리턴
-   * @param {Number} year
-   * @param {Number} month
-   * @returns {Date} lastDayOfTheMonth
-   */
-  const getLastDayOfTheMonth = (year, month) => {
-    // 1. date 객체에서 month + 1
-    const lastDate = new Date(year, month);
-    lastDate.setMonth(lastDate.getMonth());
-    lastDate.setDate(lastDate.getDate() - 1);
-    return lastDate;
-  };
 
   /**
    * 첫째날의 달력상의 index, 마지막 날의 date로 렌더링할 달력의 마지막 주를 계산해 리턴
@@ -59,16 +46,15 @@ export default function LedgerCalendar(props) {
   /**
    * ============== event handler ==============
    */
-  const selectDate = ({ day, isHoliday, nameOfTheDay, week }) => {
-    if (day === null) {
-      onDateSelect(undefined);
+  const selectDay = ({ day, isHoliday, nameOfTheDay, week }) => {
+    if (!day) {
       return;
     }
-    onDateSelect(day);
+    onDaySelect(day);
   };
 
   const touchDate = ({ day, isHoliday, nameOfTheDay, week }) => {
-    if (day === null) {
+    if (!day) {
       onDateTouching(undefined);
       return;
     }
@@ -107,7 +93,7 @@ export default function LedgerCalendar(props) {
         }
 
         const cell = {
-          day: null,
+          day: undefined,
           nameOfTheDay: daysOfTheWeek[i % 7],
           week: Math.floor(i / 7) + 1,
           isHoliday: false,
@@ -155,7 +141,7 @@ export default function LedgerCalendar(props) {
                 return (
                   <td
                     className={`calendar-date-cell${
-                      selectedDate === day.day
+                      selectedDay === day.day && selected
                         ? " calendar-date-cell-selected"
                         : ""
                     }`}
@@ -165,7 +151,7 @@ export default function LedgerCalendar(props) {
                     onTouchEnd={() => {
                       if (!swiping) {
                         touchDateEnd();
-                        selectDate(day);
+                        selectDay(day);
                       }
                     }}
                     key={`calendar-day-of-${weekIndex}-${dayIndex}`}

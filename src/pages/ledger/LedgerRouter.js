@@ -14,7 +14,7 @@ export default function LedgerRouter() {
         childFactory={(child) => {
           return cloneElement(child, {
             classNames:
-              location.state === "stack-push"
+              location.state && location.state.push
                 ? "right-to-left"
                 : "left-to-right",
             timeout: 300,

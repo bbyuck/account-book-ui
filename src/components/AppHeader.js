@@ -3,7 +3,7 @@ import "components/style/AppHeader.css";
 export default function AppHeader({ left, center, right }) {
   return (
     <div className="app-header">
-      <div className="app-header-item app-header-item-right">
+      <div className="app-header-item app-header-item-left">
         {left === undefined || !left ? null : left}
       </div>
       <div className="app-header-item">

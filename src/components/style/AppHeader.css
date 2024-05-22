@@ -13,12 +13,16 @@
 
 .app-header-item-right {
   text-align: right;
-  width: 25vw;
-  right: 3vw;
+  width: 30vw;
+  padding-right: 3vw;
 }
 
 .app-header-item-left {
   text-align: left;
-  width: 25vw;
-  margin-left: 3vw;
+  width: 30vw;
+  padding-left: 3vw;
+}
+
+.app-header-icon-button {
+  font-size: 35px;
 }
