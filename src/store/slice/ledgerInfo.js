@@ -1,10 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const today = new Date();
+export const namesOfDay = ["일", "월", "화", "수", "목", "금", "토"];
+
 const initialState = {
-  selectedMonth: {
+  selectedDate: {
     year: today.getFullYear(),
-    month: today.getMonth(),
+    month: today.getMonth() + 1,
+    day: today.getDate(),
+    dayName: namesOfDay[today.getDay()],
   },
 };
 
@@ -12,11 +16,11 @@ const ledgerInfoSlice = createSlice({
   name: "ledgerInfo",
   initialState,
   reducers: {
-    setSelectedMonth(state = initialState, action) {
-      state.selectedMonth = action.payload;
+    setSelectedDate(state = initialState, action) {
+      state.selectedDate = action.payload;
     },
   },
 });
 
-export const { setSelectedMonth } = ledgerInfoSlice.actions;
+export const { setSelectedDate } = ledgerInfoSlice.actions;
 export default ledgerInfoSlice.reducer;

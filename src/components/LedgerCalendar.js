@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { getLastDayOfTheMonth } from "util/calendarUtil";
 import "components/style/LedgerCalendar.css";
+import { namesOfDay } from "store/slice/ledgerInfo";
 
 export default function LedgerCalendar(props) {
   /**
@@ -17,10 +18,7 @@ export default function LedgerCalendar(props) {
     swiping,
     selected,
   } = props;
-  const daysOfTheWeek = useMemo(
-    () => ["일", "월", "화", "수", "목", "금", "토"],
-    []
-  );
+
   /**
    * ============== util methods ==============
    */
@@ -94,7 +92,7 @@ export default function LedgerCalendar(props) {
 
         const cell = {
           day: undefined,
-          nameOfTheDay: daysOfTheWeek[i % 7],
+          nameOfTheDay: namesOfDay[i % 7],
           week: Math.floor(i / 7) + 1,
           isHoliday: false,
         };
@@ -113,7 +111,7 @@ export default function LedgerCalendar(props) {
     };
 
     setCalendarInfo(getCalendarInfo());
-  }, [daysOfTheWeek, month, year]);
+  }, [month, year]);
 
   useEffect(() => {
     if (swiping) {
@@ -126,7 +124,7 @@ export default function LedgerCalendar(props) {
       <table className="calendar-wrapper">
         <thead>
           <tr className="calendar-day-name-of-the-week">
-            {daysOfTheWeek.map((nameOfTheDay, index) => (
+            {namesOfDay.map((nameOfTheDay, index) => (
               <th key={`day-of-the-week-${index}`}>{nameOfTheDay}</th>
             ))}
           </tr>

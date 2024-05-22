@@ -1,9 +1,11 @@
 import LedgerCalendarCarousel from "components/LedgerCalendarCarousel";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 import Page from "components/Page";
+import { useDispatch, useSelector } from "react-redux";
+import { namesOfDay, setSelectedDate } from "store/slice/ledgerInfo";
 
 const monthlyData = {
   year: 2024,
@@ -136,6 +138,9 @@ const monthlyData = {
 
 export default function LedgerMain() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { selectedDate } = useSelector((state) => state.ledgerInfo);
+
   const getPrev = (current) => {
     return {
       year: current.month === 1 ? current.year - 1 : current.year,
@@ -166,33 +171,45 @@ export default function LedgerMain() {
 
     setMonthBuffer(tmp);
   };
-  const today = new Date();
-
   const [selectedMonth, setSelectedMonth] = useState({
-    year: today.getFullYear(),
-    month: today.getMonth(),
+    year: selectedDate.year,
+    month: selectedDate.month,
   });
+
   const [monthBuffer, setMonthBuffer] = useState([
     getPrev(selectedMonth),
     selectedMonth,
     getNext(selectedMonth),
   ]);
-  const [selectedDay, setSelectedDay] = useState(today.getDate());
+
+  const [selectedDay, setSelectedDay] = useState(selectedDate.day);
 
   useEffect(() => {
     /* TODO -> 월별 가계부 조회 API 호출 */
   }, [selectedMonth]);
-
   const headerInfo = {
     center: <h2>{`${selectedMonth.year}년 ${selectedMonth.month}월`}</h2>,
     right: (
       <IconButton
         onClick={() => {
+          dispatch(
+            setSelectedDate({
+              year: selectedMonth.year,
+              month: selectedMonth.month,
+              day: selectedDay,
+              dayName:
+                namesOfDay[
+                  new Date(
+                    selectedMonth.year,
+                    selectedMonth.month - 1,
+                    selectedDay
+                  ).getDay()
+                ],
+            })
+          );
           navigate("/ledger/register", {
             state: {
               push: true,
-              selectedMonth: selectedMonth,
-              selectedDay: selectedDay,
             },
           });
         }}
