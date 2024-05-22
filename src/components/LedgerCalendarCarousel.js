@@ -5,8 +5,6 @@ import { useState } from "react";
 import LedgerCalendar from "components/LedgerCalendar";
 import LedgerCalendarHeader from "components/LedgerCalendarHeader";
 import { getLastDayOfTheMonth } from "util/calendarUtil";
-import { setSelectedMonth } from "store/slice/ledgerInfo";
-import { namesOfDay } from "store/slice/ledgerInfo";
 
 export default function CalendarCarousel({
   monthlyData,
