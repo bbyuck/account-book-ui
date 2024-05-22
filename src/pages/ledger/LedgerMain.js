@@ -1,6 +1,13 @@
 import LedgerCalendarCarousel from "components/LedgerCalendarCarousel";
 import { useEffect, useState } from "react";
-import { IconButton } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 import Page from "components/Page";
@@ -192,6 +199,7 @@ export default function LedgerMain() {
     right: (
       <IconButton
         onClick={() => {
+          window.scrollTo({ top: 0 });
           dispatch(
             setSelectedDate({
               year: selectedMonth.year,
@@ -219,6 +227,24 @@ export default function LedgerMain() {
     ),
   };
 
+  /**
+   * 가계부 목록
+   */
+  const [checked, setChecked] = useState([0]);
+
+  const handleToggle = (value) => () => {
+    const currentIndex = checked.indexOf(value);
+    const newChecked = [...checked];
+
+    if (currentIndex === -1) {
+      newChecked.push(value);
+    } else {
+      newChecked.splice(currentIndex, 1);
+    }
+
+    setChecked(newChecked);
+  };
+
   return (
     <Page headerInfo={headerInfo}>
       <LedgerCalendarCarousel
@@ -230,6 +256,40 @@ export default function LedgerMain() {
         onDaySelect={setSelectedDay}
         buffering={buffering}
       />
+      <Box>
+        <List sx={{ width: "100%", bgcolor: "background.paper" }}>
+          {[0, 1, 2, 3].map((value) => {
+            return (
+              <ListItem
+                key={value}
+                secondaryAction={
+                  <IconButton edge="end" aria-label="comments"></IconButton>
+                }
+                disablePadding
+              >
+                <ListItemButton
+                  style={{ backgroundColor: "lightGrey" }}
+                  role={undefined}
+                  onClick={() => {
+                    window.scrollTo({ top: 0 });
+                    navigate("/ledger/update", {
+                      state: {
+                        push: true,
+                      },
+                    });
+                  }}
+                >
+                  <ListItemText primary={`규조토`} />
+                  <ListItemText
+                    style={{ position: "absolute", right: "3vw" }}
+                    primary={`11,760원`}
+                  />
+                </ListItemButton>
+              </ListItem>
+            );
+          })}
+        </List>
+      </Box>
     </Page>
   );
 }

@@ -2,6 +2,10 @@ html::-webkit-scrollbar {
   display: none;
 }
 
+html {
+  overflow-x: none;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -23,6 +27,12 @@ body > #root > div {
 .page-wrapper {
   height: calc(var(--vh, 1vh) * 100);
   width: 100vw;
+  position: absolute;
+}
+
+.page-contents-wrapper {
+  position: relative;
+  top: 70px;
 }
 
 .transitions-wrapper {

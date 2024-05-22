@@ -41,7 +41,8 @@ export default function CalendarCarousel({
           selectedItem={1}
           interval={2000}
           transitionTime={350}
-          swipeScrollTolerance={150}
+          preventMovementUntilSwipeScrollTolerance
+          swipeScrollTolerance={60}
           onChange={(newValue) => {
             buffering(newValue);
             const newMonth = {

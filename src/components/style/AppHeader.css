@@ -1,6 +1,10 @@
 .app-header {
   width: 100vw;
   height: 70px;
+  top: 0;
+  position: fixed;
+  background-color: #fff;
+  z-index: 99;
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -10,7 +10,7 @@ export default function Page({ className, children, headerInfo }) {
   return (
     <div className={classes}>
       <AppHeader left={left} center={center} right={right} />
-      {children}
+      <div className={"page-contents-wrapper"}>{children}</div>
     </div>
   );
 }

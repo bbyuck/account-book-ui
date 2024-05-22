@@ -3,6 +3,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import LedgerMain from "pages/ledger/LedgerMain";
 import LedgerRegister from "pages/ledger/LedgerRegister";
+import LedgerUpdate from "pages/ledger/LedgerUpdate";
 
 export default function LedgerRouter() {
   const location = useLocation();
@@ -36,6 +37,11 @@ export default function LedgerRouter() {
               key={location.pathname}
               element={<LedgerRegister />}
               path="/register"
+            />
+            <Route
+              key={location.pathname}
+              element={<LedgerUpdate />}
+              path="/update"
             />
           </Routes>
         </CSSTransition>
