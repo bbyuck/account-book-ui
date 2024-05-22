@@ -190,7 +190,9 @@ export default function LedgerMain() {
         right={
           <IconButton
             onClick={() => {
-              navigate("/ledger/register");
+              navigate("/ledger/register", {
+                state: "stack-push",
+              });
             }}
           >
             <AddIcon color="primary" style={{ fontSize: "35px" }} />

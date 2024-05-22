@@ -1,3 +1,3 @@
 export default function LedgerRegister() {
-  return <>hello world</>;
+  return <div className="page-wrapper">hello world</div>;
 }

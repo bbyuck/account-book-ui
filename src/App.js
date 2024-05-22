@@ -4,7 +4,7 @@ import Login from "pages/Login";
 import AppNavigation from "components/AppNavigation";
 import Schedule from "pages/schedule/Schedule";
 import Setting from "pages/setting/Setting";
-import LedgerIndex from "pages/ledger/Index";
+import LedgerRouter from "pages/ledger/LedgerRouter";
 
 function App() {
   const location = useLocation();
@@ -15,7 +15,7 @@ function App() {
         <Route key={location.pathname} element={<Login />} path="/login" />
         <Route
           key={location.pathname}
-          element={<LedgerIndex />}
+          element={<LedgerRouter />}
           path="/ledger/*"
         />
         <Route

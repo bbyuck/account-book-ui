@@ -1,28 +1,24 @@
-import { cloneElement, useState } from "react";
+import { cloneElement, useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import LedgerMain from "./LedgerMain";
-import LedgerRegister from "./LedgerRegister";
-import "style/transition.css";
+import LedgerMain from "pages/ledger/LedgerMain";
+import LedgerRegister from "pages/ledger/LedgerRegister";
 
-export default function Index() {
+export default function LedgerRouter() {
   const location = useLocation();
-  const [isNext, setIsNext] = useState(true);
-
-  window.onpopstate = () => {
-    setIsNext(false);
-  };
 
   return (
     <>
       <TransitionGroup
         className="transition-wrapper"
         childFactory={(child) => {
-          const childElement = cloneElement(child, {
-            className: isNext ? "right-to-left" : "left-to-right",
+          return cloneElement(child, {
+            classNames:
+              location.state === "stack-push"
+                ? "right-to-left"
+                : "left-to-right",
             timeout: 300,
           });
-          return childElement;
         }}
       >
         <CSSTransition
