@@ -6,7 +6,7 @@ import LedgerCalendar from "components/LedgerCalendar";
 import LedgerCalendarHeader from "components/LedgerCalendarHeader";
 import { getLastDayOfTheMonth } from "util/calendarUtil";
 
-export default function CalendarCarousel({
+export default function LedgerCalendarCarousel({
   monthlyData,
   monthBuffer,
   buffering,
@@ -21,8 +21,8 @@ export default function CalendarCarousel({
     <>
       <div className="carousel-wrapper">
         <LedgerCalendarHeader
-          income={monthlyData.income}
-          expenditure={monthlyData.expenditure}
+          income={monthlyData ? monthlyData.totalIncome : 0}
+          expenditure={monthlyData ? monthlyData.totalExpenditure : 0}
         />
         <Carousel
           showArrows={false}
@@ -92,6 +92,7 @@ export default function CalendarCarousel({
                       ym.month === selectedMonth.month
                     }
                     ledgers={
+                      monthlyData &&
                       monthlyData.year === ym.year &&
                       monthlyData.month === ym.month
                         ? monthlyData.ledgersPerDay

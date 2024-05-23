@@ -14,15 +14,17 @@ import Page from "components/Page";
 import { useDispatch, useSelector } from "react-redux";
 import { namesOfDay, setSelectedDate } from "store/slice/ledgerInfo";
 
-const monthlyData = {
+const testData = {
   year: 2024,
   month: 4,
-  income: 8000000,
-  expenditure: 1140000,
+  totalIncome: 8000000,
+  totalExpenditure: 300000,
+  totalSave: 740000,
   ledgersPerDay: {
     1: {
       ledgers: [
         {
+          ledgerId: 2,
           ownerNickname: "히욱",
           ledgerCode: "E",
           ledgerCodeValue: "지출",
@@ -37,6 +39,7 @@ const monthlyData = {
     2: {
       ledgers: [
         {
+          ledgerId: 3,
           ownerNickname: "히욱",
           ledgerCode: "E",
           ledgerCodeValue: "지출",
@@ -51,6 +54,7 @@ const monthlyData = {
     3: {
       ledgers: [
         {
+          ledgerId: 4,
           ownerNickname: "히욱",
           ledgerCode: "S",
           ledgerCodeValue: "저축",
@@ -65,6 +69,7 @@ const monthlyData = {
     4: {
       ledgers: [
         {
+          ledgerId: 5,
           ownerNickname: "히욱",
           ledgerCode: "S",
           ledgerCodeValue: "저축",
@@ -79,6 +84,7 @@ const monthlyData = {
     21: {
       ledgers: [
         {
+          ledgerId: 1,
           ownerNickname: "히욱",
           ledgerCode: "I",
           ledgerCodeValue: "소득",
@@ -86,21 +92,14 @@ const monthlyData = {
           amount: 4000000,
           description: "M월급",
         },
-        {
-          ownerNickname: "히욱",
-          ledgerCode: "E",
-          ledgerCodeValue: "지출",
-          day: 21,
-          amount: 4000000,
-          description: "M월급",
-        },
       ],
-      dailyIncome: 4000000000,
-      dailyExpenditure: 4000000,
+      dailyIncome: 4000000,
+      dailyExpenditure: 0,
     },
     5: {
       ledgers: [
         {
+          ledgerId: 7,
           ownerNickname: "아내",
           ledgerCode: "S",
           ledgerCodeValue: "저축",
@@ -115,6 +114,7 @@ const monthlyData = {
     8: {
       ledgers: [
         {
+          ledgerId: 8,
           ownerNickname: "아내",
           ledgerCode: "S",
           ledgerCodeValue: "저축",
@@ -129,6 +129,7 @@ const monthlyData = {
     25: {
       ledgers: [
         {
+          ledgerId: 6,
           ownerNickname: "아내",
           ledgerCode: "I",
           ledgerCodeValue: "소득",
@@ -147,6 +148,7 @@ export default function LedgerMain() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { selectedDate } = useSelector((state) => state.ledgerInfo);
+  const [monthlyData, setMonthlyData] = useState(testData);
 
   const getPrev = (current) => {
     return {
@@ -193,7 +195,9 @@ export default function LedgerMain() {
 
   useEffect(() => {
     /* TODO -> 월별 가계부 조회 API 호출 */
+    setMonthlyData(null);
   }, [selectedMonth]);
+
   const headerInfo = {
     center: <h2>{`${selectedMonth.year}년 ${selectedMonth.month}월`}</h2>,
     right: (
@@ -244,7 +248,6 @@ export default function LedgerMain() {
 
     setChecked(newChecked);
   };
-
   return (
     <Page headerInfo={headerInfo}>
       <LedgerCalendarCarousel
@@ -258,36 +261,38 @@ export default function LedgerMain() {
       />
       <Box>
         <List sx={{ width: "100%", bgcolor: "background.paper" }}>
-          {[0, 1, 2, 3].map((value) => {
-            return (
-              <ListItem
-                key={value}
-                secondaryAction={
-                  <IconButton edge="end" aria-label="comments"></IconButton>
-                }
-                disablePadding
-              >
-                <ListItemButton
-                  style={{ backgroundColor: "lightGrey" }}
-                  role={undefined}
-                  onClick={() => {
-                    window.scrollTo({ top: 0 });
-                    navigate("/ledger/update", {
-                      state: {
-                        push: true,
-                      },
-                    });
-                  }}
-                >
-                  <ListItemText primary={`규조토`} />
-                  <ListItemText
-                    style={{ position: "absolute", right: "3vw" }}
-                    primary={`11,760원`}
-                  />
-                </ListItemButton>
-              </ListItem>
-            );
-          })}
+          {monthlyData && monthlyData.ledgersPerDay[selectedDay]
+            ? monthlyData.ledgersPerDay[selectedDay].ledgers.map((value) => {
+                return (
+                  <ListItem
+                    key={value}
+                    secondaryAction={
+                      <IconButton edge="end" aria-label="comments"></IconButton>
+                    }
+                    disablePadding
+                  >
+                    <ListItemButton
+                      style={{ backgroundColor: "lightGrey" }}
+                      role={undefined}
+                      onClick={() => {
+                        window.scrollTo({ top: 0 });
+                        navigate("/ledger/update", {
+                          state: {
+                            push: true,
+                          },
+                        });
+                      }}
+                    >
+                      <ListItemText primary={`규조토`} />
+                      <ListItemText
+                        style={{ position: "absolute", right: "3vw" }}
+                        primary={`11,760원`}
+                      />
+                    </ListItemButton>
+                  </ListItem>
+                );
+              })
+            : null}
         </List>
       </Box>
     </Page>

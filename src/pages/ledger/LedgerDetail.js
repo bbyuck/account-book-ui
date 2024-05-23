@@ -26,7 +26,6 @@ export default function LedgerUpdate() {
         <NavigateBeforeIcon />
       </IconButton>
     ),
-    center: <h2>가계부 수정</h2>,
   };
 
   /**
