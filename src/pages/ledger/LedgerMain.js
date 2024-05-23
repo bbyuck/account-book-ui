@@ -229,7 +229,7 @@ export default function LedgerMain() {
           ],
       })
     );
-  }, [selectedMonth, selectedDay]);
+  }, [dispatch, selectedMonth, selectedDay]);
 
   const headerInfo = {
     center: <h2>{`${selectedMonth.year}년 ${selectedMonth.month}월`}</h2>,

@@ -1,0 +1,7 @@
+.disabled-textfield-button:hover {
+  cursor: pointer;
+}
+.disabled-textfield-button input[type="text"]:disabled {
+  color: black !important;
+  -webkit-text-fill-color: rgba(0, 0, 0, 1) !important;
+}

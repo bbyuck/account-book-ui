@@ -13,7 +13,9 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
+import "components/style/TextField.css";
 import http from "api";
+import DatePickerModal from "components/DatePickerModal";
 
 export default function LedgerUpdate() {
   const navigate = useNavigate();
@@ -56,7 +58,7 @@ export default function LedgerUpdate() {
      * TODO ledger detail get
      */
     console.log(ledgerId);
-  }, [ledgerId]);
+  }, [ledgerId, navigate]);
 
   const { selectedDate } = useSelector((state) => state.ledgerInfo);
   console.log(selectedDate);
@@ -71,6 +73,15 @@ export default function LedgerUpdate() {
       </IconButton>
     ),
   };
+
+  /**
+   * ================= 날짜 ===================
+   */
+  const [datePickerOpen, setDatePickerOpen] = useState(false);
+
+  /**
+   * ================= 날짜 ===================
+   */
 
   /**
    * ================= 금액 ===================
@@ -153,12 +164,15 @@ export default function LedgerUpdate() {
 
   return (
     <Page headerInfo={headerInfo}>
+      <DatePickerModal open={datePickerOpen} onOpen={setDatePickerOpen} />
       <Box sx={{ display: "flex", alignItems: "flex-end", marginTop: "20px" }}>
         <CalendarMonthIcon sx={{ color: "action.active", mx: 2, my: 0.5 }} />
         <TextField
           id="input-with-sx"
           sx={{ mr: 2, width: "100%" }}
           label="날짜"
+          className="disabled-textfield-button"
+          disabled
           value={`${selectedDate.year}년 ${selectedDate.month}월 ${selectedDate.day}일 (${selectedDate.dayName}요일)`}
           variant="standard"
         />
