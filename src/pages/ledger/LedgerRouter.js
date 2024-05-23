@@ -18,14 +18,14 @@ export default function LedgerRouter() {
               location.state && location.state.push
                 ? "right-to-left"
                 : "left-to-right",
-            timeout: 300,
+            timeout: 400,
           });
         }}
       >
         <CSSTransition
           key={location.pathname}
           classNames="right-to-left"
-          timeout={300}
+          timeout={400}
         >
           <Routes location={location}>
             <Route

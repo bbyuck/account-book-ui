@@ -1,6 +1,6 @@
 .carousel-wrapper {
   width: 100vw;
-  height: calc(100vw + 20vh);
+  height: 460px;
   position: relative;
   margin-left: 0;
 }

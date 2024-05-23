@@ -1,5 +1,4 @@
 import { Button, Link, TextField } from "@mui/material";
-import "style/font.css";
 import "pages/style/Login.css";
 
 export default function Login() {

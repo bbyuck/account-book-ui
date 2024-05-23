@@ -6,7 +6,7 @@ export default function LedgerCalendarHeader({ income, expenditure }) {
       <div
         style={{ display: "inline-block", position: "absolute", left: "10px" }}
       >
-        {`수입 +${income ? String(income).toLocaleString() : 0}원`}
+        {`수입 +${income ? income.toLocaleString() : 0}원`}
       </div>
       <div
         style={{
@@ -15,7 +15,7 @@ export default function LedgerCalendarHeader({ income, expenditure }) {
           right: "10px",
         }}
       >
-        {`지출 -${expenditure ? String(expenditure).toLocaleString() : 0}원`}
+        {`지출 -${expenditure ? expenditure.toLocaleString() : 0}원`}
       </div>
     </div>
   );

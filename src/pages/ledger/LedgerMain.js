@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import Page from "components/Page";
 import { useDispatch, useSelector } from "react-redux";
 import { namesOfDay, setSelectedDate } from "store/slice/ledgerInfo";
+import http from "api";
 
 const testData = {
   year: 2024,
@@ -194,8 +195,20 @@ export default function LedgerMain() {
   const [selectedDay, setSelectedDay] = useState(selectedDate.day);
 
   useEffect(() => {
-    /* TODO -> 월별 가계부 조회 API 호출 */
     setMonthlyData(null);
+    /* TODO -> 월별 가계부 조회 API 호출 */
+    http
+      .get(
+        `/api/v1/couple/monthly/ledger?ym=${selectedMonth.year}${String(
+          selectedMonth.month
+        ).padStart(2, "0")}`
+      )
+      .then((response) => {
+        setMonthlyData(response.data.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }, [selectedMonth]);
 
   const headerInfo = {
@@ -203,7 +216,6 @@ export default function LedgerMain() {
     right: (
       <IconButton
         onClick={() => {
-          window.scrollTo({ top: 0 });
           dispatch(
             setSelectedDate({
               year: selectedMonth.year,
@@ -234,20 +246,7 @@ export default function LedgerMain() {
   /**
    * 가계부 목록
    */
-  const [checked, setChecked] = useState([0]);
 
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
-  };
   return (
     <Page headerInfo={headerInfo}>
       <LedgerCalendarCarousel
@@ -262,10 +261,10 @@ export default function LedgerMain() {
       <Box>
         <List sx={{ width: "100%", bgcolor: "background.paper" }}>
           {monthlyData && monthlyData.ledgersPerDay[selectedDay]
-            ? monthlyData.ledgersPerDay[selectedDay].ledgers.map((value) => {
+            ? monthlyData.ledgersPerDay[selectedDay].ledgers.map((ledger) => {
                 return (
                   <ListItem
-                    key={value}
+                    key={ledger}
                     secondaryAction={
                       <IconButton edge="end" aria-label="comments"></IconButton>
                     }
@@ -275,18 +274,17 @@ export default function LedgerMain() {
                       style={{ backgroundColor: "lightGrey" }}
                       role={undefined}
                       onClick={() => {
-                        window.scrollTo({ top: 0 });
-                        navigate("/ledger/update", {
+                        navigate(`/ledger/detail/${ledger.ledgerId}`, {
                           state: {
                             push: true,
                           },
                         });
                       }}
                     >
-                      <ListItemText primary={`규조토`} />
+                      <ListItemText primary={ledger.description} />
                       <ListItemText
                         style={{ position: "absolute", right: "3vw" }}
-                        primary={`11,760원`}
+                        primary={ledger.amount}
                       />
                     </ListItemButton>
                   </ListItem>
