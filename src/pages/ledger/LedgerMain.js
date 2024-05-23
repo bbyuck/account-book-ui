@@ -197,12 +197,14 @@ export default function LedgerMain() {
   useEffect(() => {
     setMonthlyData(null);
     /* TODO -> 월별 가계부 조회 API 호출 */
+    const params = {
+      ym: `${selectedMonth.year}${String(selectedMonth.month).padStart(
+        2,
+        "0"
+      )}`,
+    };
     http
-      .get(
-        `/api/v1/couple/monthly/ledger?ym=${selectedMonth.year}${String(
-          selectedMonth.month
-        ).padStart(2, "0")}`
-      )
+      .get(`/api/v1/couple/monthly/ledger`, { params })
       .then((response) => {
         setMonthlyData(response.data.data);
       })
@@ -211,26 +213,29 @@ export default function LedgerMain() {
       });
   }, [selectedMonth]);
 
+  useEffect(() => {
+    dispatch(
+      setSelectedDate({
+        year: selectedMonth.year,
+        month: selectedMonth.month,
+        day: selectedDay,
+        dayName:
+          namesOfDay[
+            new Date(
+              selectedMonth.year,
+              selectedMonth.month - 1,
+              selectedDay
+            ).getDay()
+          ],
+      })
+    );
+  }, [selectedMonth, selectedDay]);
+
   const headerInfo = {
     center: <h2>{`${selectedMonth.year}년 ${selectedMonth.month}월`}</h2>,
     right: (
       <IconButton
         onClick={() => {
-          dispatch(
-            setSelectedDate({
-              year: selectedMonth.year,
-              month: selectedMonth.month,
-              day: selectedDay,
-              dayName:
-                namesOfDay[
-                  new Date(
-                    selectedMonth.year,
-                    selectedMonth.month - 1,
-                    selectedDay
-                  ).getDay()
-                ],
-            })
-          );
           navigate("/ledger/register", {
             state: {
               push: true,

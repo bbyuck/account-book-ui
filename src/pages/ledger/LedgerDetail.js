@@ -1,6 +1,6 @@
 import { Avatar, Box, Grid, IconButton, TextField } from "@mui/material";
 import Page from "components/Page";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
@@ -11,11 +11,55 @@ import MoneyOffIcon from "@mui/icons-material/MoneyOff";
 import DescriptionIcon from "@mui/icons-material/Description";
 
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import http from "api";
 
 export default function LedgerUpdate() {
   const navigate = useNavigate();
+  const { ledgerId } = useParams();
+  // testData
+  const coupleId = 1;
+
+  const [ledger, setLedger] = useState();
+
+  useEffect(() => {
+    if (!ledgerId) {
+      alert("잘못된 접근입니다.");
+      navigate(-1);
+    }
+
+    if (coupleId) {
+      const params = {
+        ci: coupleId,
+      };
+      http
+        .get(`/api/v1/couple/ledger/${ledgerId}`, { params })
+        .then((response) => {
+          setLedger(response.data.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else {
+      http
+        .get(`/api/v1/personal/ledger/${ledgerId}`)
+        .then((response) => {
+          setLedger(response.data.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+
+    /**
+     * TODO ledger detail get
+     */
+    console.log(ledgerId);
+  }, [ledgerId]);
+
   const { selectedDate } = useSelector((state) => state.ledgerInfo);
+  console.log(selectedDate);
   const headerInfo = {
     left: (
       <IconButton
@@ -114,7 +158,6 @@ export default function LedgerUpdate() {
         <TextField
           id="input-with-sx"
           sx={{ mr: 2, width: "100%" }}
-          disabled
           label="날짜"
           value={`${selectedDate.year}년 ${selectedDate.month}월 ${selectedDate.day}일 (${selectedDate.dayName}요일)`}
           variant="standard"
