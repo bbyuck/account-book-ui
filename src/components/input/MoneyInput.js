@@ -1,26 +1,17 @@
 import { Box, TextField } from "@mui/material";
 import MoneyIcon from "@mui/icons-material/Money";
+import {
+  fromLocaleStringToNumber,
+  removeAllLeadingZero,
+} from "util/numberUtil";
 
 export default function MoneyInput({ style, value, max, onChange, label }) {
   const defaultMax = 100000000; // 1억 default
 
-  /**
-   * 왼쪽의 모든 0을 제거
-   * @param {String} str
-   * @returns
-   */
-  const removeAllLeadingZero = (str) => {
-    return str.replace(/^0+/, "");
-  };
-
-  const getNumberValue = (str) => {
-    return Number(str.replace(/,/g, ""));
-  };
-
   const numericInput = (e) => {
     if (e.key === "Backspace") {
       onChange(
-        getNumberValue(
+        fromLocaleStringToNumber(
           removeAllLeadingZero(value.slice(0, -1))
         ).toLocaleString()
       );
@@ -29,7 +20,9 @@ export default function MoneyInput({ style, value, max, onChange, label }) {
       return;
     }
 
-    const changedNumber = getNumberValue(removeAllLeadingZero(value + e.key));
+    const changedNumber = fromLocaleStringToNumber(
+      removeAllLeadingZero(value + e.key)
+    );
     if (changedNumber > (max ? max : defaultMax)) {
       alert(
         `금액은 ${

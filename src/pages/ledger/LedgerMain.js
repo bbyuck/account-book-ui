@@ -54,7 +54,7 @@ export default function LedgerMain() {
    * navigate methods
    */
   const goToRegisterPage = () => {
-    navigate("/ledger/register", {
+    navigate("/app/ledger/register", {
       state: {
         push: true,
       },
@@ -62,7 +62,7 @@ export default function LedgerMain() {
   };
 
   const goToDetailPage = (ledgerId) => {
-    navigate(`/ledger/detail/${ledgerId}`, {
+    navigate(`/app/ledger/detail/${ledgerId}`, {
       state: {
         push: true,
       },

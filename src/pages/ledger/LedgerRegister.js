@@ -5,15 +5,20 @@ import { useNavigate } from "react-router";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker from "components/input/DatePicker";
 import MoneyInput from "components/input/MoneyInput";
 import DescriptionInput from "components/input/DescriptionInput";
 import LedgerCodeSelect from "components/input/LedgerCodeSelect";
+import { fromLocaleStringToNumber } from "util/numberUtil";
+
+import http from "api";
 
 export default function LedgerRegister() {
   const navigate = useNavigate();
   const { selectedDate } = useSelector((state) => state.ledgerInfo);
+  const [requiredInputCompleted, setRequiredInputCompleted] = useState(false);
+
   const headerInfo = {
     left: (
       <IconButton
@@ -55,6 +60,42 @@ export default function LedgerRegister() {
   /**
    * ================= 설명 ===================
    */
+
+  /**
+   * 필수 입력 조건
+   */
+  useEffect(() => {
+    setRequiredInputCompleted(ledgerCode ? true : false);
+  }, [ledgerCode]);
+
+  /**
+   * 필수 입력 조건 모두 입력시 저장
+   */
+  useEffect(() => {
+    if (requiredInputCompleted) {
+      // TODO insert API call
+
+      const params = {
+        ledgerDate: `${selectedDate.year}-${String(selectedDate.month).padStart(
+          2,
+          "0"
+        )}-${String(selectedDate.day).padStart(2, "0")}`,
+        ledgerCode: ledgerCode,
+        ledgerAmount: fromLocaleStringToNumber(amount),
+        ledgerDescription: description,
+      };
+
+      http
+        .post("/api/v1/ledger", params)
+        .then((response) => {
+          console.log(response);
+          navigate(-1);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [requiredInputCompleted]);
 
   return (
     <Page headerInfo={headerInfo}>
