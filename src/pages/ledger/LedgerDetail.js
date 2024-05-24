@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router";
 
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
-import MoneyIcon from "@mui/icons-material/Money";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import MoneyOffIcon from "@mui/icons-material/MoneyOff";
@@ -16,6 +15,7 @@ import { useEffect, useState } from "react";
 import "components/style/TextField.css";
 import http from "api";
 import DatePickerModal from "components/DatePickerModal";
+import MoneyInput from "components/input/MoneyInput";
 
 export default function LedgerUpdate() {
   const navigate = useNavigate();
@@ -90,39 +90,6 @@ export default function LedgerUpdate() {
   const [amount, setAmount] = useState("0");
 
   /**
-   * 왼쪽의 모든 0을 제거
-   * @param {String} str
-   * @returns
-   */
-  const removeAllLeadingZero = (str) => {
-    return str.replace(/^0+/, "");
-  };
-
-  const getNumberValue = (str) => {
-    return Number(str.replace(/,/g, ""));
-  };
-
-  const numericInput = (e) => {
-    if (e.key === "Backspace") {
-      setAmount(
-        getNumberValue(
-          removeAllLeadingZero(amount.slice(0, -1))
-        ).toLocaleString()
-      );
-    } else if (e.key < "0" || e.key > "9") {
-      return;
-    } else {
-      if (String(getNumberValue(amount)).length > 8) {
-        alert("금액은 999,999,999 미만으로 입력해야 합니다.");
-        return;
-      }
-
-      setAmount(
-        getNumberValue(removeAllLeadingZero(amount + e.key)).toLocaleString()
-      );
-    }
-  };
-  /**
    * ================= 금액 ===================
    */
 
@@ -177,19 +144,13 @@ export default function LedgerUpdate() {
           variant="standard"
         />
       </Box>
-      <Box sx={{ display: "flex", alignItems: "flex-end", marginTop: "20px" }}>
-        <MoneyIcon sx={{ color: "action.active", mx: 2, my: 0.5 }} />
-        <TextField
-          id="input-with-sx"
-          sx={{ mr: 2, width: "100%" }}
-          variant="standard"
-          type="text"
-          value={amount}
-          label="금액을 입력해주세요."
-          inputMode="numeric"
-          onKeyDown={(e) => numericInput(e)}
-        />
-      </Box>
+
+      <MoneyInput
+        style={{ marginTop: "20px" }}
+        value={amount}
+        onChange={setAmount}
+        max={100000000}
+      />
 
       <Box sx={{ display: "flex", alignItems: "flex-end", marginTop: "20px" }}>
         <DescriptionIcon sx={{ color: "action.active", mx: 2, my: 0.5 }} />

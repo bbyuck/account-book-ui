@@ -17,7 +17,17 @@ const ledgerInfoSlice = createSlice({
   initialState,
   reducers: {
     setSelectedDate(state = initialState, action) {
-      state.selectedDate = action.payload;
+      state.selectedDate = {
+        ...action.payload,
+        dayName:
+          namesOfDay[
+            new Date(
+              action.payload.year,
+              action.payload.month - 1,
+              action.payload.day
+            ).getDay()
+          ],
+      };
     },
   },
 });

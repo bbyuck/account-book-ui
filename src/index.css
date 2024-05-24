@@ -1,4 +1,5 @@
-html::-webkit-scrollbar {
+html::-webkit-scrollbar,
+html *::-webkit-scrollbar {
   display: none;
 }
 
@@ -17,19 +18,22 @@ code {
     monospace;
 }
 
-body > #root > div {
+body > #root {
+  height: 100vh;
   height: calc(var(--vh, 1vh) * 100);
 }
 
 .page-wrapper {
-  height: calc(var(--vh, 1vh) * 100);
+  height: 100%;
   width: 100vw;
   position: absolute;
 }
 
 .page-contents-wrapper {
   position: relative;
+  overflow-y: scroll;
   top: 70px;
+  height: calc(var(--vh, 1vh) * 100 - 126px);
 }
 
 .transitions-wrapper {
