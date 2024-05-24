@@ -50,18 +50,29 @@ export default function LedgerMain() {
     );
   }, [dispatch, selectedMonth, selectedDay]);
 
+  /**
+   * navigate methods
+   */
+  const goToRegisterPage = () => {
+    navigate("/ledger/register", {
+      state: {
+        push: true,
+      },
+    });
+  };
+
+  const goToDetailPage = (ledgerId) => {
+    navigate(`/ledger/detail/${ledgerId}`, {
+      state: {
+        push: true,
+      },
+    });
+  };
+
   const headerInfo = {
     center: <h2>{`${selectedMonth.year}년 ${selectedMonth.month}월`}</h2>,
     right: (
-      <IconButton
-        onClick={() => {
-          navigate("/ledger/register", {
-            state: {
-              push: true,
-            },
-          });
-        }}
-      >
+      <IconButton onClick={goToRegisterPage}>
         <AddIcon color="primary" />
       </IconButton>
     ),
@@ -85,13 +96,7 @@ export default function LedgerMain() {
             ? monthlyData.ledgersPerDay[selectedDay].ledgers
             : []
         }
-        onItemSelect={(ledgerId) => {
-          navigate(`/ledger/detail/${ledgerId}`, {
-            state: {
-              push: true,
-            },
-          });
-        }}
+        onItemSelect={(ledgerId) => goToDetailPage(ledgerId)}
       />
     </Page>
   );
