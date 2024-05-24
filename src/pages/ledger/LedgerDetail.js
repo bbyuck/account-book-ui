@@ -57,11 +57,9 @@ export default function LedgerUpdate() {
     /**
      * TODO ledger detail get
      */
-    console.log(ledgerId);
   }, [ledgerId, navigate]);
 
   const { selectedDate } = useSelector((state) => state.ledgerInfo);
-  console.log(selectedDate);
   const headerInfo = {
     left: (
       <IconButton

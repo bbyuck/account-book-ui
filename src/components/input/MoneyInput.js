@@ -24,22 +24,22 @@ export default function MoneyInput({ style, value, max, onChange }) {
           removeAllLeadingZero(value.slice(0, -1))
         ).toLocaleString()
       );
+      return;
     } else if (e.key < "0" || e.key > "9") {
       return;
-    } else {
-      if (getNumberValue(value) > (max ? max : defaultMax)) {
-        alert(
-          `금액은 ${
-            max ? max.toLocaleString() : defaultMax.toLocaleString()
-          } 미만으로 입력해야 합니다.`
-        );
-        return;
-      }
-
-      onChange(
-        getNumberValue(removeAllLeadingZero(value + e.key)).toLocaleString()
-      );
     }
+
+    const changedNumber = getNumberValue(removeAllLeadingZero(value + e.key));
+    if (changedNumber > (max ? max : defaultMax)) {
+      alert(
+        `금액은 ${
+          max ? max.toLocaleString() : defaultMax.toLocaleString()
+        } 미만으로 입력해야 합니다.`
+      );
+      return;
+    }
+
+    onChange(changedNumber.toLocaleString());
   };
 
   return (
@@ -53,6 +53,7 @@ export default function MoneyInput({ style, value, max, onChange }) {
         value={value}
         label="금액을 입력해주세요."
         inputMode="numeric"
+        onPaste={(e) => e.preventDefault()}
         onKeyDown={(e) => numericInput(e)}
       />
     </Box>
