@@ -1,7 +1,6 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import Login from "pages/Login";
-import AppNavigation from "components/AppNavigation";
 
 import AppRouter from "pages/AppRouter";
 

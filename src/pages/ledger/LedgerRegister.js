@@ -23,7 +23,7 @@ export default function LedgerRegister() {
     left: (
       <IconButton
         onTouchEnd={() => {
-          navigate(-1);
+          navigate(-1, { state: { pop: true } });
         }}
       >
         <NavigateBeforeIcon />
