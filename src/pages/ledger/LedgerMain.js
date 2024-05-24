@@ -289,7 +289,7 @@ export default function LedgerMain() {
                       <ListItemText primary={ledger.description} />
                       <ListItemText
                         style={{ position: "absolute", right: "3vw" }}
-                        primary={ledger.amount}
+                        primary={`${ledger.amount.toLocaleString()}원`}
                       />
                     </ListItemButton>
                   </ListItem>
