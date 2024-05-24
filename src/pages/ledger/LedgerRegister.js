@@ -19,7 +19,7 @@ export default function LedgerRegister() {
   const headerInfo = {
     left: (
       <IconButton
-        onClick={() => {
+        onTouchEnd={() => {
           navigate(-1);
         }}
       >

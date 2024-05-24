@@ -25,7 +25,7 @@ export default function LedgerDailyList({ ledgers, onItemSelect }) {
                   <ListItemButton
                     style={{ backgroundColor: "lightGrey" }}
                     role={undefined}
-                    onClick={() => {
+                    onTouchEnd={() => {
                       onItemSelect(ledger.ledgerId);
                     }}
                   >

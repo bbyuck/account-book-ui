@@ -40,7 +40,7 @@ export default function Login() {
           </div>
           <div className="signup-prompt">
             아직 계정이 없으신가요?{" "}
-            <Link onClick={toSignUp} className={"anchor-button"}>
+            <Link onTouchEnd={toSignUp} className={"anchor-button"}>
               Sign up
             </Link>
           </div>

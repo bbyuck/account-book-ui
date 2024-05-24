@@ -72,7 +72,7 @@ export default function LedgerMain() {
   const headerInfo = {
     center: <h2>{`${selectedMonth.year}년 ${selectedMonth.month}월`}</h2>,
     right: (
-      <IconButton onClick={goToRegisterPage}>
+      <IconButton onTouchEnd={goToRegisterPage}>
         <AddIcon color="primary" />
       </IconButton>
     ),
