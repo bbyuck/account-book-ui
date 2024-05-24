@@ -60,7 +60,7 @@ export default function LedgerUpdate() {
   const headerInfo = {
     left: (
       <IconButton
-        onClick={() => {
+        onTouchEnd={() => {
           navigate(-1);
         }}
       >
@@ -120,6 +120,7 @@ export default function LedgerUpdate() {
       <MoneyInput
         style={{ marginTop: "20px" }}
         value={amount}
+        label={"금액을 입력해주세요."}
         onChange={setAmount}
         max={100000000}
       />

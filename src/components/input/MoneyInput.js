@@ -1,7 +1,7 @@
 import { Box, TextField } from "@mui/material";
 import MoneyIcon from "@mui/icons-material/Money";
 
-export default function MoneyInput({ style, value, max, onChange }) {
+export default function MoneyInput({ style, value, max, onChange, label }) {
   const defaultMax = 100000000; // 1억 default
 
   /**
@@ -51,7 +51,7 @@ export default function MoneyInput({ style, value, max, onChange }) {
         variant="standard"
         type="text"
         value={value}
-        label="금액을 입력해주세요."
+        label={label}
         inputMode="numeric"
         onPaste={(e) => e.preventDefault()}
         onKeyDown={(e) => numericInput(e)}

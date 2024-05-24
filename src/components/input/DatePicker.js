@@ -3,7 +3,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 export default function DatePicker({
   label,
-  disabled,
+  disabled = false,
   year,
   month,
   day,
