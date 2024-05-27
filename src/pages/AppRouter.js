@@ -4,9 +4,8 @@ import LedgerRouter from "pages/ledger/LedgerRouter";
 import { Route, Routes, useLocation } from "react-router";
 import AppNavigation from "components/AppNavigation";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import { cloneElement, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setPageTransition } from "store/slice/clientInfo";
+import { cloneElement } from "react";
+import { useSelector } from "react-redux";
 
 export default function AppRouter() {
   const location = useLocation();
