@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSelectedDate } from "store/slice/ledgerInfo";
 import http from "api";
 import LedgerDailyList from "components/LedgerDailyList";
+import { setPageTransition } from "store/slice/clientInfo";
 
 export default function LedgerMain() {
   const navigate = useNavigate();
@@ -54,19 +55,13 @@ export default function LedgerMain() {
    * navigate methods
    */
   const goToRegisterPage = () => {
-    navigate("/app/ledger/register", {
-      state: {
-        push: true,
-      },
-    });
+    dispatch(setPageTransition("push"));
+    navigate("/app/ledger/register");
   };
 
   const goToDetailPage = (ledgerId) => {
-    navigate(`/app/ledger/detail/${ledgerId}`, {
-      state: {
-        push: true,
-      },
-    });
+    dispatch(setPageTransition("push"));
+    navigate(`/app/ledger/detail/${ledgerId}`);
   };
 
   const headerInfo = {

@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router";
 
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
 import "components/style/TextField.css";
@@ -13,18 +13,20 @@ import MoneyInput from "components/input/MoneyInput";
 import DatePicker from "components/input/DatePicker";
 import DescriptionInput from "components/input/DescriptionInput";
 import LedgerCodeSelect from "components/input/LedgerCodeSelect";
+import { setPageTransition } from "store/slice/clientInfo";
 
 export default function LedgerUpdate() {
   const navigate = useNavigate();
   const { ledgerId } = useParams();
   // testData
   const coupleId = 1;
-
   const [ledger, setLedger] = useState();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!ledgerId) {
       alert("잘못된 접근입니다.");
+      dispatch(setPageTransition("pop"));
       navigate(-1);
     }
 
@@ -54,13 +56,14 @@ export default function LedgerUpdate() {
     /**
      * TODO ledger detail get
      */
-  }, [ledgerId, navigate]);
+  }, [ledgerId, navigate, dispatch]);
 
   const { selectedDate } = useSelector((state) => state.ledgerInfo);
   const headerInfo = {
     left: (
       <IconButton
         onTouchEnd={() => {
+          dispatch(setPageTransition("pop"));
           navigate(-1);
         }}
       >

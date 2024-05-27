@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import DatePicker from "components/input/DatePicker";
 import MoneyInput from "components/input/MoneyInput";
@@ -13,17 +13,20 @@ import LedgerCodeSelect from "components/input/LedgerCodeSelect";
 import { fromLocaleStringToNumber } from "util/numberUtil";
 
 import http from "api";
+import { setPageTransition } from "store/slice/clientInfo";
 
 export default function LedgerRegister() {
   const navigate = useNavigate();
   const { selectedDate } = useSelector((state) => state.ledgerInfo);
   const [requiredInputCompleted, setRequiredInputCompleted] = useState(false);
+  const dispatch = useDispatch();
 
   const headerInfo = {
     left: (
       <IconButton
         onTouchEnd={() => {
-          navigate(-1, { state: { pop: true } });
+          dispatch(setPageTransition("pop"));
+          navigate(-1);
         }}
       >
         <NavigateBeforeIcon />
@@ -89,13 +92,14 @@ export default function LedgerRegister() {
         .post("/api/v1/ledger", params)
         .then((response) => {
           console.log(response);
+          dispatch(setPageTransition("pop"));
           navigate(-1);
         })
         .catch((error) => {
           console.log(error);
         });
     }
-  }, [requiredInputCompleted]);
+  }, [requiredInputCompleted, dispatch]);
 
   return (
     <Page headerInfo={headerInfo}>

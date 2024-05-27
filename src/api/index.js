@@ -13,7 +13,7 @@ api.interceptors.request.use(
     // config.headers[Authorization] = getTokenFromSession();
     config.headers.Authorization =
       "Bearer " +
-      "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOjMsImF1dGgiOiJST0xFX1VTRVIiLCJpc3MiOiJoYXktYWNjb3VudC1ib29rIiwiZXhwIjoxNzE2NjEyNTc2fQ.WsxK3SE4wORjiY4H__OIoYDcdD6Xm-icdVN7SyUhFISE7MA0pP6Ev2Ncu3cMT704Q4Q4OZwZkCGw6GpCrmhiBA";
+      "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOjMsImF1dGgiOiJST0xFX1VTRVIiLCJpc3MiOiJoYXktYWNjb3VudC1ib29rIiwiZXhwIjoxNzE2ODU3MDg2fQ.7SXMc2e7MIuNMI_1XunLIR5gJtot1wt_JjwbmnJcG0ZlT5c12-YTw8g0UkZEI01tnr_xm4y5apKFJ2gN-IUJKw";
     return config;
   },
   (err) => {

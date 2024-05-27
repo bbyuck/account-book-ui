@@ -5,12 +5,16 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setPageTransition } from "store/slice/clientInfo";
 
 export default function AppNavigation() {
   const [selectedTab, setSelectedTab] = useState("ledger");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleChangeBottomNavigation = (event, newValue) => {
     setSelectedTab(newValue);
+    dispatch(setPageTransition("switch"));
     navigate(`/app/${newValue}/main`);
   };
 

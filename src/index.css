@@ -56,28 +56,8 @@ body > #root {
   transition: all !important;
 }
 
-.pop-enter {
-  transform: translateX(100%);
-  z-index: 1;
-}
-.pop-enter-active {
-  transform: translateX(0);
-  transition: all 0.4s ease;
-  z-index: 1;
-}
-
-.pop-exit {
-  transform: translateX(0);
-  z-index: 0;
-}
-.pop-exit-active {
-  transform: translateX(-100%);
-  transition: all 0.4s ease;
-  z-index: 0;
-}
-
 .push-enter {
-  transform: translateX(-100%);
+  transform: translateX(100%);
   z-index: 1;
 }
 .push-enter-active {
@@ -91,6 +71,26 @@ body > #root {
   z-index: 0;
 }
 .push-exit-active {
+  transform: translateX(-100%);
+  transition: all 0.4s ease;
+  z-index: 0;
+}
+
+.pop-enter {
+  transform: translateX(-100%);
+  z-index: 1;
+}
+.pop-enter-active {
+  transform: translateX(0);
+  transition: all 0.4s ease;
+  z-index: 1;
+}
+
+.pop-exit {
+  transform: translateX(0);
+  z-index: 0;
+}
+.pop-exit-active {
   transform: translateX(100%);
   transition: all 0.4s ease;
   z-index: 0;
