@@ -103,14 +103,7 @@ export default function LedgerRegister() {
 
   return (
     <Page headerInfo={headerInfo}>
-      <DatePicker
-        label={"날짜"}
-        year={selectedDate.year}
-        month={selectedDate.month}
-        day={selectedDate.day}
-        dayName={selectedDate.dayName}
-        disabled
-      />
+      <DatePicker label={"날짜"} selectedDate={selectedDate} disabled />
 
       <MoneyInput
         style={{ marginTop: "20px" }}

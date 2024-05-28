@@ -4,9 +4,12 @@ import Login from "pages/Login";
 
 import AppRouter from "pages/AppRouter";
 import DatePickerModal from "components/input/DatePickerModal";
+import { useState } from "react";
 
 function App() {
   const location = useLocation();
+
+  const [open, setOpen] = useState(true);
 
   return (
     <div className="App">
@@ -15,7 +18,9 @@ function App() {
         <Route key={location.pathname} element={<Login />} path="/login" />
         <Route
           key={location.pathname}
-          element={<DatePickerModal />}
+          element={
+            <DatePickerModal open={open} onClose={() => setOpen(false)} />
+          }
           path="/comp"
         />
       </Routes>

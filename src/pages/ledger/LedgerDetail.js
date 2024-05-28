@@ -14,6 +14,7 @@ import DatePicker from "components/input/DatePicker";
 import DescriptionInput from "components/input/DescriptionInput";
 import LedgerCodeSelect from "components/input/LedgerCodeSelect";
 import { setPageTransition } from "store/slice/clientInfo";
+import { setSelectedDetailDate } from "store/slice/ledgerInfo";
 
 export default function LedgerUpdate() {
   const navigate = useNavigate();
@@ -22,6 +23,12 @@ export default function LedgerUpdate() {
   const coupleId = 1;
   const [ledger, setLedger] = useState();
   const dispatch = useDispatch();
+  const { selectedDate, selectedDetailDate } = useSelector(
+    (state) => state.ledgerInfo
+  );
+  useEffect(() => {
+    dispatch(setSelectedDetailDate(selectedDate));
+  }, [dispatch]);
 
   useEffect(() => {
     if (!ledgerId) {
@@ -58,7 +65,6 @@ export default function LedgerUpdate() {
      */
   }, [ledgerId, navigate, dispatch]);
 
-  const { selectedDate } = useSelector((state) => state.ledgerInfo);
   const headerInfo = {
     left: (
       <IconButton
@@ -114,10 +120,12 @@ export default function LedgerUpdate() {
     <Page headerInfo={headerInfo}>
       <DatePicker
         label={"날짜"}
-        year={selectedDate.year}
-        month={selectedDate.month}
-        day={selectedDate.day}
-        dayName={selectedDate.dayName}
+        selectedDate={selectedDetailDate}
+        selectDate={(pickedDate) => {
+          dispatch(setSelectedDetailDate(pickedDate));
+        }}
+        pickerOpen={datePickerOpen}
+        setPickerOpen={setDatePickerOpen}
       />
 
       <MoneyInput

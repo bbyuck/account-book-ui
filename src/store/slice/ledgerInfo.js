@@ -10,6 +10,12 @@ const initialState = {
     day: today.getDate(),
     dayName: namesOfDay[today.getDay()],
   },
+  selectedDetailDate: {
+    year: today.getFullYear(),
+    month: today.getMonth() + 1,
+    day: today.getDate(),
+    dayName: namesOfDay[today.getDay()],
+  },
 };
 
 const ledgerInfoSlice = createSlice({
@@ -29,8 +35,22 @@ const ledgerInfoSlice = createSlice({
           ],
       };
     },
+    setSelectedDetailDate(state = initialState, action) {
+      state.selectedDetailDate = {
+        ...action.payload,
+        dayName:
+          namesOfDay[
+            new Date(
+              action.payload.year,
+              action.payload.month - 1,
+              action.payload.day
+            ).getDay()
+          ],
+      };
+    },
   },
 });
 
-export const { setSelectedDate } = ledgerInfoSlice.actions;
+export const { setSelectedDate, setSelectedDetailDate } =
+  ledgerInfoSlice.actions;
 export default ledgerInfoSlice.reducer;
