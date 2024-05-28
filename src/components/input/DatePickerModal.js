@@ -58,10 +58,10 @@ export default function DatePickerModal({
         (_, index) => 1 + index
       ),
     });
-    if (selectedDate.day > lastDayOfPickedMonth.getDate()) {
+    if (pickedDate.day > lastDayOfPickedMonth.getDate()) {
       setPickedDate({
-        year: selectedDate.year,
-        month: selectedDate.month,
+        year: pickedDate.year,
+        month: pickedDate.month,
         day: lastDayOfPickedMonth.getDate(),
       });
     }

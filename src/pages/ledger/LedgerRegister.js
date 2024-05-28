@@ -14,6 +14,7 @@ import { fromLocaleStringToNumber } from "util/numberUtil";
 
 import http from "api";
 import { setPageTransition } from "store/slice/clientInfo";
+import { convertToLocalDateFormat } from "util/calendarUtil";
 
 export default function LedgerRegister() {
   const navigate = useNavigate();
@@ -78,11 +79,16 @@ export default function LedgerRegister() {
     if (requiredInputCompleted) {
       // TODO insert API call
 
+      if (fromLocaleStringToNumber(amount) === 0) {
+        setLedgerCode(null);
+        setRequiredInputCompleted(false);
+
+        alert("가계부 금액은 0원 이상이어야 합니다.");
+        return;
+      }
+
       const params = {
-        ledgerDate: `${selectedDate.year}-${String(selectedDate.month).padStart(
-          2,
-          "0"
-        )}-${String(selectedDate.day).padStart(2, "0")}`,
+        ledgerDate: convertToLocalDateFormat(selectedDate),
         ledgerCode: ledgerCode,
         ledgerAmount: fromLocaleStringToNumber(amount),
         ledgerDescription: description,

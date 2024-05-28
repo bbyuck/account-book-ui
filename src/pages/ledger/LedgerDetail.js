@@ -3,6 +3,7 @@ import Page from "components/Page";
 import { useNavigate, useParams } from "react-router";
 
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
+import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -15,13 +16,14 @@ import DescriptionInput from "components/input/DescriptionInput";
 import LedgerCodeSelect from "components/input/LedgerCodeSelect";
 import { setPageTransition } from "store/slice/clientInfo";
 import { setSelectedDetailDate } from "store/slice/ledgerInfo";
+import { convertToLocalDateFormat } from "util/calendarUtil";
+import { fromLocaleStringToNumber } from "util/numberUtil";
 
 export default function LedgerUpdate() {
   const navigate = useNavigate();
   const { ledgerId } = useParams();
   // testData
   const coupleId = 1;
-  const [ledger, setLedger] = useState();
   const dispatch = useDispatch();
   const { selectedDate, selectedDetailDate } = useSelector(
     (state) => state.ledgerInfo
@@ -37,33 +39,51 @@ export default function LedgerUpdate() {
       navigate(-1);
     }
 
-    if (coupleId) {
-      const params = {
-        ci: coupleId,
-      };
-      http
-        .get(`/api/v1/couple/ledger/${ledgerId}`, { params })
-        .then((response) => {
-          setLedger(response.data.data);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    } else {
-      http
-        .get(`/api/v1/personal/ledger/${ledgerId}`)
-        .then((response) => {
-          setLedger(response.data.data);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
+    const params = {
+      ci: coupleId,
+    };
+    const targetApi = coupleId
+      ? `/api/v1/couple/ledger/${ledgerId}`
+      : `/api/v1/personal/ledger/${ledgerId}`;
+
+    http
+      .get(targetApi, coupleId ? { params } : undefined)
+      .then((response) => {
+        setAmount(response.data.data.ledgerAmount.toLocaleString());
+        setDescription(response.data.data.ledgerDescription);
+        setLedgerCode(response.data.data.ledgerCode);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
 
     /**
      * TODO ledger detail get
      */
   }, [ledgerId, navigate, dispatch]);
+
+  const updateLedger = () => {
+    if (fromLocaleStringToNumber(amount) === 0) {
+      alert("가계부 금액은 0원 이상이어야 합니다.");
+      return;
+    }
+
+    const param = {
+      ledgerDate: convertToLocalDateFormat(selectedDetailDate),
+      ledgerCode: ledgerCode,
+      ledgerAmount: fromLocaleStringToNumber(amount),
+      ledgerDescription: description,
+    };
+    http
+      .put(`/api/v1/ledger/${ledgerId}`, param)
+      .then((response) => {
+        console.log(response);
+        navigate(-1);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const headerInfo = {
     left: (
@@ -74,6 +94,11 @@ export default function LedgerUpdate() {
         }}
       >
         <NavigateBeforeIcon />
+      </IconButton>
+    ),
+    right: (
+      <IconButton onTouchEnd={updateLedger}>
+        <AssignmentTurnedInIcon />
       </IconButton>
     ),
   };

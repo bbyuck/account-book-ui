@@ -12,4 +12,11 @@ const getLastDayOfTheMonth = (year, month) => {
   return lastDate;
 };
 
-export { getLastDayOfTheMonth };
+const convertToLocalDateFormat = ({ year, month, day }) => {
+  return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(
+    2,
+    "0"
+  )}`;
+};
+
+export { getLastDayOfTheMonth, convertToLocalDateFormat };

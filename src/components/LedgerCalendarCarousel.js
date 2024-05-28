@@ -59,6 +59,7 @@ export default function LedgerCalendarCarousel({
         <LedgerCalendarHeader
           income={monthlyData ? monthlyData.totalIncome : 0}
           expenditure={monthlyData ? monthlyData.totalExpenditure : 0}
+          save={monthlyData ? monthlyData.totalSave : 0}
         />
         <Carousel
           showArrows={false}
