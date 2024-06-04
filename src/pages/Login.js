@@ -11,6 +11,8 @@ import "pages/style/Login.css";
 import http from "api";
 import { useState } from "react";
 import { getByteLength } from "util/stringUtil";
+import { useDispatch } from "react-redux";
+import { openErrorAlert } from "store/slice/clientInfo";
 
 const AntSwitch = styled(Switch)(({ theme }) => ({
   width: 28,
@@ -57,9 +59,11 @@ const AntSwitch = styled(Switch)(({ theme }) => ({
 }));
 
 export default function Login() {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [autoLogin, setAutoLogin] = useState(false);
+
+  const dispatch = useDispatch();
 
   const toSignUp = () => {
     alert(
@@ -81,6 +85,7 @@ export default function Login() {
       })
       .catch((error) => {
         console.log(error);
+        dispatch(openErrorAlert(error.response.data.message));
       });
 
     console.log(params);

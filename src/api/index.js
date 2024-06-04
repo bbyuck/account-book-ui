@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getAccessToken } from "util/authUtil";
 
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_SERVER,
@@ -11,12 +12,18 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     // config.headers[Authorization] = getTokenFromSession();
-    config.headers.Authorization =
-      "Bearer " +
-      "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOjMsImF1dGgiOiJST0xFX1VTRVIiLCJpc3MiOiJoYXktYWNjb3VudC1ib29rIiwiZXhwIjoxNzE3MzkzNzMwfQ.mWq1Zo9yIIrXN2YbplJPv-O9bxI2TndrpQXsF4kkgI7lX8gqH1RhQVeeNRSJrJkvZbdCQANjSxkeWnsW-RrRcg";
+    config.headers.Authorization = `Bearer ${getAccessToken()}`;
     return config;
   },
   (err) => {
+    return Promise.reject(err);
+  }
+);
+
+api.interceptors.response.use(
+  (config) => {},
+  (err) => {
+    debugger;
     return Promise.reject(err);
   }
 );
