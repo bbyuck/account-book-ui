@@ -13,8 +13,11 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(`loggedIn : ${loggedIn}`);
     if (!loggedIn) {
       navigate("/login");
+    } else {
+      navigate("/app/ledger/main");
     }
   }, [loggedIn]);
 

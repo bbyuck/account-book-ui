@@ -8,8 +8,12 @@ const initialState = {
 const authInfoSlice = createSlice({
   name: "authInfo",
   initialState,
-  reducers: {},
+  reducers: {
+    syncAuth(state = initialState) {
+      state.loggedIn = haveAccessToken();
+    },
+  },
 });
 
-export const { setPageTransition } = authInfoSlice.actions;
+export const { syncAuth } = authInfoSlice.actions;
 export default authInfoSlice.reducer;

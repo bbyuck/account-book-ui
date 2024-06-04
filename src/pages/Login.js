@@ -13,6 +13,8 @@ import { useState } from "react";
 import { getByteLength } from "util/stringUtil";
 import { useDispatch } from "react-redux";
 import { openErrorAlert } from "store/slice/clientInfo";
+import { saveJWT } from "util/authUtil";
+import { syncAuth } from "store/slice/authInfo";
 
 const AntSwitch = styled(Switch)(({ theme }) => ({
   width: 28,
@@ -81,7 +83,8 @@ export default function Login() {
     http
       .post("/api/v1/authenticate", params)
       .then((response) => {
-        console.log(response);
+        saveJWT(response.data.data);
+        dispatch(syncAuth());
       })
       .catch((error) => {
         console.log(error);
