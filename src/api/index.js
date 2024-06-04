@@ -3,6 +3,7 @@ import {
   getAccessToken,
   getRefreshToken,
   haveAccessToken,
+  haveRefreshToken,
   removeJWT,
   saveJWT,
 } from "util/authUtil";
@@ -66,7 +67,9 @@ api.interceptors.response.use(
       }
     }
 
-    removeJWT();
+    if (haveAccessToken() || haveRefreshToken()) {
+      removeJWT();
+    }
 
     return Promise.reject(err);
   }
