@@ -31,7 +31,7 @@ export default function LedgerMain() {
       )}`,
     };
     http
-      .get(`/api/v1/couple/monthly/ledger`, { params })
+      .get(`/api/v1/monthly/ledger`, { params })
       .then((response) => {
         setMonthlyData(response.data.data);
       })
