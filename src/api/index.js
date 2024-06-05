@@ -8,6 +8,13 @@ import {
   saveJWT,
 } from "util/authUtil";
 
+import store from "store";
+import { openSuccessAlert, openErrorAlert } from "store/slice/clientInfo";
+
+const isAuthenticationError = (status) => {
+  return status === 401 || status === 403;
+};
+
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_SERVER,
   headers: {
@@ -22,6 +29,7 @@ api.interceptors.request.use(
     if (haveAccessToken()) {
       config.headers.Authorization = `Bearer ${getAccessToken()}`;
     }
+
     return config;
   },
   (err) => {
@@ -42,7 +50,6 @@ api.interceptors.response.use(
       /**
        * 토큰 만료 -> refresh token 요청
        */
-
       const refreshToken = getRefreshToken();
       console.log(refreshToken);
       const tokenRefreshed = await api
@@ -52,7 +59,6 @@ api.interceptors.response.use(
           },
         })
         .then((response) => {
-          console.log(response);
           saveJWT(response.data.data);
           return true;
         })
@@ -67,9 +73,14 @@ api.interceptors.response.use(
       }
     }
 
-    if (haveAccessToken() || haveRefreshToken()) {
+    if (
+      isAuthenticationError(err.response.status) &&
+      (haveAccessToken() || haveRefreshToken())
+    ) {
       removeJWT();
     }
+
+    store.dispatch(openErrorAlert(err.response.data.message));
 
     return Promise.reject(err);
   }

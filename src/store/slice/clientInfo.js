@@ -23,7 +23,11 @@ const clientInfoSlice = createSlice({
       state.pageTransition = initialPageTransition;
     },
     closeAlert(state = initialState) {
-      state.alert = initialAlert;
+      state.alert = {
+        open: false,
+        message: state.alert.message,
+        type: state.alert.type,
+      };
     },
     openSuccessAlert(state = initialState, action) {
       state.alert = {

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeAlert } from "store/slice/clientInfo";
 
 function SlideTransition(props) {
-  return <Slide {...props} direction="up" />;
+  return <Slide {...props} direction="down" />;
 }
 
 export default function AppAlert() {
@@ -21,13 +21,14 @@ export default function AppAlert() {
       open={open}
       autoHideDuration={1500}
       TransitionComponent={SlideTransition}
+      anchorOrigin={{ vertical: "top", horizontal: "center" }}
       onClose={handleClose}
     >
       <Alert
         onClose={handleClose}
-        sx={{ width: "100vw" }}
+        sx={{ width: "100vw", borderRadius: "15px" }}
         severity={type}
-        variant={"outlined"}
+        variant={"filled"}
       >
         {message}
       </Alert>
