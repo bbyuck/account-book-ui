@@ -25,9 +25,11 @@ export default function LedgerRegister() {
   const headerInfo = {
     left: (
       <IconButton
-        onTouchEnd={() => {
-          dispatch(setPageTransition("pop"));
-          navigate(-1);
+        onClick={() => {
+          sessionStorage.setItem("buttonBack", true);
+          navigate(-1, {
+            replace: true,
+          });
         }}
       >
         <NavigateBeforeIcon />
@@ -97,8 +99,10 @@ export default function LedgerRegister() {
       http
         .post("/api/v1/ledger", params)
         .then((response) => {
-          dispatch(setPageTransition("pop"));
-          navigate(-1);
+          sessionStorage.setItem("buttonBack", true);
+          navigate(-1, {
+            replace: true,
+          });
         })
         .catch((error) => {
           console.log(error);

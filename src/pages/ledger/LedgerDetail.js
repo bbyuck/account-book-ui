@@ -34,8 +34,10 @@ export default function LedgerUpdate() {
   useEffect(() => {
     if (!ledgerId) {
       alert("잘못된 접근입니다.");
-      dispatch(setPageTransition("pop"));
-      navigate(-1);
+      sessionStorage.setItem("buttonBack", true);
+      navigate(-1, {
+        replace: true,
+      });
     }
 
     const apiUrl = `/api/v1/ledger/${ledgerId}`;
@@ -70,9 +72,10 @@ export default function LedgerUpdate() {
     http
       .put(`/api/v1/ledger/${ledgerId}`, param)
       .then((response) => {
-        console.log(response);
-        dispatch(setPageTransition("pop"));
-        navigate(-1);
+        sessionStorage.setItem("buttonBack", true);
+        navigate(-1, {
+          replace: true,
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -83,8 +86,10 @@ export default function LedgerUpdate() {
     left: (
       <IconButton
         onTouchEnd={() => {
-          dispatch(setPageTransition("pop"));
-          navigate(-1);
+          sessionStorage.setItem("buttonBack", true);
+          navigate(-1, {
+            replace: true,
+          });
         }}
       >
         <NavigateBeforeIcon />

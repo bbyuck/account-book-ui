@@ -20,7 +20,9 @@ function App() {
   useEffect(() => {
     history.listen((location) => {
       if (history.action === "POP") {
-        dispatch(setPageTransition("none"));
+        const buttonBack = sessionStorage.getItem("buttonBack");
+        dispatch(setPageTransition(buttonBack ? "pop" : "none"));
+        sessionStorage.removeItem("buttonBack");
       }
     });
   }, [history]);
