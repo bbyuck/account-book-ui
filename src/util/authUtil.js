@@ -11,11 +11,10 @@ export const isAutoLogin = () => {
 };
 
 export const haveAccessToken = () => {
-  if (isAutoLogin()) {
-    return localStorage.getItem(ACCESS_TOKEN_KEY) ? true : false;
-  } else {
-    return sessionStorage.getItem(ACCESS_TOKEN_KEY) ? true : false;
-  }
+  return localStorage.getItem(ACCESS_TOKEN_KEY) ||
+    sessionStorage.getItem(ACCESS_TOKEN_KEY)
+    ? true
+    : false;
 };
 
 export const haveRefreshToken = () => {
@@ -59,6 +58,4 @@ export const removeJWT = () => {
   }
   localStorage.removeItem(REFRESH_TOKEN_KEY);
   localStorage.removeItem(AUTO_LOGIN_KEY);
-
-  window.location.reload(true);
 };

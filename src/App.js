@@ -26,10 +26,13 @@ function App() {
   }, [history]);
 
   useEffect(() => {
-    console.log(`loggedIn : ${loggedIn}`);
-    if (!loggedIn) {
-      navigate("/login");
-    } else {
+    const kicked = localStorage.getItem("kicked");
+    if (!loggedIn && !kicked) {
+      localStorage.setItem("kicked", true);
+      window.location.replace("/login");
+    } else if (kicked) {
+      localStorage.removeItem("kicked");
+    } else if (loggedIn) {
       navigate("/app/ledger/main");
     }
   }, [loggedIn]);

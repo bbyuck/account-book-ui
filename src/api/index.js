@@ -10,6 +10,7 @@ import {
 
 import store from "store";
 import { openSuccessAlert, openErrorAlert } from "store/slice/clientInfo";
+import { syncAuth } from "store/slice/authInfo";
 
 const isAuthenticationError = (status) => {
   return status === 401 || status === 403;
@@ -73,11 +74,9 @@ api.interceptors.response.use(
       }
     }
 
-    if (
-      isAuthenticationError(err.response.status) &&
-      (haveAccessToken() || haveRefreshToken())
-    ) {
+    if (isAuthenticationError(err.response.status)) {
       removeJWT();
+      store.dispatch(syncAuth());
     }
 
     store.dispatch(openErrorAlert(err.response.data.message));
