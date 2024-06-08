@@ -16,9 +16,7 @@ export default function LedgerCalendarHeader({ income, expenditure, save }) {
           right: "10px",
         }}
       >
-        {`지출 ${
-          expenditure && save ? (expenditure + save).toLocaleString() : 0
-        }원`}
+        {`지출 ${expenditure ? expenditure.toLocaleString() : 0}원`}
       </div>
       <div
         style={{

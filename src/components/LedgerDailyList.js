@@ -30,7 +30,7 @@ export default function LedgerDailyList({ ledgers, onItemSelect }) {
                       marginBottom: "1px",
                     }}
                     role={undefined}
-                    onTouchEnd={() => {
+                    onClick={() => {
                       onItemSelect(ledger.ledgerId);
                     }}
                   >
