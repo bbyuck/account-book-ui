@@ -23,7 +23,12 @@ export default function LedgerDailyList({ ledgers, onItemSelect }) {
                   disablePadding
                 >
                   <ListItemButton
-                    style={{ backgroundColor: "lightGrey" }}
+                    style={{
+                      backgroundColor: "lightGrey",
+                      height: "48px",
+                      marginTop: "1px",
+                      marginBottom: "1px",
+                    }}
                     role={undefined}
                     onTouchEnd={() => {
                       onItemSelect(ledger.ledgerId);

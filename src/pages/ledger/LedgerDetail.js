@@ -23,7 +23,6 @@ export default function LedgerUpdate() {
   const navigate = useNavigate();
   const { ledgerId } = useParams();
   // testData
-  const coupleId = 1;
   const dispatch = useDispatch();
   const { selectedDate, selectedDetailDate } = useSelector(
     (state) => state.ledgerInfo
@@ -39,15 +38,9 @@ export default function LedgerUpdate() {
       navigate(-1);
     }
 
-    const params = {
-      ci: coupleId,
-    };
-    const targetApi = coupleId
-      ? `/api/v1/couple/ledger/${ledgerId}`
-      : `/api/v1/personal/ledger/${ledgerId}`;
-
+    const apiUrl = `/api/v1/ledger/${ledgerId}`;
     http
-      .get(targetApi, coupleId ? { params } : undefined)
+      .get(apiUrl)
       .then((response) => {
         setAmount(response.data.data.ledgerAmount.toLocaleString());
         setDescription(response.data.data.ledgerDescription);
