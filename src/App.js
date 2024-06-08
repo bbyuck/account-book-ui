@@ -13,7 +13,7 @@ function App() {
   const history = createBrowserHistory();
 
   const location = useLocation();
-  const loggedIn = useSelector((state) => state.authInfo.loggedIn);
+  const { loggedIn, check } = useSelector((state) => state.authInfo);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -26,16 +26,16 @@ function App() {
   }, [history]);
 
   useEffect(() => {
-    const kicked = localStorage.getItem("kicked");
-    if (!loggedIn && !kicked) {
-      localStorage.setItem("kicked", true);
-      window.location.replace("/login");
-    } else if (kicked) {
-      localStorage.removeItem("kicked");
+    if (!loggedIn) {
+      navigate("/login", {
+        replace: true,
+      });
     } else if (loggedIn) {
-      navigate("/app/ledger/main");
+      navigate("/app/ledger/main", {
+        replace: true,
+      });
     }
-  }, [loggedIn]);
+  }, [check]);
 
   return (
     <div className="App">

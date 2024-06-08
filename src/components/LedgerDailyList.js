@@ -16,7 +16,7 @@ export default function LedgerDailyList({ ledgers, onItemSelect }) {
             {ledgers.map((ledger) => {
               return (
                 <ListItem
-                  key={ledger}
+                  key={ledger.ledgerId}
                   secondaryAction={
                     <IconButton edge="end" aria-label="comments"></IconButton>
                   }

@@ -3,6 +3,7 @@ import { haveAccessToken } from "util/authUtil";
 
 const initialState = {
   loggedIn: haveAccessToken(),
+  check: 0,
 };
 
 const authInfoSlice = createSlice({
@@ -11,6 +12,8 @@ const authInfoSlice = createSlice({
   reducers: {
     syncAuth(state = initialState) {
       state.loggedIn = haveAccessToken();
+      state.check = state.check + 1;
+      console.log(state.check);
     },
   },
 });

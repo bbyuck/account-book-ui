@@ -73,7 +73,6 @@ api.interceptors.response.use(
         return api(err.config);
       }
     }
-
     if (isAuthenticationError(err.response.status)) {
       removeJWT();
       store.dispatch(syncAuth());
