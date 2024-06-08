@@ -20,7 +20,7 @@ function App() {
   useEffect(() => {
     history.listen((location) => {
       if (history.action === "POP") {
-        dispatch(setPageTransition("pop"));
+        dispatch(setPageTransition("none"));
       }
     });
   }, [history]);

@@ -71,6 +71,7 @@ export default function LedgerUpdate() {
       .put(`/api/v1/ledger/${ledgerId}`, param)
       .then((response) => {
         console.log(response);
+        dispatch(setPageTransition("pop"));
         navigate(-1);
       })
       .catch((error) => {

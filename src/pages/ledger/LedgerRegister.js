@@ -97,7 +97,6 @@ export default function LedgerRegister() {
       http
         .post("/api/v1/ledger", params)
         .then((response) => {
-          console.log(response);
           dispatch(setPageTransition("pop"));
           navigate(-1);
         })
