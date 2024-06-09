@@ -19,6 +19,7 @@ const initialState = {
   pageTransition: initialPageTransition,
   alert: initialAlert,
   confirm: initialConfirm,
+  customColor: null,
 };
 
 const clientInfoSlice = createSlice({
@@ -86,6 +87,9 @@ const clientInfoSlice = createSlice({
         confirmed: false,
       };
     },
+    setCustomColor(state = initialState, action) {
+      state.customColor = action.payload;
+    },
   },
 });
 
@@ -98,5 +102,6 @@ export const {
   procConfirm,
   cancelConfirm,
   openConfirm,
+  setCustomColor,
 } = clientInfoSlice.actions;
 export default clientInfoSlice.reducer;

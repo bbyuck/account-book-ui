@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { getLastDayOfTheMonth } from "util/calendarUtil";
 import "components/style/LedgerCalendar.css";
 import { namesOfDay } from "store/slice/ledgerInfo";
+import { useSelector } from "react-redux";
 
 export default function LedgerCalendar(props) {
   /**
@@ -18,6 +19,8 @@ export default function LedgerCalendar(props) {
     swiping,
     selected,
   } = props;
+
+  const customColor = useSelector((state) => state.clientInfo.customColor);
 
   /**
    * ============== util methods ==============
@@ -138,11 +141,14 @@ export default function LedgerCalendar(props) {
               {week.map((day, dayIndex) => {
                 return (
                   <td
-                    className={`calendar-date-cell${
-                      selectedDay === day.day && selected
-                        ? " calendar-date-cell-selected"
-                        : ""
-                    }`}
+                    style={{
+                      borderRadius: "10px",
+                      backgroundColor:
+                        selectedDay === day.day && selected
+                          ? `#${customColor}`
+                          : "transparent",
+                    }}
+                    className={`calendar-date-cell`}
                     onTouchStart={() => {
                       touchDate(day);
                     }}
