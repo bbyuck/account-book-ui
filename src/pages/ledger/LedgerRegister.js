@@ -27,7 +27,8 @@ export default function LedgerRegister() {
       <IconButton
         onClick={() => {
           sessionStorage.setItem("buttonBack", true);
-          navigate(-1, {
+          dispatch(setPageTransition("pop"));
+          navigate("/app/ledger/main", {
             replace: true,
           });
         }}
@@ -100,7 +101,8 @@ export default function LedgerRegister() {
         .post("/api/v1/ledger", params)
         .then((response) => {
           sessionStorage.setItem("buttonBack", true);
-          navigate(-1, {
+          dispatch(setPageTransition("pop"));
+          navigate("/app/ledger/main", {
             replace: true,
           });
         })

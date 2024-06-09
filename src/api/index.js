@@ -52,7 +52,6 @@ api.interceptors.response.use(
        * 토큰 만료 -> refresh token 요청
        */
       const refreshToken = getRefreshToken();
-      console.log(refreshToken);
       const tokenRefreshed = await api
         .post("/api/v1/reissue/token", null, {
           headers: {
@@ -69,7 +68,7 @@ api.interceptors.response.use(
         });
 
       if (tokenRefreshed) {
-        console.log("token refreshed");
+        // console.log("token refreshed");
         return api(err.config);
       }
     }

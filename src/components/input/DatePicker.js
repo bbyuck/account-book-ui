@@ -26,11 +26,9 @@ export default function DatePicker({
           selectedDate={selectedDate}
           selectDate={selectDate}
           onClose={() => {
-            console.log("close");
             setPickerOpen(false);
           }}
           onDatePicked={() => {
-            console.log("date picked");
             setPickerOpen(false);
           }}
         />

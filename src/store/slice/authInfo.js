@@ -13,7 +13,6 @@ const authInfoSlice = createSlice({
     syncAuth(state = initialState) {
       state.loggedIn = haveAccessToken();
       state.check = state.check + 1;
-      console.log(state.check);
     },
   },
 });

@@ -1,4 +1,4 @@
-import { IconButton } from "@mui/material";
+import { Fab, IconButton, Zoom } from "@mui/material";
 import Page from "components/Page";
 import { useNavigate, useParams } from "react-router";
 
@@ -14,12 +14,17 @@ import MoneyInput from "components/input/MoneyInput";
 import DatePicker from "components/input/DatePicker";
 import DescriptionInput from "components/input/DescriptionInput";
 import LedgerCodeSelect from "components/input/LedgerCodeSelect";
-import { setPageTransition } from "store/slice/clientInfo";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { setSelectedDetailDate } from "store/slice/ledgerInfo";
 import { convertToLocalDateFormat } from "util/calendarUtil";
 import { fromLocaleStringToNumber } from "util/numberUtil";
+import {
+  cancelConfirm,
+  openConfirm,
+  setPageTransition,
+} from "store/slice/clientInfo";
 
-export default function LedgerUpdate() {
+export default function LedgerDetail() {
   const navigate = useNavigate();
   const { ledgerId } = useParams();
   // testData
@@ -27,6 +32,8 @@ export default function LedgerUpdate() {
   const { selectedDate, selectedDetailDate } = useSelector(
     (state) => state.ledgerInfo
   );
+  const { confirm } = useSelector((state) => state.clientInfo);
+
   useEffect(() => {
     dispatch(setSelectedDetailDate(selectedDate));
   }, [dispatch]);
@@ -35,7 +42,8 @@ export default function LedgerUpdate() {
     if (!ledgerId) {
       alert("잘못된 접근입니다.");
       sessionStorage.setItem("buttonBack", true);
-      navigate(-1, {
+      dispatch(setPageTransition("pop"));
+      navigate("/app/ledger/main", {
         replace: true,
       });
     }
@@ -57,6 +65,13 @@ export default function LedgerUpdate() {
      */
   }, [ledgerId, navigate, dispatch]);
 
+  useEffect(() => {
+    if (confirm.confirmed) {
+      deleteLedger();
+      dispatch(cancelConfirm());
+    }
+  }, [confirm.confirmed]);
+
   const updateLedger = () => {
     if (fromLocaleStringToNumber(amount) === 0) {
       alert("가계부 금액은 0원 이상이어야 합니다.");
@@ -73,9 +88,39 @@ export default function LedgerUpdate() {
       .put(`/api/v1/ledger/${ledgerId}`, param)
       .then((response) => {
         sessionStorage.setItem("buttonBack", true);
-        navigate(-1, {
+        dispatch(setPageTransition("pop"));
+        navigate("/app/ledger/main", {
           replace: true,
         });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const deleteButtonClickHandler = () => {
+    console.log(`delete ${ledgerId}`);
+
+    dispatch(
+      openConfirm({
+        title: "삭제하시겠습니까?",
+        message: "삭제된 가계부는 복구할 수 없습니다.",
+        confirmLabel: "삭제",
+        cancelLabel: "취소",
+      })
+    );
+  };
+
+  const deleteLedger = () => {
+    http
+      .delete(`/api/v1/ledger/${ledgerId}`)
+      .then((response) => {
+        if (response.data.data.success) {
+          dispatch(setPageTransition("pop"));
+          navigate("/app/ledger/main", {
+            replace: true,
+          });
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -87,7 +132,8 @@ export default function LedgerUpdate() {
       <IconButton
         onTouchEnd={() => {
           sessionStorage.setItem("buttonBack", true);
-          navigate(-1, {
+          dispatch(setPageTransition("pop"));
+          navigate("/app/ledger/main", {
             replace: true,
           });
         }}
@@ -97,7 +143,7 @@ export default function LedgerUpdate() {
     ),
     right: (
       <IconButton onTouchEnd={updateLedger}>
-        <AssignmentTurnedInIcon />
+        <AssignmentTurnedInIcon color={"primary"} />
       </IconButton>
     ),
   };
@@ -172,6 +218,28 @@ export default function LedgerUpdate() {
         value={ledgerCode}
         onSelect={setLedgerCode}
       />
+
+      <Zoom
+        in={true}
+        timeout={200}
+        style={{
+          transitionDelay: "200ms",
+        }}
+        unmountOnExit
+      >
+        <Fab
+          sx={{
+            position: "absolute",
+            bottom: 25,
+            right: 25,
+          }}
+          aria-label={"Delete"}
+          color="error"
+          onClick={deleteButtonClickHandler}
+        >
+          <DeleteIcon />
+        </Fab>
+      </Zoom>
     </Page>
   );
 }

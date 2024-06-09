@@ -23,6 +23,7 @@ export const haveRefreshToken = () => {
 
 export const getAccessToken = () => {
   if (!haveAccessToken()) return null;
+
   if (isAutoLogin()) {
     return localStorage.getItem(ACCESS_TOKEN_KEY);
   } else {
@@ -51,11 +52,9 @@ export const saveJWT = (jwt) => {
 };
 
 export const removeJWT = () => {
-  if (isAutoLogin()) {
-    localStorage.removeItem(ACCESS_TOKEN_KEY);
-  } else {
-    sessionStorage.removeItem(ACCESS_TOKEN_KEY);
-  }
+  localStorage.removeItem(ACCESS_TOKEN_KEY);
+  sessionStorage.removeItem(ACCESS_TOKEN_KEY);
+
   localStorage.removeItem(REFRESH_TOKEN_KEY);
   localStorage.removeItem(AUTO_LOGIN_KEY);
 };

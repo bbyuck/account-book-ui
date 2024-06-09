@@ -8,6 +8,7 @@ import AppAlert from "components/AppAlert";
 import { useDispatch, useSelector } from "react-redux";
 import { setPageTransition } from "store/slice/clientInfo";
 import { createBrowserHistory } from "history";
+import AppConfirm from "components/AppConfirm";
 
 function App() {
   const history = createBrowserHistory();
@@ -29,10 +30,12 @@ function App() {
 
   useEffect(() => {
     if (!loggedIn) {
+      dispatch(setPageTransition("switch"));
       navigate("/login", {
         replace: true,
       });
     } else if (loggedIn) {
+      dispatch(setPageTransition("switch"));
       navigate("/app/ledger/main", {
         replace: true,
       });
@@ -46,6 +49,7 @@ function App() {
         <Route key={location.pathname} element={<Login />} path="/login" />
       </Routes>
       <AppAlert />
+      <AppConfirm />
     </div>
   );
 }
