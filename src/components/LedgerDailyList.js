@@ -24,10 +24,13 @@ export default function LedgerDailyList({ ledgers, onItemSelect }) {
                 >
                   <ListItemButton
                     style={{
-                      backgroundColor: "lightGrey",
+                      backgroundColor: `#${ledger.color}`,
                       height: "48px",
                       marginTop: "1px",
                       marginBottom: "1px",
+                      textShadow:
+                        "-1px 0px black, 0px 1px black, 1px 0px black, 0px -1px black",
+                      color: "white",
                     }}
                     role={undefined}
                     onClick={() => {
