@@ -56,6 +56,22 @@ body > #root {
   transition: all !important;
 }
 
+.none-enter {
+  opacity: 0 !important;
+}
+
+.none-enter-active {
+  opacity: 1 !important;
+  transition: all 0s ease !important;
+}
+.none-exit {
+  opacity: 1;
+}
+.none-exit-active {
+  opacity: 0;
+  transition: all !important;
+}
+
 .push-enter {
   transform: translateX(100%);
   z-index: 1;

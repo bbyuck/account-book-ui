@@ -18,14 +18,14 @@ export default function AppRouter() {
         childFactory={(child) => {
           return cloneElement(child, {
             classNames: pageTransition,
-            timeout: 400,
+            timeout: pageTransition === "none" ? 0 : 400,
           });
         }}
       >
         <CSSTransition
           key={location.pathname}
           classNames={pageTransition}
-          timeout={400}
+          timeout={pageTransition === "none" ? 0 : 400}
         >
           <Routes location={location}>
             <Route
