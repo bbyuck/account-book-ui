@@ -4,12 +4,26 @@ import LedgerRouter from "pages/ledger/LedgerRouter";
 import { Route, Routes, useLocation } from "react-router";
 import AppNavigation from "components/AppNavigation";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import { cloneElement } from "react";
-import { useSelector } from "react-redux";
+import { cloneElement, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import api from "api";
+import { setCustomColor } from "store/slice/clientInfo";
 
 export default function AppRouter() {
   const location = useLocation();
   const { pageTransition } = useSelector((state) => state.clientInfo);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    api
+      .get("/api/v1/custom/color")
+      .then((response) => {
+        dispatch(setCustomColor(response.data.data.color));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   return (
     <>

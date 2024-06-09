@@ -6,10 +6,9 @@ import AppRouter from "pages/AppRouter";
 import { useEffect } from "react";
 import AppAlert from "components/AppAlert";
 import { useDispatch, useSelector } from "react-redux";
-import { setCustomColor, setPageTransition } from "store/slice/clientInfo";
+import { setPageTransition } from "store/slice/clientInfo";
 import { createBrowserHistory } from "history";
 import AppConfirm from "components/AppConfirm";
-import api from "api";
 
 function App() {
   const history = createBrowserHistory();
@@ -42,17 +41,6 @@ function App() {
       });
     }
   }, [check]);
-
-  useEffect(() => {
-    api
-      .get("/api/v1/custom/color")
-      .then((response) => {
-        dispatch(setCustomColor(response.data.data.color));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
 
   return (
     <div className="App">

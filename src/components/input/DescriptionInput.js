@@ -2,12 +2,7 @@ import DescriptionIcon from "@mui/icons-material/Description";
 
 import { Box, TextField } from "@mui/material";
 
-export default function DescriptionInput({
-  style,
-  label,
-  description,
-  onChange,
-}) {
+export default function DescriptionInput({ style, label, value, onChange }) {
   return (
     <Box sx={{ display: "flex", alignItems: "flex-end", ...style }}>
       <DescriptionIcon sx={{ color: "action.active", mx: 2, my: 0.5 }} />
@@ -17,7 +12,7 @@ export default function DescriptionInput({
         variant="standard"
         label={label}
         type="text"
-        value={description}
+        value={value}
         onChange={(e) => onChange(e.target.value)}
       />
     </Box>
