@@ -43,16 +43,20 @@ api.interceptors.response.use(
     return config;
   },
   async (err) => {
+    let tokenRefreshed = false;
+    const isReissueTokenRequest = err.config.url === "/api/v1/reissue/token";
+
     if (
       err.response.data &&
       err.response.data.error &&
-      err.response.data.code === "ERR_AUTH_005"
+      err.response.data.code === "ERR_AUTH_005" &&
+      !isReissueTokenRequest
     ) {
       /**
        * 토큰 만료 -> refresh token 요청
        */
       const refreshToken = getRefreshToken();
-      const tokenRefreshed = await api
+      tokenRefreshed = await api
         .post("/api/v1/reissue/token", null, {
           headers: {
             "Refresh-Token": refreshToken,
@@ -72,7 +76,8 @@ api.interceptors.response.use(
         return api(err.config);
       }
     }
-    if (isAuthenticationError(err.response.status)) {
+
+    if (isAuthenticationError(err.response.status) && !tokenRefreshed) {
       removeJWT();
       store.dispatch(syncAuth());
     }
