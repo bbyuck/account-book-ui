@@ -1,5 +1,4 @@
 import Schedule from "pages/schedule/Schedule";
-import Setting from "pages/setting/Setting";
 import LedgerRouter from "pages/ledger/LedgerRouter";
 import { Route, Routes, useLocation } from "react-router";
 import AppNavigation from "components/AppNavigation";
@@ -8,6 +7,7 @@ import { cloneElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import api from "api";
 import { setCustomColor } from "store/slice/clientInfo";
+import SettingRouter from "pages/setting/SettingRouter";
 
 export default function AppRouter() {
   const location = useLocation();
@@ -54,7 +54,7 @@ export default function AppRouter() {
             />
             <Route
               key={location.pathname}
-              element={<Setting />}
+              element={<SettingRouter />}
               path="/setting/*"
             />
           </Routes>
