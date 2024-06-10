@@ -14,6 +14,7 @@ export default function LedgerMain() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { selectedDate } = useSelector((state) => state.ledgerInfo);
+  const [pageInit, setPageInit] = useState(true);
   const [monthlyData, setMonthlyData] = useState({});
   const [selectedMonth, setSelectedMonth] = useState({
     year: selectedDate.year,
@@ -41,12 +42,11 @@ export default function LedgerMain() {
   };
 
   useEffect(() => {
-    findMonthlyLedger();
-  }, []);
-
-  useEffect(() => {
-    findMonthlyLedger();
-  }, [selectedMonth]);
+    if (!pageInit) {
+      findMonthlyLedger();
+    }
+    setPageInit(false);
+  }, [selectedMonth, pageInit]);
 
   useEffect(() => {
     // selectedDate update

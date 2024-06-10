@@ -40,7 +40,9 @@ export default function LedgerDailyList({ ledgers, onItemSelect }) {
                     <ListItemText primary={ledger.description} />
                     <ListItemText
                       style={{ position: "absolute", right: "3vw" }}
-                      primary={`${ledger.amount.toLocaleString()}원`}
+                      primary={`${
+                        ledger.ledgerCode === "E" ? "- " : "+ "
+                      }${ledger.amount.toLocaleString()}원`}
                     />
                   </ListItemButton>
                 </ListItem>
