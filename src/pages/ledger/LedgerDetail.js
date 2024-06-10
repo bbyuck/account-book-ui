@@ -180,7 +180,7 @@ export default function LedgerDetail() {
    * ================= 설명 ===================
    */
 
-  const [description, setDescription] = useState();
+  const [description, setDescription] = useState("");
 
   /**
    * ================= 설명 ===================
