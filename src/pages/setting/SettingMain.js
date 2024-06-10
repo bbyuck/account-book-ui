@@ -18,7 +18,27 @@ export default function SettingMain() {
 
   return (
     <Page headerInfo={headerInfo}>
-      <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+      <List
+        sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+        subheader={<ListSubheader>Settings</ListSubheader>}
+      >
+        <ListItem>
+          <ListItemIcon>
+            <WifiIcon />
+          </ListItemIcon>
+          <ListItemText id="switch-list-label-wifi" primary="Wi-Fi" />
+        </ListItem>
+        <ListItem>
+          <ListItemIcon>
+            <BluetoothIcon />
+          </ListItemIcon>
+          <ListItemText id="switch-list-label-bluetooth" primary="Bluetooth" />
+        </ListItem>
+      </List>
+      <List
+        sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+        subheader={<ListSubheader>Settings</ListSubheader>}
+      >
         <ListItem>
           <ListItemIcon>
             <WifiIcon />
