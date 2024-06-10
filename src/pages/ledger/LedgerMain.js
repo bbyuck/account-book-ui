@@ -21,7 +21,7 @@ export default function LedgerMain() {
   });
   const [selectedDay, setSelectedDay] = useState(selectedDate.day);
 
-  useEffect(() => {
+  const findMonthlyLedger = () => {
     setMonthlyData(null);
     /* TODO -> 월별 가계부 조회 API 호출 */
     const params = {
@@ -38,6 +38,14 @@ export default function LedgerMain() {
       .catch((e) => {
         console.log(e);
       });
+  };
+
+  useEffect(() => {
+    findMonthlyLedger();
+  }, []);
+
+  useEffect(() => {
+    findMonthlyLedger();
   }, [selectedMonth]);
 
   useEffect(() => {
