@@ -45,7 +45,7 @@ export default function MoneyInput({ style, value, max, onChange, label }) {
         type="text"
         value={value}
         label={label}
-        inputMode="decimal"
+        pattern="\d*"
         onPaste={(e) => e.preventDefault()}
         onKeyDown={(e) => numericInput(e)}
       />
