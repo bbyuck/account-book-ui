@@ -1,8 +1,5 @@
-import { IconButton } from "@mui/material";
 import Page from "components/Page";
 import { useNavigate } from "react-router";
-
-import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -15,6 +12,7 @@ import { fromLocaleStringToNumber } from "util/numberUtil";
 import http from "api";
 import { setPageTransition } from "store/slice/clientInfo";
 import { convertToLocalDateFormat } from "util/calendarUtil";
+import HeaderBackButton from "components/input/HeaderBackButton";
 
 export default function LedgerRegister() {
   const navigate = useNavigate();
@@ -23,19 +21,7 @@ export default function LedgerRegister() {
   const dispatch = useDispatch();
 
   const headerInfo = {
-    left: (
-      <IconButton
-        onClick={() => {
-          sessionStorage.setItem("buttonBack", true);
-          dispatch(setPageTransition("pop"));
-          navigate("/app/ledger/main", {
-            replace: true,
-          });
-        }}
-      >
-        <NavigateBeforeIcon />
-      </IconButton>
-    ),
+    left: <HeaderBackButton />,
     center: <h2>가계부 입력</h2>,
   };
 

@@ -2,7 +2,6 @@ import { Fab, IconButton, Zoom } from "@mui/material";
 import Page from "components/Page";
 import { useNavigate, useParams } from "react-router";
 
-import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -23,6 +22,7 @@ import {
   openConfirm,
   setPageTransition,
 } from "store/slice/clientInfo";
+import HeaderBackButton from "components/input/HeaderBackButton";
 
 export default function LedgerDetail() {
   const navigate = useNavigate();
@@ -128,19 +128,7 @@ export default function LedgerDetail() {
   };
 
   const headerInfo = {
-    left: (
-      <IconButton
-        onTouchEnd={() => {
-          sessionStorage.setItem("buttonBack", true);
-          dispatch(setPageTransition("pop"));
-          navigate("/app/ledger/main", {
-            replace: true,
-          });
-        }}
-      >
-        <NavigateBeforeIcon />
-      </IconButton>
-    ),
+    left: <HeaderBackButton />,
     right: (
       <IconButton onTouchEnd={updateLedger}>
         <AssignmentTurnedInIcon color={"primary"} />
