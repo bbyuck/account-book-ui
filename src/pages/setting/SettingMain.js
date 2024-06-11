@@ -1,4 +1,5 @@
 import {
+  Divider,
   List,
   ListItem,
   ListItemButton,
@@ -28,6 +29,7 @@ export default function SettingMain() {
   return (
     <Page headerInfo={headerInfo}>
       <List sx={{ width: "100%", bgcolor: "background.paper" }}>
+        <Divider component="li" />
         <ListItem>
           <ListItemButton onClick={() => goTo("/app/setting/account")}>
             <ListItemIcon>
@@ -36,6 +38,7 @@ export default function SettingMain() {
             <ListItemText id="switch-list-label-bluetooth" primary="계정" />
           </ListItemButton>
         </ListItem>
+        <Divider component="li" />
         <ListItem>
           <ListItemButton>
             <ListItemIcon>
@@ -44,6 +47,7 @@ export default function SettingMain() {
             <ListItemText id="switch-list-label-bluetooth" primary="가계부" />
           </ListItemButton>
         </ListItem>
+        <Divider component="li" />
       </List>
     </Page>
   );
