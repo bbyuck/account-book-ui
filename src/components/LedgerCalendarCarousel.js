@@ -53,6 +53,34 @@ export default function LedgerCalendarCarousel({
     setMonthBuffer(tmp);
   };
 
+  const calendarMonthChangeHandler = (newValue) => {
+    buffering(newValue);
+    const newMonth = {
+      year: monthBuffer[newValue].year,
+      month: monthBuffer[newValue].month,
+    };
+
+    onMonthSelect(newMonth);
+
+    /**
+     * 24.05.22 31일 선택 후 다른 달로 변경시 1일 자동 선택
+     */
+    const lastDayOfNewMonth = getLastDayOfTheMonth(
+      newMonth.year,
+      newMonth.month
+    );
+    const lastDay = lastDayOfNewMonth.getDate();
+
+    if (selectedDay > lastDay) {
+      onDaySelect(1);
+    }
+
+    /**
+     * 24.06.13 월 swipe 후 스크롤 최상단
+     */
+    window.scrollTo(0, 0);
+  };
+
   return (
     <>
       <div className="carousel-wrapper">
@@ -80,28 +108,7 @@ export default function LedgerCalendarCarousel({
           transitionTime={350}
           preventMovementUntilSwipeScrollTolerance
           swipeScrollTolerance={60}
-          onChange={(newValue) => {
-            buffering(newValue);
-            const newMonth = {
-              year: monthBuffer[newValue].year,
-              month: monthBuffer[newValue].month,
-            };
-
-            onMonthSelect(newMonth);
-
-            /**
-             * 24.05.22 31일 선택 후 다른 달로 변경시 1일 자동 선택
-             */
-            const lastDayOfNewMonth = getLastDayOfTheMonth(
-              newMonth.year,
-              newMonth.month
-            );
-            const lastDay = lastDayOfNewMonth.getDate();
-
-            if (selectedDay > lastDay) {
-              onDaySelect(1);
-            }
-          }}
+          onChange={(newValue) => calendarMonthChangeHandler(newValue)}
           onSwipeMove={() => {
             setSwiping(true);
           }}
