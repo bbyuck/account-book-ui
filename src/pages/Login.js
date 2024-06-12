@@ -12,9 +12,10 @@ import http from "api";
 import { useEffect, useState } from "react";
 import { getByteLength } from "util/stringUtil";
 import { useDispatch } from "react-redux";
-import { openErrorAlert } from "store/slice/clientInfo";
+import { openErrorAlert, setPageTransition } from "store/slice/clientInfo";
 import { saveJWT } from "util/authUtil";
 import { syncAuth } from "store/slice/authInfo";
+import { useNavigate } from "react-router-dom";
 
 const AntSwitch = styled(Switch)(({ theme }) => ({
   width: 28,
@@ -66,11 +67,14 @@ export default function Login() {
   const [autoLogin, setAutoLogin] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const toSignUp = () => {
-    alert(
-      "회원 가입 페이지는 준비중입니다. 계정 발급은 관리자에게 문의해주세요."
-    );
+    dispatch(setPageTransition("push"));
+    navigate("/signup");
+    // alert(
+    //   "회원 가입 페이지는 준비중입니다. 계정 발급은 관리자에게 문의해주세요."
+    // );
   };
 
   const login = () => {

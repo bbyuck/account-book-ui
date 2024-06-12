@@ -11,6 +11,7 @@ import { createBrowserHistory } from "history";
 import AppConfirm from "components/AppConfirm";
 import AppLoading from "components/AppLoading";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import Signup from "pages/Signup";
 
 function App() {
   const history = createBrowserHistory();
@@ -61,13 +62,18 @@ function App() {
           classNames={pageTransition}
           timeout={pageTransition === "none" ? 0 : 400}
         >
-          <Routes>
+          <Routes location={location}>
             <Route
               key={location.pathname}
               element={<AppRouter />}
               path="/app/*"
             />
             <Route key={location.pathname} element={<Login />} path="/login" />
+            <Route
+              key={location.pathname}
+              element={<Signup />}
+              path="/signup"
+            />
           </Routes>
         </CSSTransition>
       </TransitionGroup>
