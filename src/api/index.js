@@ -9,7 +9,12 @@ import {
 } from "util/authUtil";
 
 import store from "store";
-import { openSuccessAlert, openErrorAlert } from "store/slice/clientInfo";
+import {
+  openSuccessAlert,
+  openErrorAlert,
+  loadingStart,
+  loadingEnd,
+} from "store/slice/clientInfo";
 import { syncAuth } from "store/slice/authInfo";
 
 const isAuthenticationError = (status) => {
@@ -26,6 +31,8 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
+    store.dispatch(loadingStart());
+
     // config.headers[Authorization] = getTokenFromSession();
     if (haveAccessToken()) {
       config.headers.Authorization = `Bearer ${getAccessToken()}`;
@@ -40,9 +47,11 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   (config) => {
+    store.dispatch(loadingEnd());
     return config;
   },
   async (err) => {
+    store.dispatch(loadingEnd());
     let tokenRefreshed = false;
     const isReissueTokenRequest = err.config.url === "/api/v1/reissue/token";
 

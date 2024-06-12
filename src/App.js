@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPageTransition } from "store/slice/clientInfo";
 import { createBrowserHistory } from "history";
 import AppConfirm from "components/AppConfirm";
+import AppLoading from "components/AppLoading";
 
 function App() {
   const history = createBrowserHistory();
@@ -48,6 +49,7 @@ function App() {
         <Route key={location.pathname} element={<AppRouter />} path="/app/*" />
         <Route key={location.pathname} element={<Login />} path="/login" />
       </Routes>
+      <AppLoading />
       <AppAlert />
       <AppConfirm />
     </div>

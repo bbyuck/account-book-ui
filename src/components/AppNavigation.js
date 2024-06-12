@@ -33,7 +33,7 @@ export default function AppNavigation() {
           icon={<SavingsIcon />}
         />
         <BottomNavigationAction
-          label="일정"
+          label="Asset"
           value="schedule"
           icon={<CalendarMonthIcon />}
         />

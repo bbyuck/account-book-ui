@@ -20,6 +20,7 @@ const initialState = {
   alert: initialAlert,
   confirm: initialConfirm,
   customColor: null,
+  loading: false,
 };
 
 const clientInfoSlice = createSlice({
@@ -90,6 +91,12 @@ const clientInfoSlice = createSlice({
     setCustomColor(state = initialState, action) {
       state.customColor = action.payload;
     },
+    loadingStart(state = initialState) {
+      state.loading = true;
+    },
+    loadingEnd(state = initialState) {
+      state.loading = false;
+    },
   },
 });
 
@@ -103,5 +110,7 @@ export const {
   cancelConfirm,
   openConfirm,
   setCustomColor,
+  loadingStart,
+  loadingEnd,
 } = clientInfoSlice.actions;
 export default clientInfoSlice.reducer;

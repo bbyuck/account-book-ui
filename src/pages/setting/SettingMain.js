@@ -37,7 +37,11 @@ export default function SettingMain() {
           </ListItemButton>
         </ListItem>
         <ListItem>
-          <ListItemButton>
+          <ListItemButton
+            onClick={() => {
+              alert("가계부 설정은 준비중입니다.");
+            }}
+          >
             <ListItemIcon>
               <SavingsIcon />
             </ListItemIcon>
