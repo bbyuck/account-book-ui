@@ -36,6 +36,12 @@ body > #root {
   height: calc(100svh - 55px);
 }
 
+.pre-logged-in-page-contents-wrapper {
+  position: relative;
+  overflow-y: scroll;
+  height: calc(100svh + 25px);
+}
+
 .transitions-wrapper {
   position: relative;
 }

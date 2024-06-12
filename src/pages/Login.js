@@ -16,6 +16,7 @@ import { openErrorAlert, setPageTransition } from "store/slice/clientInfo";
 import { saveJWT } from "util/authUtil";
 import { syncAuth } from "store/slice/authInfo";
 import { useNavigate } from "react-router-dom";
+import Page from "components/Page";
 
 const AntSwitch = styled(Switch)(({ theme }) => ({
   width: 28,
@@ -99,7 +100,7 @@ export default function Login() {
   };
 
   return (
-    <div className="page-wrapper">
+    <Page preLoggedIn>
       <div className="login-page-wrapper">
         <div className="poetsen-one-regular">
           <h1>Login</h1>
@@ -140,7 +141,7 @@ export default function Login() {
             </div>
 
             <div className="signup-prompt">
-              아직 계정이 없으신가요?
+              아직 계정이 없으신가요?&nbsp;&nbsp;
               <Link onClick={toSignUp} className={"anchor-button"}>
                 Sign up
               </Link>
@@ -170,6 +171,6 @@ export default function Login() {
           </div>
         </FormGroup>
       </div>
-    </div>
+    </Page>
   );
 }
