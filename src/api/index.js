@@ -14,6 +14,7 @@ import {
   openErrorAlert,
   loadingStart,
   loadingEnd,
+  loadingReady,
 } from "store/slice/clientInfo";
 import { syncAuth } from "store/slice/authInfo";
 
@@ -31,7 +32,11 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    store.dispatch(loadingStart());
+    /**
+     * 300ms내로 response 받지 못할시 loading start
+     */
+    store.dispatch(loadingReady());
+    setTimeout(() => store.dispatch(loadingStart()), 300);
 
     // config.headers[Authorization] = getTokenFromSession();
     if (haveAccessToken()) {

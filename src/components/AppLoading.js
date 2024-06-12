@@ -1,4 +1,4 @@
-import { Dialog } from "@mui/material";
+import { Dialog, Modal } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useDispatch, useSelector } from "react-redux";
 import { loadingEnd } from "store/slice/clientInfo";
@@ -12,8 +12,17 @@ export default function AppLoading() {
   };
 
   return (
-    <Dialog open={loading} onClose={handleClose}>
+    <Modal
+      sx={{
+        display: "flex",
+        flexDirection: "colomn",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+      open={loading}
+      onClose={handleClose}
+    >
       <CircularProgress />
-    </Dialog>
+    </Modal>
   );
 }

@@ -21,6 +21,7 @@ const initialState = {
   confirm: initialConfirm,
   customColor: null,
   loading: false,
+  loadingReady: false,
 };
 
 const clientInfoSlice = createSlice({
@@ -91,10 +92,16 @@ const clientInfoSlice = createSlice({
     setCustomColor(state = initialState, action) {
       state.customColor = action.payload;
     },
+    loadingReady(state = initialState) {
+      state.loadingReady = true;
+    },
     loadingStart(state = initialState) {
-      state.loading = true;
+      if (state.loadingReady) {
+        state.loading = true;
+      }
     },
     loadingEnd(state = initialState) {
+      state.loadingReady = false;
       state.loading = false;
     },
   },
@@ -112,5 +119,6 @@ export const {
   setCustomColor,
   loadingStart,
   loadingEnd,
+  loadingReady,
 } = clientInfoSlice.actions;
 export default clientInfoSlice.reducer;
