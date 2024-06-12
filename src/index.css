@@ -20,7 +20,7 @@ code {
 
 body > #root {
   height: 100vh;
-  height: calc(var(--vh, 1vh) * 100);
+  height: calc(100svh - 55px);
 }
 
 .page-wrapper {
@@ -32,8 +32,9 @@ body > #root {
 .page-contents-wrapper {
   position: relative;
   overflow-y: scroll;
-  top: 70px;
-  height: calc(var(--vh, 1vh) * 100 - 70px);
+  margin-top: 70px;
+  /* height: calc(var(--vh, 1vh) * 100 - 70px); */
+  height: calc(100svh - 125px);
 }
 
 .transitions-wrapper {
