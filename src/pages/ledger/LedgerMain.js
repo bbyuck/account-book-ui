@@ -9,6 +9,7 @@ import { setSelectedDate } from "store/slice/ledgerInfo";
 import http from "api";
 import LedgerDailyList from "components/LedgerDailyList";
 import { setPageTransition } from "store/slice/clientInfo";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 export default function LedgerMain() {
   const navigate = useNavigate();
@@ -72,10 +73,20 @@ export default function LedgerMain() {
     navigate(`/app/ledger/detail/${ledgerId}`);
   };
 
+  const goToSettingPage = () => {
+    dispatch(setPageTransition("push"));
+    navigate("/app/setting/main");
+  };
+
   const headerInfo = {
+    left: (
+      <IconButton>
+        <SettingsIcon onClick={goToSettingPage} />
+      </IconButton>
+    ),
     center: <h2>{`${selectedMonth.year}년 ${selectedMonth.month}월`}</h2>,
     right: (
-      <IconButton onTouchEnd={goToRegisterPage}>
+      <IconButton onClick={goToRegisterPage}>
         <AddIcon color="primary" />
       </IconButton>
     ),

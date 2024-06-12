@@ -1,4 +1,5 @@
 import {
+  IconButton,
   List,
   ListItem,
   ListItemButton,
@@ -11,25 +12,38 @@ import Page from "components/Page";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setPageTransition } from "store/slice/clientInfo";
+import HomeIcon from "@mui/icons-material/Home";
 
 export default function SettingMain() {
-  const headerInfo = {
-    center: <h2>{`설정`}</h2>,
-  };
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const goTo = (url) => {
+  const goForward = (url) => {
     dispatch(setPageTransition("push"));
     navigate(url);
+  };
+
+  const goBackToLedgerMain = () => {
+    dispatch(setPageTransition("pop"));
+    navigate("/app/ledger/main", {
+      replace: true,
+    });
+  };
+
+  const headerInfo = {
+    left: (
+      <IconButton onClick={goBackToLedgerMain}>
+        <HomeIcon />
+      </IconButton>
+    ),
+    center: <h2>{`설정`}</h2>,
   };
 
   return (
     <Page headerInfo={headerInfo}>
       <List sx={{ width: "100%", bgcolor: "background.paper" }}>
         <ListItem>
-          <ListItemButton onClick={() => goTo("/app/setting/account")}>
+          <ListItemButton onClick={() => goForward("/app/setting/account")}>
             <ListItemIcon>
               <AccountCircleIcon />
             </ListItemIcon>
