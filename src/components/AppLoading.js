@@ -22,7 +22,11 @@ export default function AppLoading() {
       open={loading}
       onClose={handleClose}
     >
-      <CircularProgress />
+      <CircularProgress
+        sx={{
+          "-webkit-tap-highlight-color": "transparent",
+        }}
+      />
     </Modal>
   );
 }
