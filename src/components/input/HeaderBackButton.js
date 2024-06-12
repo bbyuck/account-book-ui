@@ -10,7 +10,7 @@ export default function HeaderBackButton() {
 
   return (
     <IconButton
-      onTouchEnd={() => {
+      onClick={() => {
         sessionStorage.setItem("buttonBack", true);
         dispatch(setPageTransition("pop"));
         navigate(-1, {

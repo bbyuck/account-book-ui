@@ -137,7 +137,7 @@ export default function Login() {
 
             <div className="signup-prompt">
               아직 계정이 없으신가요?
-              <Link onTouchEnd={toSignUp} className={"anchor-button"}>
+              <Link onClick={toSignUp} className={"anchor-button"}>
                 Sign up
               </Link>
             </div>
@@ -146,7 +146,7 @@ export default function Login() {
                 fullWidth
                 variant="contained"
                 size={"large"}
-                onTouchEnd={login}
+                onClick={login}
               >
                 Login in
               </Button>

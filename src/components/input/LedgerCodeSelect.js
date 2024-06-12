@@ -27,7 +27,7 @@ export default function LedgerCodeSelect({ style, value, onSelect }) {
       <Grid container spacing={2}>
         {ledgerCodes.map((ledgerCode, index) => (
           <Grid item xs={4} key={`ledger-code-${ledgerCode.value}`}>
-            <IconButton onTouchEnd={() => onSelect(ledgerCode.value)}>
+            <IconButton onClick={() => onSelect(ledgerCode.value)}>
               <Avatar
                 style={
                   ledgerCode.value === value

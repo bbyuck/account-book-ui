@@ -130,7 +130,7 @@ export default function LedgerDetail() {
   const headerInfo = {
     left: <HeaderBackButton />,
     right: (
-      <IconButton onTouchEnd={updateLedger}>
+      <IconButton onClick={updateLedger}>
         <AssignmentTurnedInIcon color={"primary"} />
       </IconButton>
     ),
