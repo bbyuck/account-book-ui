@@ -1,5 +1,4 @@
 import {
-  Divider,
   List,
   ListItem,
   ListItemButton,
@@ -9,16 +8,32 @@ import {
 import api from "api";
 import Page from "components/Page";
 import HeaderBackButton from "components/input/HeaderBackButton";
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { syncAuth } from "store/slice/authInfo";
+import { openConfirm } from "store/slice/clientInfo";
 import { removeJWT } from "util/authUtil";
 
 export default function SettingAccount() {
   const dispatch = useDispatch();
+  const { confirmed } = useSelector((state) => state.clientInfo.confirm);
 
   const headerInfo = {
     left: <HeaderBackButton />,
     center: <h2>계정</h2>,
+  };
+
+  const openLogoutConfirm = () => {
+    dispatch(
+      openConfirm({
+        open: true,
+        title: "로그아웃 하시겠습니까?",
+        message: "",
+        confirmLabel: "확인",
+        cancelLabel: "취소",
+        confirmed: false,
+      })
+    );
   };
 
   const logout = () => {
@@ -35,16 +50,20 @@ export default function SettingAccount() {
       });
   };
 
+  useEffect(() => {
+    if (confirmed) {
+      logout();
+    }
+  }, [confirmed]);
+
   return (
     <Page headerInfo={headerInfo}>
       <List sx={{ width: "100%", bgcolor: "background.paper" }}>
-        <Divider component="li" />
         <ListItem>
-          <ListItemButton onClick={logout}>
+          <ListItemButton onClick={openLogoutConfirm}>
             <ListItemText id="switch-list-label-bluetooth" primary="로그아웃" />
           </ListItemButton>
         </ListItem>
-        <Divider component="li" />
       </List>
     </Page>
   );
