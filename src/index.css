@@ -33,7 +33,7 @@ body > #root {
   position: relative;
   overflow-y: scroll;
   top: 70px;
-  height: calc(var(--vh, 1vh) * 100 - 126px);
+  height: calc(var(--vh, 1vh) * 100);
 }
 
 .transitions-wrapper {

@@ -60,7 +60,6 @@ export default function AppRouter() {
           </Routes>
         </CSSTransition>
       </TransitionGroup>
-      <AppNavigation />
     </>
   );
 }
