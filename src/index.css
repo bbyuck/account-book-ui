@@ -32,9 +32,8 @@ body > #root {
 .page-contents-wrapper {
   position: relative;
   overflow-y: scroll;
-  margin-top: 70px;
-  /* height: calc(var(--vh, 1vh) * 100 - 70px); */
-  height: calc(100svh - 125px);
+  top: 70px;
+  height: calc(100svh - 55px);
 }
 
 .transitions-wrapper {

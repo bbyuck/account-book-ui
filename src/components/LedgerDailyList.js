@@ -11,7 +11,7 @@ export default function LedgerDailyList({ ledgers, onItemSelect }) {
   return (
     <>
       {ledgers && ledgers.length > 0 ? (
-        <Box>
+        <Box sx={{ marginBottom: "10px" }}>
           <List sx={{ width: "100%", bgcolor: "background.paper" }}>
             {ledgers.map((ledger) => {
               return (
