@@ -23,7 +23,7 @@ export default function Signup() {
     <Page
       headerInfo={headerInfo}
       innerContnentsStyle={{
-        height: "calc(100svh + 25px)",
+        height: "calc(100svh - 55px)",
         top: "0px",
       }}
     >
