@@ -74,8 +74,6 @@ export default function LedgerCalendarCarousel({
     if (selectedDay > lastDay) {
       onDaySelect(1);
     }
-
-    document.getElementById("page-contents-wrapper").scroll(0, 0);
   };
 
   return (

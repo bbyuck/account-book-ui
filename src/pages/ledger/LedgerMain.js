@@ -39,6 +39,9 @@ export default function LedgerMain() {
       })
       .catch((e) => {
         console.log(e);
+      })
+      .finally(() => {
+        document.getElementById("page-contents-wrapper").scroll(0, 0);
       });
   };
 
