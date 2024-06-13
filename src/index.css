@@ -29,14 +29,14 @@ body > #root {
   position: absolute;
 }
 
-.page-contents-wrapper {
+#page-contents-wrapper {
   position: relative;
   overflow-y: scroll;
   top: 70px;
   height: calc(100svh - 55px);
 }
 
-.pre-logged-in-page-contents-wrapper {
+#pre-logged-in-page-contents-wrapper {
   position: relative;
   overflow-y: scroll;
   height: calc(100svh + 25px);

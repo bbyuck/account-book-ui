@@ -12,7 +12,7 @@ export default function Page({ className, children, headerInfo, preLoggedIn }) {
     <div className={classes}>
       <AppHeader left={left} center={center} right={right} />
       <div
-        className={
+        id={
           preLoggedIn
             ? "pre-logged-in-page-contents-wrapper"
             : "page-contents-wrapper"
