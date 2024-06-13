@@ -1,6 +1,11 @@
 import AppHeader from "./AppHeader";
 
-export default function Page({ className, children, headerInfo, preLoggedIn }) {
+export default function Page({
+  className,
+  children,
+  headerInfo,
+  innerContnentsStyle,
+}) {
   const classes = "page-wrapper " + (className ? className : "");
   headerInfo =
     headerInfo === undefined
@@ -12,11 +17,10 @@ export default function Page({ className, children, headerInfo, preLoggedIn }) {
     <div className={classes}>
       <AppHeader left={left} center={center} right={right} />
       <div
-        id={
-          preLoggedIn
-            ? "pre-logged-in-page-contents-wrapper"
-            : "page-contents-wrapper"
-        }
+        id="page-contents-wrapper"
+        style={{
+          ...innerContnentsStyle,
+        }}
       >
         {children}
       </div>

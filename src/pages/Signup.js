@@ -20,7 +20,13 @@ export default function Signup() {
   const navigate = useNavigate();
 
   return (
-    <Page headerInfo={headerInfo} preLoggedIn>
+    <Page
+      headerInfo={headerInfo}
+      innerContnentsStyle={{
+        height: "calc(100svh + 25px)",
+        top: "0px",
+      }}
+    >
       <div className="login-page-wrapper">
         <div className="poetsen-one-regular">
           <h1>Sign up</h1>
