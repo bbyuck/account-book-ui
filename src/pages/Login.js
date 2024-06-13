@@ -99,8 +99,7 @@ export default function Login() {
   return (
     <Page
       innerContnentsStyle={{
-        position: "absolute",
-        height: "calc(100%)",
+        height: "100%",
         top: "0px",
       }}
     >
