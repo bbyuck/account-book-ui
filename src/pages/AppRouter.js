@@ -1,8 +1,8 @@
 import Schedule from "pages/schedule/Schedule";
 import LedgerRouter from "pages/ledger/LedgerRouter";
 import { Route, Routes, useLocation } from "react-router";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import api from "api";
 import { setCustomColor } from "store/slice/clientInfo";
 import SettingRouter from "pages/setting/SettingRouter";
@@ -10,16 +10,19 @@ import SettingRouter from "pages/setting/SettingRouter";
 export default function AppRouter() {
   const location = useLocation();
   const dispatch = useDispatch();
+  const { customColor } = useSelector((state) => state.clientInfo);
 
   useEffect(() => {
-    api
-      .get("/api/v1/custom/color")
-      .then((response) => {
-        dispatch(setCustomColor(response.data.data.color));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (!customColor) {
+      api
+        .get("/api/v1/custom/color")
+        .then((response) => {
+          dispatch(setCustomColor(response.data.data.color));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }, []);
 
   return (
