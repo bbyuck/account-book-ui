@@ -19,14 +19,14 @@ export default function AppAlert() {
   return (
     <Snackbar
       open={open}
-      autoHideDuration={1500}
+      autoHideDuration={3000}
       TransitionComponent={SlideTransition}
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
       onClose={handleClose}
     >
       <Alert
         onClose={handleClose}
-        sx={{ width: "100vw", borderRadius: "15px" }}
+        sx={{ width: "100vw", borderRadius: "15px", whiteSpace: "pre-wrap" }}
         severity={type}
         variant={"filled"}
       >

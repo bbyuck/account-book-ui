@@ -1,10 +1,16 @@
 import { Button, FormControlLabel, FormGroup, TextField } from "@mui/material";
+import api from "api";
 import Page from "components/Page";
 import HeaderBackButton from "components/input/HeaderBackButton";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { setPageTransition } from "store/slice/clientInfo";
+import {
+  closeAlert,
+  openErrorAlert,
+  openSuccessAlert,
+  setPageTransition,
+} from "store/slice/clientInfo";
 import { getByteLength } from "util/stringUtil";
 
 export default function Signup() {
@@ -14,10 +20,85 @@ export default function Signup() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [autoLogin, setAutoLogin] = useState(false);
+  const [passwordConfirm, setPasswordConfirm] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
+  const passwordConfirmInputRef = useRef();
+
+  const validationErrorCodeTarget = {
+    ERR_VALID_000: emailInputRef,
+    ERR_VALID_001: emailInputRef,
+    ERR_VALID_002: passwordInputRef,
+    ERR_VALID_003: passwordInputRef,
+    ERR_VALID_004: passwordConfirmInputRef,
+    ERR_VALID_005: passwordConfirmInputRef,
+  };
+
+  const clientSideEmailValidation = () => {
+    if (email.length === 0) {
+      dispatch(openErrorAlert("이메일을 입력해주세요."));
+      emailInputRef.current.focus();
+      return false;
+    }
+
+    return true;
+  };
+  const clientSidePasswordValidation = () => {
+    if (password.length === 0) {
+      dispatch(openErrorAlert("패스워드를 입력해주세요."));
+      passwordInputRef.current.focus();
+      return false;
+    }
+
+    if (passwordConfirm.length === 0) {
+      dispatch(openErrorAlert("패스워드 확인을 입력해주세요."));
+      passwordConfirmInputRef.current.focus();
+      return false;
+    }
+
+    if (password !== passwordConfirm) {
+      dispatch(openErrorAlert("패스워드가 다릅니다."));
+      passwordConfirmInputRef.current.focus();
+      return false;
+    }
+
+    return true;
+  };
+
+  const signup = () => {
+    if (!clientSideEmailValidation()) {
+      return;
+    }
+
+    if (!clientSidePasswordValidation()) {
+      return;
+    }
+
+    const params = {
+      email: email,
+      password: password,
+      passwordConfirm: passwordConfirm,
+    };
+    api
+      .post("/api/v1/signup", params)
+      .then((response) => {
+        dispatch(setPageTransition("pop"));
+        dispatch(openSuccessAlert(response.data.message));
+        navigate("/login", {
+          replace: true,
+        });
+      })
+      .catch((error) => {
+        if (error.response.status === 400) {
+          dispatch(openErrorAlert(error.response.data.message));
+          validationErrorCodeTarget[error.response.data.code].current.focus();
+        }
+      });
+  };
 
   return (
     <Page
@@ -35,6 +116,7 @@ export default function Signup() {
           <div className="login-input-form">
             <div className="login-input-box">
               <TextField
+                inputRef={emailInputRef}
                 fullWidth
                 label="Email"
                 id="standard-size-small"
@@ -51,6 +133,7 @@ export default function Signup() {
             </div>
             <div className="login-input-box">
               <TextField
+                inputRef={passwordInputRef}
                 fullWidth
                 label="Password"
                 type="password"
@@ -67,27 +150,40 @@ export default function Signup() {
             </div>
             <div className="login-input-box">
               <TextField
+                inputRef={passwordConfirmInputRef}
                 fullWidth
-                label="Confirm Password"
+                label="Password Again"
                 type="password"
                 id="standard-size-normal"
                 variant="standard"
                 onChange={(e) => {
                   if (getByteLength(e.target.value) > 20) {
-                    e.target.value = password;
+                    e.target.value = passwordConfirm;
                     return;
                   }
-                  setPassword(e.target.value);
+                  setPasswordConfirm(e.target.value);
                 }}
               />
             </div>
 
+            <div
+              style={{
+                textAlign: "left",
+                fontSize: "11px",
+                width: "300px",
+                marginBottom: "25px",
+              }}
+            >
+              패스워드는 영문 / 숫자 / 특수문자를 각각 1자 이상 포함하여
+              <br />
+              8~16자로 입력해주세요.
+            </div>
             <div className="login-input-box login-input-button">
               <Button
                 fullWidth
                 variant="contained"
                 size={"large"}
-                onClick={() => {}}
+                onClick={signup}
               >
                 Sign up
               </Button>
