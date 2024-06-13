@@ -109,10 +109,6 @@ export default function LedgerCalendarCarousel({
           }}
           onSwipeEnd={() => {
             setSwiping(false);
-            /**
-             * 24.06.13 월 swipe 후 스크롤 최상단
-             */
-            window.scrollTo(0, 0);
           }}
         >
           {monthBuffer.map((ym, index) => {

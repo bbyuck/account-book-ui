@@ -36,6 +36,10 @@ export default function LedgerMain() {
       .get(`/api/v1/monthly/ledger`, { params })
       .then((response) => {
         setMonthlyData(response.data.data);
+        /**
+         * 24.06.13 월 swipe 후 스크롤 최상단
+         */
+        window.scrollTo(0, 0);
       })
       .catch((e) => {
         console.log(e);
