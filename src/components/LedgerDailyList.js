@@ -28,9 +28,10 @@ export default function LedgerDailyList({ ledgers, onItemSelect }) {
                       height: "48px",
                       marginTop: "1px",
                       marginBottom: "1px",
-                      textShadow:
-                        "-1px 0px black, 0px 1px black, 1px 0px black, 0px -1px black",
-                      color: "white",
+                      color: "#000000",
+                      // textShadow:
+                      //   "-1px 0px black, 0px 1px black, 1px 0px black, 0px -1px black",
+                      // color: "white",
                     }}
                     role={undefined}
                     onClick={() => {
