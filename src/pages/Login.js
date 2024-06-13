@@ -73,9 +73,6 @@ export default function Login() {
   const toSignUp = () => {
     dispatch(setPageTransition("push"));
     navigate("/signup");
-    // alert(
-    //   "회원 가입 페이지는 준비중입니다. 계정 발급은 관리자에게 문의해주세요."
-    // );
   };
 
   const login = () => {
