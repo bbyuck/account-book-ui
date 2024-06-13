@@ -24,6 +24,11 @@ export default function LedgerMain() {
   const [selectedDay, setSelectedDay] = useState(selectedDate.day);
 
   const findMonthlyLedger = () => {
+    /**
+     * 24.06.13 월별 가계부 조회 전 스크롤 최상단
+     */
+    window.scrollTo(0, 0);
+
     setMonthlyData(null);
     /* TODO -> 월별 가계부 조회 API 호출 */
     const params = {
@@ -39,12 +44,6 @@ export default function LedgerMain() {
       })
       .catch((e) => {
         console.log(e);
-      })
-      .finally(() => {
-        /**
-         * 24.06.13 월 월별 가계부 조회 후 스크롤 최상단
-         */
-        window.scrollTo(0, 0);
       });
   };
 
