@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import "pages/style/Login.css";
 import http from "api";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getByteLength } from "util/stringUtil";
 import { useDispatch } from "react-redux";
 import { openErrorAlert, setPageTransition } from "store/slice/clientInfo";

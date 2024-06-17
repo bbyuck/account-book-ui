@@ -3,14 +3,12 @@ import {
   getAccessToken,
   getRefreshToken,
   haveAccessToken,
-  haveRefreshToken,
   removeJWT,
   saveJWT,
 } from "util/authUtil";
 
 import store from "store";
 import {
-  openSuccessAlert,
   openErrorAlert,
   loadingStart,
   loadingEnd,

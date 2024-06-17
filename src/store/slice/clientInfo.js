@@ -28,6 +28,7 @@ const clientInfoSlice = createSlice({
   name: "clientInfo",
   initialState,
   reducers: {
+    resetClientStore: () => initialState,
     setPageTransition(state = initialState, action) {
       state.pageTransition = action.payload;
     },
@@ -120,5 +121,6 @@ export const {
   loadingStart,
   loadingEnd,
   loadingReady,
+  resetClientStore,
 } = clientInfoSlice.actions;
 export default clientInfoSlice.reducer;

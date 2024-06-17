@@ -10,6 +10,7 @@ const authInfoSlice = createSlice({
   name: "authInfo",
   initialState,
   reducers: {
+    resetAuthStore: () => initialState,
     syncAuth(state = initialState) {
       state.loggedIn = haveAccessToken();
       state.check = state.check + 1;
@@ -17,5 +18,5 @@ const authInfoSlice = createSlice({
   },
 });
 
-export const { syncAuth } = authInfoSlice.actions;
+export const { syncAuth, resetAuthStore } = authInfoSlice.actions;
 export default authInfoSlice.reducer;

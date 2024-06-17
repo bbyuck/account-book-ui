@@ -103,6 +103,7 @@ export default function SettingPasswordChange() {
   useEffect(() => {
     if (confirmed) {
       changePassword();
+
       dispatch(closeConfirm());
     }
   }, [confirmed]);

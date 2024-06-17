@@ -12,7 +12,13 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { syncAuth } from "store/slice/authInfo";
-import { openConfirm, setPageTransition } from "store/slice/clientInfo";
+import {
+  closeConfirm,
+  openConfirm,
+  resetClientStore,
+  setPageTransition,
+} from "store/slice/clientInfo";
+import { resetLedgerStore } from "store/slice/ledgerInfo";
 import { removeJWT } from "util/authUtil";
 
 export default function SettingAccount() {
@@ -48,6 +54,10 @@ export default function SettingAccount() {
       .then((response) => {
         if (response.data.data.success) {
           removeJWT();
+          dispatch(resetLedgerStore());
+          dispatch(resetClientStore());
+          dispatch(resetLedgerStore());
+          dispatch(setPageTransition("switch"));
           dispatch(syncAuth());
         }
       })
@@ -67,6 +77,7 @@ export default function SettingAccount() {
         logout();
       }
 
+      dispatch(closeConfirm());
       setCurrentConfirm("");
     }
   }, [confirmed]);

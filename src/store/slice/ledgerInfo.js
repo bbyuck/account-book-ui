@@ -22,6 +22,7 @@ const ledgerInfoSlice = createSlice({
   name: "ledgerInfo",
   initialState,
   reducers: {
+    resetLedgerStore: () => initialState,
     setSelectedDate(state = initialState, action) {
       state.selectedDate = {
         ...action.payload,
@@ -51,6 +52,6 @@ const ledgerInfoSlice = createSlice({
   },
 });
 
-export const { setSelectedDate, setSelectedDetailDate } =
+export const { setSelectedDate, setSelectedDetailDate, resetLedgerStore } =
   ledgerInfoSlice.actions;
 export default ledgerInfoSlice.reducer;
