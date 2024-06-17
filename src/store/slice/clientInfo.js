@@ -65,7 +65,7 @@ const clientInfoSlice = createSlice({
         confirmed: true,
       };
     },
-    cancelConfirm(state = initialState, action) {
+    closeConfirm(state = initialState, action) {
       state.confirm = {
         open: false,
         title: state.confirm.title,
@@ -114,7 +114,7 @@ export const {
   openSuccessAlert,
   openErrorAlert,
   procConfirm,
-  cancelConfirm,
+  closeConfirm,
   openConfirm,
   setCustomColor,
   loadingStart,

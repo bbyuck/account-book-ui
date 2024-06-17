@@ -92,8 +92,6 @@ export default function Login() {
         console.log(error);
         dispatch(openErrorAlert(error.response.data.message));
       });
-
-    console.log(params);
   };
 
   return (
@@ -112,7 +110,7 @@ export default function Login() {
             <div className="login-input-box">
               <TextField
                 fullWidth
-                label="Email"
+                label="이메일"
                 id="standard-size-small"
                 size="small"
                 variant="standard"
@@ -128,7 +126,7 @@ export default function Login() {
             <div className="login-input-box">
               <TextField
                 fullWidth
-                label="Password"
+                label="비밀번호"
                 type="password"
                 id="standard-size-normal"
                 variant="standard"

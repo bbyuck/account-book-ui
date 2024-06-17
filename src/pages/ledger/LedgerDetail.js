@@ -18,7 +18,7 @@ import { setSelectedDetailDate } from "store/slice/ledgerInfo";
 import { convertToLocalDateFormat } from "util/calendarUtil";
 import { fromLocaleStringToNumber } from "util/numberUtil";
 import {
-  cancelConfirm,
+  closeConfirm,
   openConfirm,
   setPageTransition,
 } from "store/slice/clientInfo";
@@ -68,7 +68,7 @@ export default function LedgerDetail() {
   useEffect(() => {
     if (confirm.confirmed) {
       deleteLedger();
-      dispatch(cancelConfirm());
+      dispatch(closeConfirm());
     }
   }, [confirm.confirmed]);
 
@@ -99,8 +99,6 @@ export default function LedgerDetail() {
   };
 
   const deleteButtonClickHandler = () => {
-    console.log(`delete ${ledgerId}`);
-
     dispatch(
       openConfirm({
         title: "삭제하시겠습니까?",

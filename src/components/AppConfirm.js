@@ -7,14 +7,14 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { cancelConfirm, procConfirm } from "store/slice/clientInfo";
+import { closeConfirm, procConfirm } from "store/slice/clientInfo";
 
 export default function AppConfirm() {
   const { confirm } = useSelector((state) => state.clientInfo);
   const dispatch = useDispatch();
 
   const handleClose = () => {
-    dispatch(cancelConfirm());
+    dispatch(closeConfirm());
   };
 
   const handleConfirm = () => {

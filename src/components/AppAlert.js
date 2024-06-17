@@ -26,7 +26,12 @@ export default function AppAlert() {
     >
       <Alert
         onClose={handleClose}
-        sx={{ width: "100vw", borderRadius: "15px", whiteSpace: "pre-wrap" }}
+        sx={{
+          width: "100vw",
+          textAlign: "left",
+          borderRadius: "15px",
+          whiteSpace: "pre-wrap",
+        }}
         severity={type}
         variant={"filled"}
       >

@@ -13,7 +13,6 @@ export default function AppRouter() {
   const { customColor } = useSelector((state) => state.clientInfo);
 
   useEffect(() => {
-    console.log(customColor);
     if (!customColor) {
       api
         .get("/api/v1/custom/color")

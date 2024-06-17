@@ -8,15 +8,20 @@ import {
 import api from "api";
 import Page from "components/Page";
 import HeaderBackButton from "components/input/HeaderBackButton";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { syncAuth } from "store/slice/authInfo";
-import { openConfirm } from "store/slice/clientInfo";
+import { openConfirm, setPageTransition } from "store/slice/clientInfo";
 import { removeJWT } from "util/authUtil";
 
 export default function SettingAccount() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { confirmed } = useSelector((state) => state.clientInfo.confirm);
+
+  const [currentConfirm, setCurrentConfirm] = useState("");
 
   const headerInfo = {
     left: <HeaderBackButton />,
@@ -24,6 +29,7 @@ export default function SettingAccount() {
   };
 
   const openLogoutConfirm = () => {
+    setCurrentConfirm("logout");
     dispatch(
       openConfirm({
         open: true,
@@ -50,9 +56,18 @@ export default function SettingAccount() {
       });
   };
 
+  const goForward = (url) => {
+    dispatch(setPageTransition("push"));
+    navigate(url);
+  };
+
   useEffect(() => {
     if (confirmed) {
-      logout();
+      if (currentConfirm === "logout") {
+        logout();
+      }
+
+      setCurrentConfirm("");
     }
   }, [confirmed]);
 
@@ -62,6 +77,16 @@ export default function SettingAccount() {
         <ListItem>
           <ListItemButton onClick={openLogoutConfirm}>
             <ListItemText id="switch-list-label-bluetooth" primary="로그아웃" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem>
+          <ListItemButton
+            onClick={() => goForward("/app/setting/account/passwordchange")}
+          >
+            <ListItemText
+              id="switch-list-label-bluetooth"
+              primary="비밀번호 변경"
+            />
           </ListItemButton>
         </ListItem>
       </List>

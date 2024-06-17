@@ -49,19 +49,19 @@ export default function Signup() {
   };
   const clientSidePasswordValidation = () => {
     if (password.length === 0) {
-      dispatch(openErrorAlert("패스워드를 입력해주세요."));
+      dispatch(openErrorAlert("비밀번호를 입력해주세요."));
       passwordInputRef.current.focus();
       return false;
     }
 
     if (passwordConfirm.length === 0) {
-      dispatch(openErrorAlert("패스워드 확인을 입력해주세요."));
+      dispatch(openErrorAlert("비밀번호 확인을 입력해주세요."));
       passwordConfirmInputRef.current.focus();
       return false;
     }
 
     if (password !== passwordConfirm) {
-      dispatch(openErrorAlert("패스워드가 다릅니다."));
+      dispatch(openErrorAlert("비밀번호가 다릅니다."));
       passwordConfirmInputRef.current.focus();
       return false;
     }
@@ -118,8 +118,7 @@ export default function Signup() {
               <TextField
                 inputRef={emailInputRef}
                 fullWidth
-                label="Email"
-                id="standard-size-small"
+                label="이메일"
                 size="small"
                 variant="standard"
                 onChange={(e) => {
@@ -135,9 +134,8 @@ export default function Signup() {
               <TextField
                 inputRef={passwordInputRef}
                 fullWidth
-                label="Password"
+                label="비밀번호"
                 type="password"
-                id="standard-size-normal"
                 variant="standard"
                 onChange={(e) => {
                   if (getByteLength(e.target.value) > 20) {
@@ -152,9 +150,8 @@ export default function Signup() {
               <TextField
                 inputRef={passwordConfirmInputRef}
                 fullWidth
-                label="Password Again"
+                label="비밀번호 확인"
                 type="password"
-                id="standard-size-normal"
                 variant="standard"
                 onChange={(e) => {
                   if (getByteLength(e.target.value) > 20) {
@@ -174,9 +171,9 @@ export default function Signup() {
                 marginBottom: "25px",
               }}
             >
-              패스워드는 영문 / 숫자 / 특수문자를 각각 1자 이상 포함하여
+              &#8251; 비밀번호는 영문 / 숫자 / 특수문자를 각각 1자 이상 포함하여
               <br />
-              8~16자로 입력해주세요.
+              &nbsp;&nbsp;&nbsp;8~16자로 입력해주세요.
             </div>
             <div className="login-input-box login-input-button">
               <Button
