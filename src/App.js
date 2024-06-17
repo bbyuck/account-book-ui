@@ -3,7 +3,7 @@ import "./App.css";
 import Login from "pages/Login";
 
 import AppRouter from "pages/AppRouter";
-import { cloneElement, useEffect } from "react";
+import { cloneElement, useEffect, useState } from "react";
 import AppAlert from "components/AppAlert";
 import { useDispatch, useSelector } from "react-redux";
 import { setPageTransition } from "store/slice/clientInfo";
@@ -12,6 +12,7 @@ import AppConfirm from "components/AppConfirm";
 import AppLoading from "components/AppLoading";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Signup from "pages/Signup";
+import MobileOnly from "pages/common/MobileOnly";
 
 function App() {
   const history = createBrowserHistory();
@@ -21,6 +22,40 @@ function App() {
   const { loggedIn, check } = useSelector((state) => state.authInfo);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [isMobile, setIsMobile] = useState(true);
+
+  useEffect(() => {
+    const uagent = navigator.userAgent.toLowerCase();
+    const isTablet =
+      /ipad|xoom|sch-i800|(android(?!.*mobile))|playbook|tablet|kindle/i.test(
+        uagent
+      );
+    const isMobile =
+      /mobile|iphone|ipod|blackberry|windows\sce|palm|smartphone|iemobile|NOKIA/i.test(
+        uagent
+      );
+    const isSmallScreen = window.matchMedia("(max-width: 800px)").matches;
+    const isTouchDevice =
+      "maxTouchPoints" in navigator && navigator.maxTouchPoints > 0;
+    const isMobileDevice =
+      isTablet || isMobile || (isSmallScreen && isTouchDevice);
+
+    if (isMobileDevice) {
+      // mobile
+    } else {
+      setIsMobile(false);
+    }
+  });
+
+  useEffect(() => {
+    if (!isMobile) {
+      dispatch(setPageTransition("switch"));
+      navigate("/pc", {
+        replace: true,
+      });
+    }
+  }, [navigate, isMobile]);
 
   useEffect(() => {
     history.listen((location) => {
@@ -73,6 +108,11 @@ function App() {
               key={location.pathname}
               element={<Signup />}
               path="/signup"
+            />
+            <Route
+              key={location.pathname}
+              element={<MobileOnly />}
+              path="/pc"
             />
           </Routes>
         </CSSTransition>
