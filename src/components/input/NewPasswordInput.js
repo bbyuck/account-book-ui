@@ -1,6 +1,7 @@
 import { TextField } from "@mui/material";
 import AppInputBox from "components/AppInputBox";
 import { getByteLength } from "util/stringUtil";
+import PasswordInput from "components/input/PasswordInput";
 
 export default function NewPasswordInput({
   newPassword,
@@ -15,35 +16,19 @@ export default function NewPasswordInput({
   return (
     <>
       <AppInputBox>
-        <TextField
-          inputRef={newPasswordInputRef}
-          fullWidth
-          label={newPasswordLabel}
-          type="password"
-          variant="standard"
-          onChange={(e) => {
-            if (getByteLength(e.target.value) > 20) {
-              e.target.value = newPassword;
-              return;
-            }
-            setNewPassword(e.target.value);
-          }}
+        <PasswordInput
+          passwordInputRef={newPasswordInputRef}
+          password={newPassword}
+          setPassword={setNewPassword}
+          passwordLabel={newPasswordLabel}
         />
       </AppInputBox>
       <AppInputBox>
-        <TextField
-          inputRef={newPasswordConfirmInputRef}
-          fullWidth
-          label={newPasswordConfirmLabel}
-          type="password"
-          variant="standard"
-          onChange={(e) => {
-            if (getByteLength(e.target.value) > 20) {
-              e.target.value = newPasswordConfirm;
-              return;
-            }
-            setNewPasswordConfirm(e.target.value);
-          }}
+        <PasswordInput
+          passwordInputRef={newPasswordConfirmInputRef}
+          password={newPasswordConfirm}
+          setPassword={setNewPasswordConfirm}
+          passwordLabel={newPasswordConfirmLabel}
         />
       </AppInputBox>
 
