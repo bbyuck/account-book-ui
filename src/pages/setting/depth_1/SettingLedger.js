@@ -49,7 +49,6 @@ export default function SettingLedger() {
         dispatch(openErrorAlert(error.data.data.message));
         setSettingColor(initialColor);
       });
-    console.log(selectedColor);
   };
 
   return (

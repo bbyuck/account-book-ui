@@ -37,7 +37,8 @@ export default function ColorPicker({
       isAlphaHidden
       format="hex"
       value={value}
-      onFocus={() => {
+      onFocus={(e) => {
+        e.preventDefault();
         selectColor(value, initialValue);
       }}
       onChange={handleChange}
