@@ -1,7 +1,11 @@
 import { Button, FormControlLabel, FormGroup, TextField } from "@mui/material";
 import api from "api";
+import AppInputBox from "components/AppInputBox";
+import AppInputForm from "components/AppInputForm";
 import Page from "components/Page";
+import Subject from "components/Subject";
 import HeaderBackButton from "components/input/HeaderBackButton";
+import NewPasswordInput from "components/input/NewPasswordInput";
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -109,84 +113,45 @@ export default function Signup() {
       }}
     >
       <div className="login-page-wrapper">
-        <div className="poetsen-one-regular">
-          <h1>Sign up</h1>
-        </div>
-        <FormGroup>
-          <div className="login-input-form">
-            <div className="login-input-box">
-              <TextField
-                inputRef={emailInputRef}
-                fullWidth
-                label="이메일"
-                size="small"
-                variant="standard"
-                onChange={(e) => {
-                  if (getByteLength(e.target.value) > 40) {
-                    e.target.value = email;
-                    return;
-                  }
-                  setEmail(e.target.value);
-                }}
-              />
-            </div>
-            <div className="login-input-box">
-              <TextField
-                inputRef={passwordInputRef}
-                fullWidth
-                label="비밀번호"
-                type="password"
-                variant="standard"
-                onChange={(e) => {
-                  if (getByteLength(e.target.value) > 20) {
-                    e.target.value = password;
-                    return;
-                  }
-                  setPassword(e.target.value);
-                }}
-              />
-            </div>
-            <div className="login-input-box">
-              <TextField
-                inputRef={passwordConfirmInputRef}
-                fullWidth
-                label="비밀번호 확인"
-                type="password"
-                variant="standard"
-                onChange={(e) => {
-                  if (getByteLength(e.target.value) > 20) {
-                    e.target.value = passwordConfirm;
-                    return;
-                  }
-                  setPasswordConfirm(e.target.value);
-                }}
-              />
-            </div>
-
-            <div
-              style={{
-                textAlign: "left",
-                fontSize: "11px",
-                width: "300px",
-                marginBottom: "25px",
+        <Subject value={"Sign up"} />
+        <AppInputForm>
+          <AppInputBox>
+            <TextField
+              inputRef={emailInputRef}
+              fullWidth
+              label="이메일"
+              size="small"
+              variant="standard"
+              onChange={(e) => {
+                if (getByteLength(e.target.value) > 40) {
+                  e.target.value = email;
+                  return;
+                }
+                setEmail(e.target.value);
               }}
+            />
+          </AppInputBox>
+          <NewPasswordInput
+            newPassword={password}
+            newPasswordConfirm={passwordConfirm}
+            newPasswordInputRef={passwordInputRef}
+            newPasswordConfirmInputRef={passwordConfirmInputRef}
+            setNewPassword={setPassword}
+            setNewPasswordConfirm={setPasswordConfirm}
+            newPasswordLabel={"비밀번호"}
+            newPasswordConfirmLabel={"비밀번호 확인"}
+          />
+          <AppInputBox>
+            <Button
+              fullWidth
+              variant="contained"
+              size={"large"}
+              onClick={signup}
             >
-              &#8251; 비밀번호는 영문 / 숫자 / 특수문자를 각각 1자 이상 포함하여
-              <br />
-              &nbsp;&nbsp;&nbsp;8~16자로 입력해주세요.
-            </div>
-            <div className="login-input-box login-input-button">
-              <Button
-                fullWidth
-                variant="contained"
-                size={"large"}
-                onClick={signup}
-              >
-                Sign up
-              </Button>
-            </div>
-          </div>
-        </FormGroup>
+              Sign up
+            </Button>
+          </AppInputBox>
+        </AppInputForm>
       </div>
     </Page>
   );

@@ -1,4 +1,3 @@
-import Schedule from "pages/schedule/Schedule";
 import LedgerRouter from "pages/ledger/LedgerRouter";
 import { Route, Routes, useLocation } from "react-router";
 import { useEffect, useState } from "react";
@@ -32,11 +31,6 @@ export default function AppRouter() {
           key={location.pathname}
           element={<LedgerRouter />}
           path="/ledger/*"
-        />
-        <Route
-          key={location.pathname}
-          element={<Schedule />}
-          path="/schedule/*"
         />
         <Route
           key={location.pathname}

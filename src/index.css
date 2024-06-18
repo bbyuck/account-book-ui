@@ -111,3 +111,17 @@ body > #root {
   transition: all 0.4s ease;
   z-index: 0;
 }
+
+.app-input-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-input-form .app-input-box {
+  text-align: center;
+  width: 300px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}

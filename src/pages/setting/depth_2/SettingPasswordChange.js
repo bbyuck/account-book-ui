@@ -1,7 +1,10 @@
 import { Button, FormGroup, TextField } from "@mui/material";
 import api from "api";
+import AppInputBox from "components/AppInputBox";
+import AppInputForm from "components/AppInputForm";
 import Page from "components/Page";
 import HeaderBackButton from "components/input/HeaderBackButton";
+import NewPasswordInput from "components/input/NewPasswordInput";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -11,27 +14,25 @@ import {
   openConfirm,
   openErrorAlert,
   openSuccessAlert,
-  setPageTransition,
 } from "store/slice/clientInfo";
 import { removeJWT } from "util/authUtil";
-import { getByteLength } from "util/stringUtil";
 
 export default function SettingPasswordChange() {
-  const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
 
   const { confirmed } = useSelector((state) => state.clientInfo.confirm);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const passwordInputRef = useRef();
-  const passwordConfirmInputRef = useRef();
+  const newPasswordInputRef = useRef();
+  const newPasswordConfirmInputRef = useRef();
 
   const validationErrorCodeTarget = {
-    ERR_VALID_002: passwordInputRef,
-    ERR_VALID_003: passwordInputRef,
-    ERR_VALID_004: passwordConfirmInputRef,
-    ERR_VALID_005: passwordConfirmInputRef,
+    ERR_VALID_002: newPasswordInputRef,
+    ERR_VALID_003: newPasswordInputRef,
+    ERR_VALID_004: newPasswordConfirmInputRef,
+    ERR_VALID_005: newPasswordConfirmInputRef,
   };
 
   const headerInfo = {
@@ -40,21 +41,21 @@ export default function SettingPasswordChange() {
   };
 
   const clientSidePasswordValidation = () => {
-    if (password.length === 0) {
+    if (newPassword.length === 0) {
       dispatch(openErrorAlert("비밀번호를 입력해주세요."));
-      passwordInputRef.current.focus();
+      newPasswordInputRef.current.focus();
       return false;
     }
 
-    if (passwordConfirm.length === 0) {
+    if (newPasswordConfirm.length === 0) {
       dispatch(openErrorAlert("비밀번호 확인을 입력해주세요."));
-      passwordConfirmInputRef.current.focus();
+      newPasswordConfirmInputRef.current.focus();
       return false;
     }
 
-    if (password !== passwordConfirm) {
+    if (newPassword !== newPasswordConfirm) {
       dispatch(openErrorAlert("비밀번호가 다릅니다."));
-      passwordConfirmInputRef.current.focus();
+      newPasswordConfirmInputRef.current.focus();
       return false;
     }
 
@@ -67,8 +68,8 @@ export default function SettingPasswordChange() {
     }
 
     const params = {
-      password: password,
-      passwordConfirm: passwordConfirm,
+      newPassword: newPassword,
+      newPasswordConfirm: newPasswordConfirm,
     };
     api
       .put("/api/v1/user/password", params)
@@ -110,61 +111,29 @@ export default function SettingPasswordChange() {
 
   return (
     <Page headerInfo={headerInfo}>
-      <FormGroup>
-        <div className="login-input-form">
-          <div className="login-input-box">
-            <TextField
-              inputRef={passwordInputRef}
-              fullWidth
-              label="비밀번호"
-              type="password"
-              variant="standard"
-              onChange={(e) => {
-                if (getByteLength(e.target.value) > 20) {
-                  e.target.value = password;
-                  return;
-                }
-                setPassword(e.target.value);
-              }}
-            />
-          </div>
-          <div className="login-input-box">
-            <TextField
-              inputRef={passwordConfirmInputRef}
-              fullWidth
-              label="비밀번호 확인"
-              type="password"
-              variant="standard"
-              onChange={(e) => {
-                if (getByteLength(e.target.value) > 20) {
-                  e.target.value = passwordConfirm;
-                  return;
-                }
-                setPasswordConfirm(e.target.value);
-              }}
-            />
-          </div>
-
-          <div
-            style={{
-              textAlign: "left",
-              fontSize: "11px",
-              width: "300px",
-              marginBottom: "25px",
-            }}
+      <AppInputForm>
+        <NewPasswordInput
+          newPassword={newPassword}
+          newPasswordConfirm={newPasswordConfirm}
+          newPasswordInputRef={newPasswordInputRef}
+          newPasswordConfirmInputRef={newPasswordConfirmInputRef}
+          setNewPassword={setNewPassword}
+          setNewPasswordConfirm={setNewPasswordConfirm}
+          newPasswordLabel={"새 비밀번호"}
+          newPasswordConfirmLabel={"새 비밀번호 확인"}
+        />
+        <AppInputBox>
+          <Button
+            fullWidth
+            variant="contained"
+            size={"large"}
+            sx={{ position: "absolute", bottom: "50px" }}
+            onClick={openPasswordChangeConfirm}
           >
-            &#8251; 비밀번호는 영문 / 숫자 / 특수문자를 각각 1자 이상 포함하여
-            <br />
-            &nbsp;&nbsp;&nbsp;8~16자로 입력해주세요.
-          </div>
-        </div>
-        <Button
-          sx={{ position: "absolute", width: "100%", bottom: "50px" }}
-          onClick={openPasswordChangeConfirm}
-        >
-          변경
-        </Button>
-      </FormGroup>
+            변경
+          </Button>
+        </AppInputBox>
+      </AppInputForm>
     </Page>
   );
 }

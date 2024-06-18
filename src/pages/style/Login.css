@@ -19,20 +19,7 @@
   text-align: center;
 }
 
-.login-input-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.login-input-form .login-input-box {
-  text-align: center;
-  width: 300px;
-  margin-bottom: 20px;
-  margin-top: 20px;
-}
-.login-input-form .signup-prompt {
+.app-input-form .signup-prompt {
   margin-top: 40px;
 }
 

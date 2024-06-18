@@ -11,19 +11,19 @@
 }
 
 .app-header-item {
-  width: 40vw;
+  width: 50vw;
   text-align: center;
 }
 
 .app-header-item-right {
   text-align: right;
-  width: 30vw;
+  width: 25vw;
   padding-right: 3vw;
 }
 
 .app-header-item-left {
   text-align: left;
-  width: 30vw;
+  width: 25vw;
   padding-left: 3vw;
 }
 
