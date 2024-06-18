@@ -39,6 +39,7 @@ export default function ColorPicker({
       value={value}
       onFocus={(e) => {
         e.preventDefault();
+        e.target.blur();
         selectColor(value, initialValue);
       }}
       onChange={handleChange}
