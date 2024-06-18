@@ -55,7 +55,7 @@ export default function SettingLedger() {
     <Page headerInfo={headerInfo}>
       <SettingList>
         <ListItemNoButton>
-          <ListItemText primary="테마 컬러 선택" />
+          <ListItemText primary="개인 컬러 선택" />
           <ColorPicker
             value={settingColor}
             setValue={setSettingColor}
