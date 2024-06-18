@@ -1,6 +1,8 @@
 import { ListItem, ListItemButton, ListItemText } from "@mui/material";
+import ListItemNoButton from "components/ListItemNoButton";
 import Page from "components/Page";
 import SettingList from "components/SettingList";
+import ColorPicker from "components/input/ColorPicker";
 import HeaderBackButton from "components/input/HeaderBackButton";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -22,13 +24,10 @@ export default function SettingLedger() {
   return (
     <Page headerInfo={headerInfo}>
       <SettingList>
-        <ListItem>
-          <ListItemButton
-            onClick={() => goForward("/app/setting/ledger/color")}
-          >
-            <ListItemText primary="목록 색 선택" />
-          </ListItemButton>
-        </ListItem>
+        <ListItemNoButton>
+          <ListItemText primary="목록 색 선택" />
+          <ColorPicker />
+        </ListItemNoButton>
       </SettingList>
     </Page>
   );

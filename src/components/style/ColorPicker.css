@@ -1,2 +1,15 @@
-.color-picker-layout {
+/* 겉부분의 디자인 변경 */
+#color-picker {
+  width: 50px;
+  height: 50px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  border: none;
+}
+/* 안쪽부분의 디자인 변경 */
+#color-picker::-webkit-color-swatch {
+  border-radius: 30px;
+  border: none;
 }
