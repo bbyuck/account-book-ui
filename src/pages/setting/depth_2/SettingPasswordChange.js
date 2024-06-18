@@ -122,12 +122,16 @@ export default function SettingPasswordChange() {
           newPasswordLabel={"새 비밀번호"}
           newPasswordConfirmLabel={"새 비밀번호 확인"}
         />
-        <AppInputBox>
+        <AppInputBox
+          style={{
+            position: "absolute",
+            bottom: "70px",
+          }}
+        >
           <Button
             fullWidth
             variant="contained"
             size={"large"}
-            sx={{ position: "absolute", bottom: "50px" }}
             onClick={openPasswordChangeConfirm}
           >
             변경
