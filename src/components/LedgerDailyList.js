@@ -1,18 +1,18 @@
 import {
   Box,
   IconButton,
-  List,
   ListItem,
   ListItemButton,
   ListItemText,
 } from "@mui/material";
+import SettingList from "components/SettingList";
 
 export default function LedgerDailyList({ ledgers, onItemSelect }) {
   return (
     <>
       {ledgers && ledgers.length > 0 ? (
         <Box sx={{ marginBottom: "10px" }}>
-          <List sx={{ width: "100%", bgcolor: "background.paper" }}>
+          <SettingList>
             {ledgers.map((ledger) => {
               return (
                 <ListItem
@@ -49,7 +49,7 @@ export default function LedgerDailyList({ ledgers, onItemSelect }) {
                 </ListItem>
               );
             })}
-          </List>
+          </SettingList>
         </Box>
       ) : null}
     </>

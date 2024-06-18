@@ -1,6 +1,5 @@
 import {
   IconButton,
-  List,
   ListItem,
   ListItemButton,
   ListItemIcon,
@@ -13,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setPageTransition } from "store/slice/clientInfo";
 import HomeIcon from "@mui/icons-material/Home";
+import SettingList from "components/SettingList";
 
 export default function SettingMain() {
   const navigate = useNavigate();
@@ -41,28 +41,24 @@ export default function SettingMain() {
 
   return (
     <Page headerInfo={headerInfo}>
-      <List sx={{ width: "100%", bgcolor: "background.paper" }}>
+      <SettingList>
         <ListItem>
           <ListItemButton onClick={() => goForward("/app/setting/account")}>
             <ListItemIcon>
               <AccountCircleIcon />
             </ListItemIcon>
-            <ListItemText id="switch-list-label-bluetooth" primary="계정" />
+            <ListItemText primary="계정" />
           </ListItemButton>
         </ListItem>
         <ListItem>
-          <ListItemButton
-            onClick={() => {
-              alert("가계부 설정은 준비중입니다.");
-            }}
-          >
+          <ListItemButton onClick={() => goForward("/app/setting/ledger")}>
             <ListItemIcon>
               <SavingsIcon />
             </ListItemIcon>
-            <ListItemText id="switch-list-label-bluetooth" primary="가계부" />
+            <ListItemText primary="가계부" />
           </ListItemButton>
         </ListItem>
-      </List>
+      </SettingList>
     </Page>
   );
 }

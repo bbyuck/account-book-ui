@@ -1,5 +1,4 @@
 import {
-  List,
   ListItem,
   ListItemButton,
   ListItemIcon,
@@ -7,6 +6,7 @@ import {
 } from "@mui/material";
 import api from "api";
 import Page from "components/Page";
+import SettingList from "components/SettingList";
 import HeaderBackButton from "components/input/HeaderBackButton";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -84,23 +84,20 @@ export default function SettingAccount() {
 
   return (
     <Page headerInfo={headerInfo}>
-      <List sx={{ width: "100%", bgcolor: "background.paper" }}>
+      <SettingList>
         <ListItem>
           <ListItemButton onClick={openLogoutConfirm}>
-            <ListItemText id="switch-list-label-bluetooth" primary="로그아웃" />
+            <ListItemText primary="로그아웃" />
           </ListItemButton>
         </ListItem>
         <ListItem>
           <ListItemButton
             onClick={() => goForward("/app/setting/account/passwordchange")}
           >
-            <ListItemText
-              id="switch-list-label-bluetooth"
-              primary="비밀번호 변경"
-            />
+            <ListItemText primary="비밀번호 변경" />
           </ListItemButton>
         </ListItem>
-      </List>
+      </SettingList>
     </Page>
   );
 }
