@@ -11,12 +11,16 @@ const userInfoSlice = createSlice({
   initialState,
   reducers: {
     resetUserStore: () => initialState,
-    setCoupleStatus(state = initialState, payload) {
-      state.coupleStatus = payload.coupleStatus;
-      state.userCoupleStatus = payload.userCoupleStatus;
+    setCustomColor(state = initialState, action) {
+      state.customColor = action.payload;
+    },
+    setCoupleStatus(state = initialState, action) {
+      state.coupleStatus = action.payload.coupleStatus;
+      state.userCoupleStatus = action.payload.userCoupleStatus;
     },
   },
 });
 
-export const { setCustomColor, setCoupleStatus } = userInfoSlice.actions;
+export const { resetUserStore, setCustomColor, setCoupleStatus } =
+  userInfoSlice.actions;
 export default userInfoSlice.reducer;
