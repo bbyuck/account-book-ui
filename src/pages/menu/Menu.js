@@ -7,6 +7,7 @@ import { setPageTransition } from "store/slice/clientInfo";
 import HomeIcon from "@mui/icons-material/Home";
 import SettingMenuList from "pages/menu/list/SettingMenuList";
 import AssetMenuList from "pages/menu/list/AssetMenuList";
+import CoupleMenuList from "./list/CoupleMenuList";
 
 export default function Menu() {
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ export default function Menu() {
 
   return (
     <Page headerInfo={headerInfo}>
+      <CoupleMenuList />
       <AssetMenuList />
       <SettingMenuList />
     </Page>

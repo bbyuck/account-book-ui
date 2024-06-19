@@ -10,7 +10,7 @@ export default function MenuList({ children, subheader }) {
             style={{
               textAlign: "left",
               position: "relative",
-              left: "36px",
+              marginLeft: "36px",
             }}
           >
             {subheader}
