@@ -7,10 +7,6 @@ import styled from "@emotion/styled";
 const MuiColorInputStyled = styled(MuiColorInput)`
   & .MuiInputBase-input {
     display: none;
-    // opacity: 0;
-    // width: 0;
-    // height: 0;
-    // padding: 0;
   }
   & .MuiButtonBase-root {
     width: 40px;

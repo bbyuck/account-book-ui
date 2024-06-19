@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import api from "api";
 import { setCustomColor } from "store/slice/clientInfo";
 import SettingRouter from "pages/setting/SettingRouter";
-import Menu from "pages/Menu";
+import Menu from "pages/menu/Menu";
 
 export default function AppRouter() {
   const location = useLocation();

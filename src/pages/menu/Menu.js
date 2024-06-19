@@ -1,11 +1,12 @@
-import { IconButton } from "@mui/material";
+import { Divider, IconButton } from "@mui/material";
 
 import Page from "components/Page";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setPageTransition } from "store/slice/clientInfo";
 import HomeIcon from "@mui/icons-material/Home";
-import SettingMenuList from "./setting/SettingMenuList";
+import SettingMenuList from "pages/menu/list/SettingMenuList";
+import AssetMenuList from "pages/menu/list/AssetMenuList";
 
 export default function Menu() {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ export default function Menu() {
 
   return (
     <Page headerInfo={headerInfo}>
+      <AssetMenuList />
       <SettingMenuList />
     </Page>
   );
