@@ -6,10 +6,11 @@ import styled from "@emotion/styled";
 
 const MuiColorInputStyled = styled(MuiColorInput)`
   & .MuiInputBase-input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-    padding: 0;
+    display: none;
+    // opacity: 0;
+    // width: 0;
+    // height: 0;
+    // padding: 0;
   }
   & .MuiButtonBase-root {
     width: 40px;
@@ -36,12 +37,12 @@ export default function ColorPicker({
     <MuiColorInputStyled
       isAlphaHidden
       format="hex"
-      value={value}
-      onFocus={(e) => {
-        e.preventDefault();
-        e.target.blur();
-        selectColor(value, initialValue);
+      PopoverProps={{
+        onClose: () => {
+          selectColor(value, initialValue);
+        },
       }}
+      value={value}
       onChange={handleChange}
       size="large"
       variant="outlined"
