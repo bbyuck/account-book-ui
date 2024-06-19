@@ -19,7 +19,6 @@ const initialState = {
   pageTransition: initialPageTransition,
   alert: initialAlert,
   confirm: initialConfirm,
-  customColor: null,
   loading: false,
   loadingReady: false,
 };
@@ -90,9 +89,7 @@ const clientInfoSlice = createSlice({
         confirmed: false,
       };
     },
-    setCustomColor(state = initialState, action) {
-      state.customColor = action.payload;
-    },
+
     loadingReady(state = initialState) {
       state.loadingReady = true;
     },
@@ -117,7 +114,6 @@ export const {
   procConfirm,
   closeConfirm,
   openConfirm,
-  setCustomColor,
   loadingStart,
   loadingEnd,
   loadingReady,

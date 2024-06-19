@@ -11,9 +11,9 @@ import { useNavigate } from "react-router-dom";
 import {
   openErrorAlert,
   openSuccessAlert,
-  setCustomColor,
   setPageTransition,
 } from "store/slice/clientInfo";
+import { setCustomColor } from "store/slice/userInfo";
 
 export default function SettingLedger() {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ export default function SettingLedger() {
     navigate(url);
   };
 
-  const { customColor } = useSelector((state) => state.clientInfo);
+  const { customColor } = useSelector((state) => state.userInfo);
   const [settingColor, setSettingColor] = useState(customColor);
 
   const selectColor = (selectedColor, initialColor) => {

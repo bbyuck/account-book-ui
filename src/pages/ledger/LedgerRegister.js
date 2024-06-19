@@ -88,7 +88,7 @@ export default function LedgerRegister() {
         .then((response) => {
           sessionStorage.setItem("buttonBack", true);
           dispatch(setPageTransition("pop"));
-          navigate("/app/ledger/main", {
+          navigate("/app/ledger", {
             replace: true,
           });
         })

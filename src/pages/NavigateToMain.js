@@ -9,7 +9,7 @@ export default function NavigateToMain({ app }) {
 
   useEffect(() => {
     dispatch(setPageTransition("switch"));
-    navigate(`/app/${app}/main`);
+    navigate(`/app/${app}`);
   }, []);
 
   return <></>;

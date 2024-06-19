@@ -9,7 +9,7 @@ export default function LedgerRouter() {
 
   return (
     <Routes location={location}>
-      <Route key={location.pathname} element={<LedgerMain />} path="/main" />
+      <Route key={location.pathname} element={<LedgerMain />} path="/" />
       <Route
         key={location.pathname}
         element={<LedgerRegister />}

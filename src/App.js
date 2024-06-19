@@ -75,7 +75,7 @@ function App() {
       });
     } else if (loggedIn) {
       dispatch(setPageTransition("switch"));
-      navigate("/app/ledger/main", {
+      navigate("/app/ledger", {
         replace: true,
       });
     }

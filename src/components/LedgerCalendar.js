@@ -20,7 +20,7 @@ export default function LedgerCalendar(props) {
     selected,
   } = props;
 
-  const customColor = useSelector((state) => state.clientInfo.customColor);
+  const customColor = useSelector((state) => state.userInfo.customColor);
 
   /**
    * ============== util methods ==============

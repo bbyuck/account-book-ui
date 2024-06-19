@@ -15,7 +15,7 @@ export default function Menu() {
 
   const goBackToLedgerMain = () => {
     dispatch(setPageTransition("pop"));
-    navigate("/app/ledger/main", {
+    navigate("/app/ledger", {
       replace: true,
     });
   };

@@ -15,7 +15,7 @@ export default function AppNavigation() {
   const handleChangeBottomNavigation = (event, newValue) => {
     setSelectedTab(newValue);
     dispatch(setPageTransition("switch"));
-    navigate(`/app/${newValue}/main`, {
+    navigate(`/app/${newValue}`, {
       replace: true,
     });
   };

@@ -43,7 +43,7 @@ export default function LedgerDetail() {
       alert("잘못된 접근입니다.");
       sessionStorage.setItem("buttonBack", true);
       dispatch(setPageTransition("pop"));
-      navigate("/app/ledger/main", {
+      navigate("/app/ledger", {
         replace: true,
       });
     }
@@ -89,7 +89,7 @@ export default function LedgerDetail() {
       .then((response) => {
         sessionStorage.setItem("buttonBack", true);
         dispatch(setPageTransition("pop"));
-        navigate("/app/ledger/main", {
+        navigate("/app/ledger", {
           replace: true,
         });
       })
@@ -115,7 +115,7 @@ export default function LedgerDetail() {
       .then((response) => {
         if (response.data.data.success) {
           dispatch(setPageTransition("pop"));
-          navigate("/app/ledger/main", {
+          navigate("/app/ledger", {
             replace: true,
           });
         }
