@@ -6,7 +6,7 @@ import {
 } from "@mui/material";
 import api from "api";
 import Page from "components/Page";
-import SettingList from "components/SettingList";
+import MenuList from "components/MenuList";
 import HeaderBackButton from "components/input/HeaderBackButton";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,7 +31,7 @@ export default function SettingAccount() {
 
   const headerInfo = {
     left: <HeaderBackButton />,
-    center: <h2>계정</h2>,
+    center: <h2>계정 설정</h2>,
   };
 
   const openLogoutConfirm = () => {
@@ -84,7 +84,7 @@ export default function SettingAccount() {
 
   return (
     <Page headerInfo={headerInfo}>
-      <SettingList>
+      <MenuList>
         <ListItem>
           <ListItemButton onClick={openLogoutConfirm}>
             <ListItemText primary="로그아웃" />
@@ -97,7 +97,7 @@ export default function SettingAccount() {
             <ListItemText primary="비밀번호 변경" />
           </ListItemButton>
         </ListItem>
-      </SettingList>
+      </MenuList>
     </Page>
   );
 }

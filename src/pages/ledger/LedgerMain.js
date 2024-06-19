@@ -9,7 +9,8 @@ import { setSelectedDate } from "store/slice/ledgerInfo";
 import http from "api";
 import LedgerDailyList from "components/LedgerDailyList";
 import { setPageTransition } from "store/slice/clientInfo";
-import SettingsIcon from "@mui/icons-material/Settings";
+// import SettingsIcon from "@mui/icons-material/Settings";
+import GridViewIcon from "@mui/icons-material/GridView";
 
 export default function LedgerMain() {
   const navigate = useNavigate();
@@ -66,30 +67,21 @@ export default function LedgerMain() {
   /**
    * navigate methods
    */
-  const goToRegisterPage = () => {
-    dispatch(setPageTransition("push"));
-    navigate("/app/ledger/register");
-  };
 
-  const goToDetailPage = (ledgerId) => {
+  const goForward = (url) => {
     dispatch(setPageTransition("push"));
-    navigate(`/app/ledger/detail/${ledgerId}`);
-  };
-
-  const goToSettingPage = () => {
-    dispatch(setPageTransition("push"));
-    navigate("/app/setting/main");
+    navigate(url);
   };
 
   const headerInfo = {
     left: (
       <IconButton>
-        <SettingsIcon onClick={goToSettingPage} />
+        <GridViewIcon onClick={() => goForward("/app/menu")} />
       </IconButton>
     ),
     center: <h2>{`${selectedMonth.year}년 ${selectedMonth.month}월`}</h2>,
     right: (
-      <IconButton onClick={goToRegisterPage}>
+      <IconButton onClick={() => goForward("/app/ledger/register")}>
         <AddIcon color="primary" />
       </IconButton>
     ),
@@ -113,7 +105,7 @@ export default function LedgerMain() {
             ? monthlyData.ledgersPerDay[selectedDay].ledgers
             : []
         }
-        onItemSelect={(ledgerId) => goToDetailPage(ledgerId)}
+        onItemSelect={(ledgerId) => goForward(`/app/ledger/detail/${ledgerId}`)}
       />
     </Page>
   );

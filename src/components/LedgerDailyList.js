@@ -5,14 +5,14 @@ import {
   ListItemButton,
   ListItemText,
 } from "@mui/material";
-import SettingList from "components/SettingList";
+import MenuList from "components/MenuList";
 
 export default function LedgerDailyList({ ledgers, onItemSelect }) {
   return (
     <>
       {ledgers && ledgers.length > 0 ? (
         <Box sx={{ marginBottom: "10px" }}>
-          <SettingList>
+          <MenuList>
             {ledgers.map((ledger) => {
               return (
                 <ListItem
@@ -49,7 +49,7 @@ export default function LedgerDailyList({ ledgers, onItemSelect }) {
                 </ListItem>
               );
             })}
-          </SettingList>
+          </MenuList>
         </Box>
       ) : null}
     </>

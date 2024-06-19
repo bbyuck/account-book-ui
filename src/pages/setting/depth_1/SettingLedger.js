@@ -2,7 +2,7 @@ import { ListItem, ListItemButton, ListItemText } from "@mui/material";
 import api from "api";
 import ListItemNoButton from "components/ListItemNoButton";
 import Page from "components/Page";
-import SettingList from "components/SettingList";
+import MenuList from "components/MenuList";
 import ColorPicker from "components/input/ColorPicker";
 import HeaderBackButton from "components/input/HeaderBackButton";
 import { useState } from "react";
@@ -21,7 +21,7 @@ export default function SettingLedger() {
 
   const headerInfo = {
     left: <HeaderBackButton />,
-    center: <h2>가계부</h2>,
+    center: <h2>가계부 설정</h2>,
   };
   const goForward = (url) => {
     dispatch(setPageTransition("push"));
@@ -53,7 +53,7 @@ export default function SettingLedger() {
 
   return (
     <Page headerInfo={headerInfo}>
-      <SettingList>
+      <MenuList>
         <ListItemNoButton>
           <ListItemText primary="개인 컬러 선택" />
           <ColorPicker
@@ -62,7 +62,7 @@ export default function SettingLedger() {
             selectColor={selectColor}
           />
         </ListItemNoButton>
-      </SettingList>
+      </MenuList>
     </Page>
   );
 }
