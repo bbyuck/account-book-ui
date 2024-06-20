@@ -24,7 +24,7 @@ export default function LedgerDailyList({ ledgers, onItemSelect }) {
                   disablePadding
                 >
                   <Paper
-                    elevation={4}
+                    elevation={3}
                     sx={{
                       width: "96vw",
                       marginLeft: "2vw",
@@ -33,9 +33,11 @@ export default function LedgerDailyList({ ledgers, onItemSelect }) {
                       marginTop: "5px",
                       marginBottom: "5px",
                       borderRadius: "12px",
+                      display: "flex",
                     }}
                   >
                     <ListItemButton
+                      style={{ borderRadius: "12px" }}
                       role={undefined}
                       onClick={() => {
                         onItemSelect(ledger.ledgerId);
@@ -57,8 +59,8 @@ export default function LedgerDailyList({ ledgers, onItemSelect }) {
                       <ListItemText
                         style={{
                           position: "absolute",
-                          right: "3vw",
-                          top: "50%",
+                          right: "16px",
+                          marginLeft: "auto",
                         }}
                         primary={`${
                           ledger.ledgerCode === "E" ? "- " : "+ "
