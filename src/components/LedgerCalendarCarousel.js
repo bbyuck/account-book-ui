@@ -102,7 +102,7 @@ export default function LedgerCalendarCarousel({
           interval={2000}
           transitionTime={350}
           preventMovementUntilSwipeScrollTolerance
-          swipeScrollTolerance={60}
+          swipeScrollTolerance={130}
           onChange={(newValue) => calendarMonthChangeHandler(newValue)}
           onSwipeMove={() => {
             setSwiping(true);
