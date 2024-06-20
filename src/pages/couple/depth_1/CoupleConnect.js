@@ -17,7 +17,6 @@ export default function CoupleConnect() {
     (state) => state.userInfo
   );
   const [targetEmail, setTargetEmail] = useState("");
-  const [confirmTarget, setConfirmTarget] = useState("");
 
   const clientSideEmailValidation = () => {
     if (targetEmail.length === 0) {
@@ -28,8 +27,6 @@ export default function CoupleConnect() {
   };
 
   const openSendRequestConfirm = () => {
-    setConfirmTarget("COUPLE_CONNECT_REQUEST");
-
     dispatch(
       openConfirm({
         title: "커플 요청 보내기",
@@ -46,14 +43,12 @@ export default function CoupleConnect() {
         confirmLabel: "요청",
         cancelLabel: "취소",
         onConfirmed: () => {
-          if (confirmTarget === "COUPLE_CONNECT_REQUEST") {
-            if (!clientSideEmailValidation()) {
-              return false;
-            }
-
-            console.log(`${targetEmail}로 api 콜`);
-            return true;
+          if (!clientSideEmailValidation()) {
+            return false;
           }
+
+          console.log(`${targetEmail}로 api 콜`);
+          return true;
         },
       })
     );
