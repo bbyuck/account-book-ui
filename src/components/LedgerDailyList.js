@@ -4,6 +4,7 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  Paper,
 } from "@mui/material";
 import MenuList from "components/MenuList";
 
@@ -22,30 +23,49 @@ export default function LedgerDailyList({ ledgers, onItemSelect }) {
                   }
                   disablePadding
                 >
-                  <ListItemButton
-                    style={{
-                      backgroundColor: `#${ledger.color}`,
+                  <Paper
+                    elevation={4}
+                    sx={{
+                      width: "96vw",
+                      marginLeft: "2vw",
                       height: "48px",
-                      marginTop: "1px",
-                      marginBottom: "1px",
-                      color: "#000000",
-                      // textShadow:
-                      //   "-1px 0px black, 0px 1px black, 1px 0px black, 0px -1px black",
-                      // color: "white",
-                    }}
-                    role={undefined}
-                    onClick={() => {
-                      onItemSelect(ledger.ledgerId);
+                      lineHeight: "48px",
+                      marginTop: "5px",
+                      marginBottom: "5px",
+                      borderRadius: "12px",
                     }}
                   >
-                    <ListItemText primary={ledger.description} />
-                    <ListItemText
-                      style={{ position: "absolute", right: "3vw" }}
-                      primary={`${
-                        ledger.ledgerCode === "E" ? "- " : "+ "
-                      }${ledger.amount.toLocaleString()}원`}
-                    />
-                  </ListItemButton>
+                    <ListItemButton
+                      role={undefined}
+                      onClick={() => {
+                        onItemSelect(ledger.ledgerId);
+                      }}
+                    >
+                      <span
+                        style={{
+                          backgroundColor: `#${ledger.color}`,
+                          position: "absolute",
+                          width: "12px",
+                          height: "12px",
+                          borderRadius: "10px",
+                          right: "3px",
+                          top: "3px",
+                        }}
+                        className="ledger-daily-list-tag"
+                      ></span>
+                      <ListItemText primary={ledger.description} />
+                      <ListItemText
+                        style={{
+                          position: "absolute",
+                          right: "3vw",
+                          top: "50%",
+                        }}
+                        primary={`${
+                          ledger.ledgerCode === "E" ? "- " : "+ "
+                        }${ledger.amount.toLocaleString()}원`}
+                      />
+                    </ListItemButton>
+                  </Paper>
                 </ListItem>
               );
             })}

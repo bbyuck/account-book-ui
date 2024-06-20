@@ -13,6 +13,7 @@ import {
   loadingStart,
   loadingEnd,
   loadingReady,
+  openSuccessAlert,
 } from "store/slice/clientInfo";
 import { syncAuth } from "store/slice/authInfo";
 
@@ -51,6 +52,10 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (config) => {
     store.dispatch(loadingEnd());
+
+    if (config.data.code) {
+      store.dispatch(openSuccessAlert(config.data.message));
+    }
     return config;
   },
   async (err) => {

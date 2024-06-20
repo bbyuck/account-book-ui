@@ -89,7 +89,7 @@ export default function SettingPasswordChange() {
       .put("/api/v1/user/password", params)
       .then((response) => {
         // dispatch(setPageTransition("pop"));
-        dispatch(openSuccessAlert(response.data.message));
+        // dispatch(openSuccessAlert(response.data.message));
 
         removeJWT();
         dispatch(syncAuth());

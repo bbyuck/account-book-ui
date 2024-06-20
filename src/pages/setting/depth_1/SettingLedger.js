@@ -42,7 +42,7 @@ export default function SettingLedger() {
     api
       .post("/api/v1/custom", params)
       .then((response) => {
-        dispatch(openSuccessAlert(response.data.message));
+        // dispatch(openSuccessAlert(response.data.message));
         dispatch(setCustomColor(selectedColor.replace(/#/g, "")));
       })
       .catch((error) => {

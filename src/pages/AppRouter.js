@@ -17,17 +17,27 @@ export default function AppRouter() {
 
   useEffect(() => {
     if (!customColor) {
-      api.get("/api/v1/custom/color").then((response) => {
-        dispatch(setCustomColor(response.data.data.color));
-      });
+      api
+        .get("/api/v1/custom/color")
+        .then((response) => {
+          dispatch(setCustomColor(response.data.data.color));
+        })
+        .catch((error) => {
+          /* do nothing */
+        });
     }
   }, [customColor]);
 
   useEffect(() => {
     if (!coupleStatus && !userCoupleStatus) {
-      api.get("/api/v1/couple/status").then((response) => {
-        dispatch(setCoupleStatus(response.data.data));
-      });
+      api
+        .get("/api/v1/couple/status")
+        .then((response) => {
+          dispatch(setCoupleStatus(response.data.data));
+        })
+        .catch((error) => {
+          /* do nothing */
+        });
     }
   }, [coupleStatus, userCoupleStatus]);
 

@@ -92,7 +92,7 @@ export default function Signup() {
       .post("/api/v1/signup", params)
       .then((response) => {
         dispatch(setPageTransition("pop"));
-        dispatch(openSuccessAlert(response.data.message));
+        // dispatch(openSuccessAlert(response.data.message));
         navigate("/login", {
           replace: true,
         });
