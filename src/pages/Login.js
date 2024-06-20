@@ -1,16 +1,7 @@
-import {
-  Button,
-  FormControlLabel,
-  FormGroup,
-  Link,
-  Switch,
-  TextField,
-  styled,
-} from "@mui/material";
+import { Button, FormControlLabel, Link, Switch, styled } from "@mui/material";
 import "pages/style/Login.css";
 import http from "api";
 import { useState } from "react";
-import { getByteLength } from "util/stringUtil";
 import { useDispatch } from "react-redux";
 import { openErrorAlert, setPageTransition } from "store/slice/clientInfo";
 import { saveJWT } from "util/authUtil";
@@ -20,6 +11,8 @@ import Page from "components/Page";
 import AppInputForm from "components/AppInputForm";
 import AppInputBox from "components/AppInputBox";
 import Subject from "components/Subject";
+import PasswordInput from "components/input/PasswordInput";
+import EmailInput from "components/input/EmailInput";
 
 const AntSwitch = styled(Switch)(({ theme }) => ({
   width: 28,
@@ -108,35 +101,17 @@ export default function Login() {
         <Subject value={"Login"} />
         <AppInputForm>
           <AppInputBox>
-            <TextField
-              fullWidth
-              label="이메일"
-              id="standard-size-small"
-              size="small"
-              variant="standard"
-              onChange={(e) => {
-                if (getByteLength(e.target.value) > 40) {
-                  e.target.value = email;
-                  return;
-                }
-                setEmail(e.target.value);
-              }}
+            <EmailInput
+              email={email}
+              setEmail={setEmail}
+              emailLabel={"이메일"}
             />
           </AppInputBox>
           <AppInputBox>
-            <TextField
-              fullWidth
-              label="비밀번호"
-              type="password"
-              id="standard-size-normal"
-              variant="standard"
-              onChange={(e) => {
-                if (getByteLength(e.target.value) > 20) {
-                  e.target.value = password;
-                  return;
-                }
-                setPassword(e.target.value);
-              }}
+            <PasswordInput
+              password={password}
+              setPassword={setPassword}
+              passwordLabel={"비밀번호"}
             />
           </AppInputBox>
 

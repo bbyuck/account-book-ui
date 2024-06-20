@@ -39,7 +39,6 @@ export default function DatePicker({
       >
         <CalendarMonthIcon sx={{ color: "action.active", mx: 2, my: 0.5 }} />
         <TextField
-          id="input-with-sx"
           sx={{ mr: 2, width: "100%" }}
           label={label}
           className={disabled ? "" : "disabled-textfield-button"}

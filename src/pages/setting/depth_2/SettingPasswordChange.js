@@ -24,7 +24,6 @@ export default function SettingPasswordChange() {
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
 
-  const { confirmed } = useSelector((state) => state.clientInfo.confirm);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -115,18 +114,15 @@ export default function SettingPasswordChange() {
         message: "",
         confirmLabel: "확인",
         cancelLabel: "취소",
-        confirmed: false,
+        onConfirmed: () => {
+          changePassword();
+          dispatch(closeConfirm());
+
+          return true;
+        },
       })
     );
   };
-
-  useEffect(() => {
-    if (confirmed) {
-      changePassword();
-
-      dispatch(closeConfirm());
-    }
-  }, [confirmed]);
 
   return (
     <Page headerInfo={headerInfo}>

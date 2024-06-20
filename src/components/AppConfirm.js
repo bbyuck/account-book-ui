@@ -7,7 +7,7 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { closeConfirm, procConfirm } from "store/slice/clientInfo";
+import { closeConfirm } from "store/slice/clientInfo";
 
 export default function AppConfirm() {
   const { confirm } = useSelector((state) => state.clientInfo);
@@ -18,7 +18,9 @@ export default function AppConfirm() {
   };
 
   const handleConfirm = () => {
-    dispatch(procConfirm());
+    if (confirm.onConfirmed()) {
+      dispatch(closeConfirm());
+    }
   };
 
   return (
@@ -26,10 +28,11 @@ export default function AppConfirm() {
       open={confirm.open}
       onClose={handleClose}
       aria-labelledby="responsive-dialog-title"
+      fullWidth
     >
       <DialogTitle id="responsive-dialog-title">{confirm.title}</DialogTitle>
       <DialogContent>
-        <DialogContentText>{confirm.message}</DialogContentText>
+        <div style={{ color: "gray" }}>{confirm.message}</div>
       </DialogContent>
       <DialogActions>
         <Button autoFocus onClick={handleConfirm}>

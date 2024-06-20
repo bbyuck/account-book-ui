@@ -12,7 +12,7 @@ const initialConfirm = {
   message: "",
   confirmLabel: "확인",
   cancelLabel: "닫기",
-  confirmed: false,
+  onConfirmed: null,
 };
 
 const initialState = {
@@ -55,16 +55,6 @@ const clientInfoSlice = createSlice({
         type: "error",
       };
     },
-    procConfirm(state = initialState) {
-      state.confirm = {
-        open: false,
-        title: state.confirm.title,
-        message: state.confirm.message,
-        confirmLabel: state.confirm.confirmLabel,
-        cancelLabel: state.confirm.cancelLabel,
-        confirmed: true,
-      };
-    },
     closeConfirm(state = initialState, action) {
       state.confirm = {
         open: false,
@@ -72,7 +62,7 @@ const clientInfoSlice = createSlice({
         message: state.confirm.message,
         confirmLabel: state.confirm.confirmLabel,
         cancelLabel: state.confirm.cancelLabel,
-        confirmed: false,
+        onConfirmed: null,
       };
     },
     openConfirm(state = initialState, action) {
@@ -86,7 +76,7 @@ const clientInfoSlice = createSlice({
         cancelLabel: action.payload.cancelLabel
           ? action.payload.cancelLabel
           : state.confirm.cancelLabel,
-        confirmed: false,
+        onConfirmed: action.payload.onConfirmed,
       };
     },
 

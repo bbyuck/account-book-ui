@@ -4,6 +4,7 @@ import AppInputBox from "components/AppInputBox";
 import AppInputForm from "components/AppInputForm";
 import Page from "components/Page";
 import Subject from "components/Subject";
+import EmailInput from "components/input/EmailInput";
 import HeaderBackButton from "components/input/HeaderBackButton";
 import NewPasswordInput from "components/input/NewPasswordInput";
 import { useRef, useState } from "react";
@@ -116,19 +117,11 @@ export default function Signup() {
         <Subject value={"Sign up"} />
         <AppInputForm>
           <AppInputBox>
-            <TextField
-              inputRef={emailInputRef}
-              fullWidth
-              label="이메일"
-              size="small"
-              variant="standard"
-              onChange={(e) => {
-                if (getByteLength(e.target.value) > 40) {
-                  e.target.value = email;
-                  return;
-                }
-                setEmail(e.target.value);
-              }}
+            <EmailInput
+              eamilInputRef={emailInputRef}
+              email={email}
+              setEmail={setEmail}
+              emailLabel={"이메일"}
             />
           </AppInputBox>
           <NewPasswordInput

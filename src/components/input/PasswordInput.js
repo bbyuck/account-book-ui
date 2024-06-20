@@ -13,7 +13,6 @@ export default function PasswordInput({
       fullWidth
       label={passwordLabel}
       type="password"
-      id="standard-size-normal"
       variant="standard"
       onChange={(e) => {
         if (getByteLength(e.target.value) > 20) {

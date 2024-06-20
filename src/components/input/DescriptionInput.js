@@ -7,7 +7,6 @@ export default function DescriptionInput({ style, label, value, onChange }) {
     <Box sx={{ display: "flex", alignItems: "flex-end", ...style }}>
       <DescriptionIcon sx={{ color: "action.active", mx: 2, my: 0.5 }} />
       <TextField
-        id="input-with-sx"
         sx={{ mr: 2, width: "100%" }}
         variant="standard"
         label={label}

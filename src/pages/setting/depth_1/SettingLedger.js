@@ -5,7 +5,7 @@ import Page from "components/Page";
 import MenuList from "components/MenuList";
 import ColorPicker from "components/input/ColorPicker";
 import HeaderBackButton from "components/input/HeaderBackButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {

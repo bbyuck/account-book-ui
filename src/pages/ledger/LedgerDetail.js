@@ -65,13 +65,6 @@ export default function LedgerDetail() {
      */
   }, [ledgerId, navigate, dispatch]);
 
-  useEffect(() => {
-    if (confirm.confirmed) {
-      deleteLedger();
-      dispatch(closeConfirm());
-    }
-  }, [confirm.confirmed]);
-
   const updateLedger = () => {
     if (fromLocaleStringToNumber(amount) === 0) {
       alert("가계부 금액은 0원 이상이어야 합니다.");
@@ -105,6 +98,12 @@ export default function LedgerDetail() {
         message: "삭제된 가계부는 복구할 수 없습니다.",
         confirmLabel: "삭제",
         cancelLabel: "취소",
+        onConfirmed: () => {
+          deleteLedger();
+          dispatch(closeConfirm());
+
+          return true;
+        },
       })
     );
   };

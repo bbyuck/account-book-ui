@@ -19,11 +19,9 @@ const MuiColorInputStyled = styled(MuiColorInput)`
   }
 `;
 
-export default function ColorPicker({
-  value = "#ffffff",
-  setValue,
-  selectColor,
-}) {
+export default function ColorPicker({ value, setValue, selectColor }) {
+  value = value ? value : "000000";
+
   const handleChange = (newValue) => {
     setValue(newValue);
   };

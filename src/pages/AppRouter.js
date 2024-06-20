@@ -21,12 +21,15 @@ export default function AppRouter() {
         dispatch(setCustomColor(response.data.data.color));
       });
     }
+  }, [customColor]);
+
+  useEffect(() => {
     if (!coupleStatus && !userCoupleStatus) {
       api.get("/api/v1/couple/status").then((response) => {
         dispatch(setCoupleStatus(response.data.data));
       });
     }
-  }, []);
+  }, [coupleStatus, userCoupleStatus]);
 
   return (
     <>

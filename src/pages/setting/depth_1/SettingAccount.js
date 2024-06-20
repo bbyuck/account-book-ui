@@ -25,8 +25,6 @@ export default function SettingAccount() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { confirmed } = useSelector((state) => state.clientInfo.confirm);
-
   const [currentConfirm, setCurrentConfirm] = useState("");
 
   const headerInfo = {
@@ -43,7 +41,16 @@ export default function SettingAccount() {
         message: "",
         confirmLabel: "확인",
         cancelLabel: "취소",
-        confirmed: false,
+        onConfirmed: () => {
+          if (currentConfirm === "logout") {
+            logout();
+          }
+
+          dispatch(closeConfirm());
+          setCurrentConfirm("");
+
+          return true;
+        },
       })
     );
   };
@@ -70,17 +77,6 @@ export default function SettingAccount() {
     dispatch(setPageTransition("push"));
     navigate(url);
   };
-
-  useEffect(() => {
-    if (confirmed) {
-      if (currentConfirm === "logout") {
-        logout();
-      }
-
-      dispatch(closeConfirm());
-      setCurrentConfirm("");
-    }
-  }, [confirmed]);
 
   return (
     <Page headerInfo={headerInfo}>
