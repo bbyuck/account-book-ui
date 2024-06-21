@@ -63,7 +63,11 @@ export default function LedgerDailyList({ ledgers, onItemSelect }) {
                           marginLeft: "auto",
                         }}
                         primary={`${
-                          ledger.ledgerCode === "E" ? "- " : "+ "
+                          ledger.ledgerCode === "E"
+                            ? "- "
+                            : ledger.ledgerCode === "I"
+                            ? "+ "
+                            : ""
                         }${ledger.amount.toLocaleString()}원`}
                       />
                     </ListItemButton>
