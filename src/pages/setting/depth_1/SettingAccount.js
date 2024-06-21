@@ -10,7 +10,6 @@ import MenuList from "components/MenuList";
 import HeaderBackButton from "components/input/HeaderBackButton";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { syncAuth } from "store/slice/authInfo";
 import { openConfirm, setPageTransition } from "store/slice/clientInfo";
 import { removeJWT } from "util/authUtil";
 
