@@ -8,24 +8,15 @@ import api from "api";
 import Page from "components/Page";
 import MenuList from "components/MenuList";
 import HeaderBackButton from "components/input/HeaderBackButton";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { syncAuth } from "store/slice/authInfo";
-import {
-  closeConfirm,
-  openConfirm,
-  resetClientStore,
-  setPageTransition,
-} from "store/slice/clientInfo";
-import { resetLedgerStore } from "store/slice/ledgerInfo";
+import { openConfirm, setPageTransition } from "store/slice/clientInfo";
 import { removeJWT } from "util/authUtil";
 
 export default function SettingAccount() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const [currentConfirm, setCurrentConfirm] = useState("");
 
   const headerInfo = {
     left: <HeaderBackButton />,
@@ -33,7 +24,6 @@ export default function SettingAccount() {
   };
 
   const openLogoutConfirm = () => {
-    setCurrentConfirm("logout");
     dispatch(
       openConfirm({
         open: true,
@@ -42,13 +32,7 @@ export default function SettingAccount() {
         confirmLabel: "확인",
         cancelLabel: "취소",
         onConfirmed: () => {
-          if (currentConfirm === "logout") {
-            logout();
-          }
-
-          dispatch(closeConfirm());
-          setCurrentConfirm("");
-
+          logout();
           return true;
         },
       })
@@ -61,15 +45,16 @@ export default function SettingAccount() {
       .then((response) => {
         if (response.data.data.success) {
           removeJWT();
-          dispatch(resetLedgerStore());
-          dispatch(resetClientStore());
-          dispatch(resetLedgerStore());
-          dispatch(setPageTransition("switch"));
-          dispatch(syncAuth());
+          console.log(process.env.PUBLIC_URL);
+          window.location.replace(`${process.env.PUBLIC_URL}/login`);
+          // dispatch(setPageTransition("switch"));
+          // dispatch(syncAuth());
         }
       })
       .catch((error) => {
-        console.log(error);
+        /**
+         * Nothing to do
+         */
       });
   };
 
