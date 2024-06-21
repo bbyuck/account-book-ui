@@ -32,7 +32,7 @@ td.calendar-date-cell {
   font-size: 10px;
   width: 100%;
   position: relative;
-  top: 25px;
+  top: 5px;
 }
 
 .calendar-income {
@@ -41,6 +41,10 @@ td.calendar-date-cell {
 
 .calendar-expenditure {
   color: blue;
+}
+
+.calendar-save {
+  color: #24ff3d;
 }
 
 .calendar-date-cell-touching {

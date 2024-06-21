@@ -185,6 +185,11 @@ export default function LedgerCalendar(props) {
                           ].dailyExpenditure.toLocaleString()}`
                         : null}
                     </div>
+                    <div className="calendar-save calendar-money">
+                      {ledgers[day.day] && ledgers[day.day].dailySave
+                        ? `${ledgers[day.day].dailySave.toLocaleString()}`
+                        : null}
+                    </div>
                   </td>
                 );
               })}
