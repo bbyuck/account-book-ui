@@ -44,7 +44,8 @@ export default function SettingAccount() {
       .then((response) => {
         if (response.data.data.success) {
           removeJWT();
-          sessionStorage.setItem("logout", response.data.message);
+          sessionStorage.setItem("logout", true);
+          sessionStorage.setItem("logoutMessage", response.data.message);
           window.location.replace(`${process.env.PUBLIC_URL}/login`);
         }
       })

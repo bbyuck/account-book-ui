@@ -97,7 +97,8 @@ api.interceptors.response.use(
 
     if (isAuthenticationError(err.response.status) && !tokenRefreshed) {
       removeJWT();
-      store.dispatch(syncAuth());
+      sessionStorage.setItem("logout", true);
+      window.location.replace(`${process.env.PUBLIC_URL}/login`);
     }
 
     store.dispatch(openErrorAlert(err.response.data.message));

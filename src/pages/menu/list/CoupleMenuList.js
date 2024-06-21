@@ -15,9 +15,20 @@ const Connected = () => {
   return (
     <ListItemNoButton>
       <ListItemIcon>
-        <HandshakeIcon />
+        <HandshakeIcon color="primary" />
       </ListItemIcon>
       <ListItemText primary="연결됨" />
+    </ListItemNoButton>
+  );
+};
+
+const Wait = () => {
+  return (
+    <ListItemNoButton>
+      <ListItemIcon>
+        <HandshakeIcon />
+      </ListItemIcon>
+      <ListItemText primary="연결 대기중" />
     </ListItemNoButton>
   );
 };
@@ -52,6 +63,8 @@ export default function CoupleMenuList() {
     <MenuList subheader={"커플"}>
       {coupleStatus === "ACTIVE" ? (
         <Connected />
+      ) : userCoupleStatus === "ACTIVE" ? (
+        <Wait />
       ) : (
         <NotConnectedYet action={goForward} />
       )}

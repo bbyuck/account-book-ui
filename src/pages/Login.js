@@ -6,10 +6,11 @@ import { useDispatch } from "react-redux";
 import {
   openErrorAlert,
   openSuccessAlert,
+  resetClientStore,
   setPageTransition,
 } from "store/slice/clientInfo";
 import { saveJWT } from "util/authUtil";
-import { syncAuth } from "store/slice/authInfo";
+import { resetAuthStore, syncAuth } from "store/slice/authInfo";
 import { useNavigate } from "react-router-dom";
 import Page from "components/Page";
 import AppInputForm from "components/AppInputForm";
@@ -17,6 +18,8 @@ import AppInputBox from "components/AppInputBox";
 import Subject from "components/Subject";
 import PasswordInput from "components/input/PasswordInput";
 import EmailInput from "components/input/EmailInput";
+import { resetLedgerStore } from "store/slice/ledgerInfo";
+import { resetUserStore } from "store/slice/userInfo";
 
 const AntSwitch = styled(Switch)(({ theme }) => ({
   width: 28,
@@ -95,9 +98,19 @@ export default function Login() {
   };
 
   useEffect(() => {
-    const logoutMessage = sessionStorage.getItem("logout");
-    if (logoutMessage) {
-      dispatch(openSuccessAlert(logoutMessage));
+    const logout = sessionStorage.getItem("logout");
+    if (logout) {
+      const logoutMessage = sessionStorage.getItem("logoutMessage");
+      dispatch(resetAuthStore());
+      dispatch(resetLedgerStore());
+      dispatch(resetUserStore());
+      dispatch(resetClientStore());
+
+      if (logoutMessage) {
+        dispatch(openSuccessAlert(logoutMessage));
+        sessionStorage.removeItem("logoutMessage");
+      }
+
       sessionStorage.removeItem("logout");
     }
   }, []);

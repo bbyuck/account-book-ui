@@ -32,7 +32,9 @@ export default function AppConfirm() {
     >
       <DialogTitle id="responsive-dialog-title">{confirm.title}</DialogTitle>
       <DialogContent>
-        <div style={{ color: "gray" }}>{confirm.message}</div>
+        <div style={{ color: "gray", whiteSpace: "pre-wrap" }}>
+          {confirm.message}
+        </div>
       </DialogContent>
       <DialogActions>
         <Button autoFocus onClick={handleConfirm}>

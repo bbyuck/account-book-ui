@@ -30,6 +30,14 @@ export default function CoupleConnect() {
   const [targetEmail, setTargetEmail] = useState("");
   const [connectRequestConfirmOpen, setConnectRequestConfirmOpen] =
     useState(false);
+  const [connectionInfo, setConnectionInfo] = useState({
+    coupleName: null,
+    opponentEmail: null,
+    opponentNickname: null,
+    opponentUserCoupleStatus: "NONE",
+    userCoupleId: null,
+  });
+
   const emailInputRef = useRef();
 
   const clientSideEmailValidation = () => {
@@ -50,18 +58,55 @@ export default function CoupleConnect() {
   };
 
   useEffect(() => {
-    if (coupleStatus === "ACTIVE" && userCoupleStatus === "ACTIVE") {
+    if (coupleStatus === "ACTIVE") {
       dispatch(setPageTransition("pop"));
-      dispatch(openErrorAlert("이미 커플로 연결되어 있습니다."));
-      navigate(-1);
+      navigate("/app/menu", { replace: true });
     }
-  }, []);
+
+    if (userCoupleStatus === "ACTIVE") {
+      dispatch(setPageTransition("pop"));
+      navigate("/app/menu", { replace: true });
+    }
+  }, [coupleStatus, userCoupleStatus]);
+
+  const findCoupleStatus = () => {
+    return api
+      .get("/api/v1/couple/status")
+      .then((response) => {
+        dispatch(setCoupleStatus(response.data.data));
+      })
+      .catch((error) => {
+        /**
+         * do nothing
+         */
+      });
+  };
 
   const findCoupleConnectionInfo = () => {
     api
       .get("/api/v1/couple/connect")
       .then((response) => {
-        console.log(response);
+        setConnectionInfo(response.data.data);
+
+        const confirmParam = {
+          title: "연결 요청을 수락할까요?",
+          message: `${response.data.data.opponentEmail}님이 커플 연결 요청을 보냈습니다.`,
+          confirmLabel: "확인",
+          cancelLabel: "닫기",
+          onConfirmed: async () => {
+            const applyParam = {
+              userCoupleId: response.data.data.userCoupleId,
+            };
+            return await api
+              .post("/api/v1/couple/apply", applyParam)
+              .then((response) => {
+                findCoupleStatus();
+              })
+              .catch((error) => {})
+              .finally(() => true);
+          },
+        };
+        dispatch(openConfirm(confirmParam));
       })
       .catch((error) => {});
   };
@@ -118,20 +163,10 @@ export default function CoupleConnect() {
             });
 
           if (!requestSuccess) {
-            console.log("fail");
             return false;
           }
 
-          api
-            .get("/api/v1/couple/status")
-            .then((response) => {
-              dispatch(setCoupleStatus(response.data.data));
-            })
-            .catch((error) => {
-              /**
-               * do nothing
-               */
-            });
+          findCoupleStatus();
 
           return true;
         }}
