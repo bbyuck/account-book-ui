@@ -53,7 +53,8 @@ api.interceptors.response.use(
   (config) => {
     store.dispatch(loadingEnd());
 
-    if (config.data.code) {
+    if (config.data.code && config.data.code !== "SUC_USR_002") {
+      // 로그아웃 예외
       store.dispatch(openSuccessAlert(config.data.message));
     }
     return config;

@@ -1,9 +1,13 @@
 import { Button, FormControlLabel, Link, Switch, styled } from "@mui/material";
 import "pages/style/Login.css";
 import http from "api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { openErrorAlert, setPageTransition } from "store/slice/clientInfo";
+import {
+  openErrorAlert,
+  openSuccessAlert,
+  setPageTransition,
+} from "store/slice/clientInfo";
 import { saveJWT } from "util/authUtil";
 import { syncAuth } from "store/slice/authInfo";
 import { useNavigate } from "react-router-dom";
@@ -89,6 +93,14 @@ export default function Login() {
         dispatch(openErrorAlert(error.response.data.message));
       });
   };
+
+  useEffect(() => {
+    const logoutMessage = sessionStorage.getItem("logout");
+    if (logoutMessage) {
+      dispatch(openSuccessAlert(logoutMessage));
+      sessionStorage.removeItem("logout");
+    }
+  }, []);
 
   return (
     <Page

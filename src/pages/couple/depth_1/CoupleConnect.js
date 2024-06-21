@@ -4,15 +4,17 @@ import MenuList from "components/MenuList";
 import Page from "components/Page";
 import EmailInput from "components/input/EmailInput";
 import HeaderBackButton from "components/input/HeaderBackButton";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   openConfirm,
   openErrorAlert,
   openSuccessAlert,
+  setPageTransition,
 } from "store/slice/clientInfo";
 import api from "api";
 import { setCoupleStatus } from "store/slice/userInfo";
+import { useNavigate } from "react-router-dom";
 
 export default function CoupleConnect() {
   const headerInfo = {
@@ -20,6 +22,8 @@ export default function CoupleConnect() {
     center: <h2>커플 연결</h2>,
   };
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { coupleStatus, userCoupleStatus } = useSelector(
     (state) => state.userInfo
   );
@@ -45,6 +49,23 @@ export default function CoupleConnect() {
     return coupleStatus !== "NONE" || userCoupleStatus !== "NONE";
   };
 
+  useEffect(() => {
+    if (coupleStatus === "ACTIVE" && userCoupleStatus === "ACTIVE") {
+      dispatch(setPageTransition("pop"));
+      dispatch(openErrorAlert("이미 커플로 연결되어 있습니다."));
+      navigate(-1);
+    }
+  }, []);
+
+  const findCoupleConnectionInfo = () => {
+    api
+      .get("/api/v1/couple/connect")
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {});
+  };
+
   return (
     <Page headerInfo={headerInfo}>
       <MenuList>
@@ -56,11 +77,7 @@ export default function CoupleConnect() {
           </ListItem>
         )}
         <ListItem>
-          <ListItemButton
-            onClick={() => {
-              alert("현재 개발중입니다. 잠시만 기다려주세요!");
-            }}
-          >
+          <ListItemButton onClick={findCoupleConnectionInfo}>
             <ListItemText primary="받은 요청 확인" />
           </ListItemButton>
         </ListItem>

@@ -44,10 +44,8 @@ export default function SettingAccount() {
       .then((response) => {
         if (response.data.data.success) {
           removeJWT();
-          console.log(process.env.PUBLIC_URL);
+          sessionStorage.setItem("logout", response.data.message);
           window.location.replace(`${process.env.PUBLIC_URL}/login`);
-          // dispatch(setPageTransition("switch"));
-          // dispatch(syncAuth());
         }
       })
       .catch((error) => {
