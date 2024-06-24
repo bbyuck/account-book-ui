@@ -6,16 +6,20 @@ import { useNavigate } from "react-router-dom";
 import Page from "components/Page";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedDate } from "store/slice/ledgerInfo";
-import http from "api";
+import api from "api";
 import LedgerDailyList from "components/LedgerDailyList";
 import { setPageTransition } from "store/slice/clientInfo";
 // import SettingsIcon from "@mui/icons-material/Settings";
 import GridViewIcon from "@mui/icons-material/GridView";
+import WcIcon from "@mui/icons-material/Wc";
+import BoyIcon from "@mui/icons-material/Boy";
 
 export default function LedgerMain() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { selectedDate } = useSelector((state) => state.ledgerInfo);
+  const { coupleStatus } = useSelector((state) => state.userInfo);
+
   const [pageInit, setPageInit] = useState(true);
   const [monthlyData, setMonthlyData] = useState({});
   const [selectedMonth, setSelectedMonth] = useState({
@@ -23,8 +27,21 @@ export default function LedgerMain() {
     month: selectedDate.month,
   });
   const [selectedDay, setSelectedDay] = useState(selectedDate.day);
+  const [target, setTarget] = useState(
+    coupleStatus === "ACTIVE" ? "COUPLE" : "NONE"
+  );
 
-  const findMonthlyLedger = () => {
+  const findMonthlyLedger = (changeTo) => {
+    let apiUrl = `/api/v1/monthly/ledger`;
+
+    // if (changeTo) {
+    //   apiUrl =
+    //     changeTo === "COUPLE"
+    //       ? `/api/v1/monthly/couple/ledger`
+    //       : `/api/v1/monthly/personal/ledger`;
+    //   setTarget(changeTo);
+    // }
+
     setMonthlyData(null);
     /* TODO -> 월별 가계부 조회 API 호출 */
     const params = {
@@ -33,8 +50,8 @@ export default function LedgerMain() {
         "0"
       )}`,
     };
-    http
-      .get(`/api/v1/monthly/ledger`, { params })
+    api
+      .get(apiUrl, { params })
       .then((response) => {
         setMonthlyData(response.data.data);
       })
@@ -81,9 +98,21 @@ export default function LedgerMain() {
     ),
     center: <h2>{`${selectedMonth.year}년 ${selectedMonth.month}월`}</h2>,
     right: (
-      <IconButton onClick={() => goForward("/app/ledger/register")}>
-        <AddIcon color="primary" />
-      </IconButton>
+      <>
+        {/* {target === "NONE" ? null : target === "COUPLE" ? (
+          <IconButton onClick={() => findMonthlyLedger("PERSONAL")}>
+            <WcIcon color="primary" />
+          </IconButton>
+        ) : (
+          <IconButton onClick={() => findMonthlyLedger("COUPLE")}>
+            <BoyIcon color="primary" />
+          </IconButton>
+        )} */}
+
+        <IconButton onClick={() => goForward("/app/ledger/register")}>
+          <AddIcon color="primary" />
+        </IconButton>
+      </>
     ),
   };
 

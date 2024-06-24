@@ -9,7 +9,7 @@ import DescriptionInput from "components/input/DescriptionInput";
 import LedgerCodeSelect from "components/input/LedgerCodeSelect";
 import { fromLocaleStringToNumber } from "util/numberUtil";
 
-import http from "api";
+import api from "api";
 import { setPageTransition } from "store/slice/clientInfo";
 import { convertToLocalDateFormat } from "util/calendarUtil";
 import HeaderBackButton from "components/input/HeaderBackButton";
@@ -83,7 +83,7 @@ export default function LedgerRegister() {
         ledgerDescription: description,
       };
 
-      http
+      api
         .post("/api/v1/ledger", params)
         .then((response) => {
           sessionStorage.setItem("buttonBack", true);
