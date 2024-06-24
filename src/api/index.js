@@ -95,7 +95,11 @@ api.interceptors.response.use(
       }
     }
 
-    if (isAuthenticationError(err.response.status) && !tokenRefreshed) {
+    if (
+      isAuthenticationError(err.response.status) &&
+      !tokenRefreshed &&
+      !window.location.pathname.endsWith("login")
+    ) {
       removeJWT();
       sessionStorage.setItem("logout", true);
       window.location.replace(`${process.env.PUBLIC_URL}/login`);
