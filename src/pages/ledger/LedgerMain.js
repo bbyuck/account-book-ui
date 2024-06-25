@@ -30,14 +30,22 @@ export default function LedgerMain() {
   const [target, setTarget] = useState("NONE");
 
   const findMonthlyLedger = (changeTo) => {
-    let apiUrl = `/api/v1/monthly/ledger`;
+    const defaultApiUrl = "/api/v1/monthly/ledger";
+    const coupleApiUrl = "/api/v1/monthly/couple/ledger";
+    const personalApiUrl = "/api/v1/monthly/personal/ledger";
+
+    let apiUrl = defaultApiUrl;
 
     if (changeTo) {
-      apiUrl =
-        changeTo === "COUPLE"
-          ? `/api/v1/monthly/couple/ledger`
-          : `/api/v1/monthly/personal/ledger`;
+      apiUrl = changeTo === "COUPLE" ? coupleApiUrl : personalApiUrl;
       setTarget(changeTo);
+    } else {
+      apiUrl =
+        target === "COUPLE"
+          ? coupleApiUrl
+          : target === "PERSONAL"
+          ? personalApiUrl
+          : apiUrl;
     }
 
     setMonthlyData(null);
