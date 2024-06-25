@@ -27,20 +27,18 @@ export default function LedgerMain() {
     month: selectedDate.month,
   });
   const [selectedDay, setSelectedDay] = useState(selectedDate.day);
-  const [target, setTarget] = useState(
-    coupleStatus === "ACTIVE" ? "COUPLE" : "NONE"
-  );
+  const [target, setTarget] = useState("NONE");
 
   const findMonthlyLedger = (changeTo) => {
     let apiUrl = `/api/v1/monthly/ledger`;
 
-    // if (changeTo) {
-    //   apiUrl =
-    //     changeTo === "COUPLE"
-    //       ? `/api/v1/monthly/couple/ledger`
-    //       : `/api/v1/monthly/personal/ledger`;
-    //   setTarget(changeTo);
-    // }
+    if (changeTo) {
+      apiUrl =
+        changeTo === "COUPLE"
+          ? `/api/v1/monthly/couple/ledger`
+          : `/api/v1/monthly/personal/ledger`;
+      setTarget(changeTo);
+    }
 
     setMonthlyData(null);
     /* TODO -> 월별 가계부 조회 API 호출 */
@@ -62,6 +60,14 @@ export default function LedgerMain() {
         document.getElementById("page-contents-wrapper").scroll(0, 0);
       });
   };
+
+  useEffect(() => {
+    if (coupleStatus === "ACTIVE") {
+      setTarget("COUPLE");
+    } else {
+      setTarget("NONE");
+    }
+  }, [coupleStatus]);
 
   useEffect(() => {
     if (!pageInit) {
@@ -99,7 +105,7 @@ export default function LedgerMain() {
     center: <h2>{`${selectedMonth.year}년 ${selectedMonth.month}월`}</h2>,
     right: (
       <>
-        {/* {target === "NONE" ? null : target === "COUPLE" ? (
+        {target === "NONE" ? null : target === "COUPLE" ? (
           <IconButton onClick={() => findMonthlyLedger("PERSONAL")}>
             <WcIcon color="primary" />
           </IconButton>
@@ -107,7 +113,7 @@ export default function LedgerMain() {
           <IconButton onClick={() => findMonthlyLedger("COUPLE")}>
             <BoyIcon color="primary" />
           </IconButton>
-        )} */}
+        )}
 
         <IconButton onClick={() => goForward("/app/ledger/register")}>
           <AddIcon color="primary" />
