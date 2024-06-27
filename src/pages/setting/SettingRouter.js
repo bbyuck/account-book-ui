@@ -4,6 +4,8 @@ import SettingAccount from "pages/setting/depth_1/SettingAccount";
 import SettingPasswordChange from "pages/setting/depth_2/SettingPasswordChange";
 import SettingLedger from "pages/setting/depth_1/SettingLedger";
 import SettingLedgerCategory from "pages/setting/depth_2/ledger-category";
+import SettingLedgerCategoryAdd from "./depth_3/ledger-category-modify";
+import SettingLedgerCategoryModify from "./depth_3/ledger-category-add";
 
 export default function SettingRouter() {
   const location = useLocation();
@@ -29,6 +31,16 @@ export default function SettingRouter() {
         key={location.pathname}
         element={<SettingLedgerCategory />}
         path="/ledger/category"
+      />
+      <Route
+        key={location.pathname}
+        element={<SettingLedgerCategoryAdd />}
+        path="/ledger/category/add"
+      />
+      <Route
+        key={location.pathname}
+        element={<SettingLedgerCategoryModify />}
+        path="/ledger/category/modify/:ledgerCategoryId"
       />
 
       <Route
