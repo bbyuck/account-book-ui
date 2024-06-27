@@ -4,6 +4,7 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import { ButtonBase, Container } from "@mui/material";
 import Icon from "components/icon";
+import { useSelector } from "react-redux";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -18,7 +19,9 @@ const Item = styled(Paper)(({ theme }) => ({
   borderRadius: "15px",
 }));
 
-export default function CategoryGrid({ categories }) {
+export default function CategoryGrid({ categories, selected }) {
+  const { customColor } = useSelector((state) => state.userInfo);
+
   return (
     <Container
       sx={{
@@ -37,9 +40,27 @@ export default function CategoryGrid({ categories }) {
                 sx={{ width: "100%", borderRadius: "15px" }}
                 onClick={category.action}
               >
-                <Item sx={{ width: "100%" }} elevation={3}>
-                  <Icon src={category.iconSrcPath} fill={category.fill} />
-                  <Box sx={{ lineHeight: "25px" }}>{category.name}</Box>
+                <Item
+                  sx={{
+                    width: "100%",
+                    backgroundColor:
+                      selected && selected === category.id
+                        ? `#${customColor}`
+                        : "transparent",
+                  }}
+                  elevation={3}
+                >
+                  <Icon
+                    src={category.iconSrcPath}
+                    fill={
+                      category.fill
+                        ? category.fill
+                        : selected && selected === category.id
+                        ? `white`
+                        : "black"
+                    }
+                  />
+                  <Box sx={{ height: "25px" }}>{category.name}</Box>
                 </Item>
               </ButtonBase>
             </Grid>
