@@ -1,4 +1,9 @@
-import { ListItem, ListItemButton, ListItemText } from "@mui/material";
+import {
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
 import api from "api";
 import ListItemNoButton from "components/ListItemNoButton";
 import Page from "components/Page";
@@ -62,6 +67,13 @@ export default function SettingLedger() {
             selectColor={selectColor}
           />
         </ListItemNoButton>
+        <ListItem>
+          <ListItemButton
+            onClick={() => goForward("/app/setting/ledger/category")}
+          >
+            <ListItemText primary="카테고리 설정" />
+          </ListItemButton>
+        </ListItem>
       </MenuList>
     </Page>
   );
