@@ -48,7 +48,6 @@ export default function LedgerMain() {
           : apiUrl;
     }
 
-    setMonthlyData(null);
     /* TODO -> 월별 가계부 조회 API 호출 */
     const params = {
       ym: `${selectedMonth.year}${String(selectedMonth.month).padStart(
@@ -59,9 +58,11 @@ export default function LedgerMain() {
     api
       .get(apiUrl, { params })
       .then((response) => {
+        setMonthlyData(null);
         setMonthlyData(response.data.data);
       })
       .catch((e) => {
+        setMonthlyData(null);
         console.log(e);
       })
       .finally(() => {
