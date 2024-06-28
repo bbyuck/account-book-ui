@@ -30,6 +30,7 @@ export default function CategoryGrid({ categories, selected }) {
         maxWidth: "375px",
         display: "flex",
         justifyContent: "center",
+        marginBottom: "48px",
       }}
     >
       <Box sx={{ width: "100%" }}>
@@ -47,6 +48,10 @@ export default function CategoryGrid({ categories, selected }) {
                       selected && selected === category.id
                         ? `#${customColor}`
                         : "transparent",
+                    height: "51.75px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
                   }}
                   elevation={3}
                 >
@@ -60,7 +65,17 @@ export default function CategoryGrid({ categories, selected }) {
                         : "black"
                     }
                   />
-                  <Box sx={{ height: "25px" }}>{category.name}</Box>
+                  <Box
+                    sx={{
+                      lineHeight: "25px",
+                      width: "50px",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {category.name}
+                  </Box>
                 </Item>
               </ButtonBase>
             </Grid>

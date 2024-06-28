@@ -10,7 +10,7 @@ const CATEGORY_LIST = [
   {
     id: 1,
     iconSrcPath: "credit-card",
-    name: "배달비",
+    name: "배달비dwqdwqdwq",
     ledgerCode: "E",
   },
   {

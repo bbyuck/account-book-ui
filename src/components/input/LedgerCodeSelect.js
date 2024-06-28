@@ -2,8 +2,9 @@ import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import MoneyOffIcon from "@mui/icons-material/MoneyOff";
 import { Avatar, Box, Grid, IconButton } from "@mui/material";
+import { LEDGER_COLOR } from "consts/colors";
 
-export default function LedgerCodeSelect({ style, value, onSelect }) {
+export default function LedgerCodeSelect({ style, value, onSelect, header }) {
   const ledgerCodes = [
     {
       icon: <AccountBalanceIcon />,
@@ -24,6 +25,19 @@ export default function LedgerCodeSelect({ style, value, onSelect }) {
 
   return (
     <Box sx={{ flexGrow: 1, ...style }}>
+      {!header ? null : (
+        <Box
+          sx={{
+            height: "40px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            color: "rgba(0, 0, 0, 0.6)",
+          }}
+        >
+          <Box sx={{ marginRight: "auto", paddingLeft: "16px" }}>{header}</Box>
+        </Box>
+      )}
       <Grid container spacing={2}>
         {ledgerCodes.map((ledgerCode, index) => (
           <Grid item xs={4} key={`ledger-code-${ledgerCode.value}`}>
@@ -32,7 +46,7 @@ export default function LedgerCodeSelect({ style, value, onSelect }) {
                 style={
                   ledgerCode.value === value
                     ? {
-                        backgroundColor: "blue",
+                        backgroundColor: LEDGER_COLOR[ledgerCode.value],
                       }
                     : null
                 }
