@@ -7,13 +7,41 @@ import { setCouple, setCustomColor } from "store/slice/userInfo";
 import SettingRouter from "pages/setting/SettingRouter";
 import Menu from "pages/menu/Menu";
 import CoupleRouter from "pages/couple/CoupleRouter";
+import { setIcons } from "store/slice/clientInfo";
 
 export default function AppRouter() {
   const location = useLocation();
   const dispatch = useDispatch();
   const { customColor, couple } = useSelector((state) => state.userInfo);
+  const { icons } = useSelector((state) => state.clientInfo);
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   if (!customColor.loaded) {
+  //     api
+  //       .get("/api/v1/custom/color")
+  //       .then((response) => {
+  //         dispatch(setCustomColor(response.data.data.color));
+  //       })
+  //       .catch((error) => {
+  //         /* do nothing */
+  //       });
+  //   }
+  // }, [customColor]);
+
+  // useEffect(() => {
+  //   if (!couple.loaded) {
+  //     api
+  //       .get("/api/v1/couple/status")
+  //       .then((response) => {
+  //         dispatch(setCouple(response.data.data));
+  //       })
+  //       .catch((error) => {
+  //         /* do nothing */
+  //       });
+  //   }
+  // }, [couple]);
+
+  const initialLoad = () => {
     if (!customColor.loaded) {
       api
         .get("/api/v1/custom/color")
@@ -24,9 +52,6 @@ export default function AppRouter() {
           /* do nothing */
         });
     }
-  }, [customColor]);
-
-  useEffect(() => {
     if (!couple.loaded) {
       api
         .get("/api/v1/couple/status")
@@ -37,7 +62,19 @@ export default function AppRouter() {
           /* do nothing */
         });
     }
-  }, [couple]);
+    if (!icons.loaded) {
+      api
+        .get("/api/v1/icons")
+        .then((response) => {
+          dispatch(setIcons(response.data.data.icons));
+        })
+        .catch((error) => {});
+    }
+  };
+
+  useEffect(() => {
+    initialLoad();
+  }, []);
 
   return (
     <>

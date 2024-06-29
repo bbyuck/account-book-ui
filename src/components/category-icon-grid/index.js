@@ -19,7 +19,7 @@ const Item = styled(Paper)(({ theme }) => ({
   borderRadius: "15px",
 }));
 
-export default function CategoryGrid({ categories, selected }) {
+export default function CategoryIconGrid({ categories, selected }) {
   const { customColor } = useSelector((state) => state.userInfo);
 
   return (

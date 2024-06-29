@@ -8,45 +8,15 @@ import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import LedgerCodeSelect from "components/input/LedgerCodeSelect";
 import { Box, IconButton, Paper } from "@mui/material";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
-
-const INITAIL_ICON_LIST = [
-  {
-    id: 1,
-    iconName: "credit-card",
-  },
-  {
-    id: 2,
-    iconName: "taxi",
-  },
-  {
-    id: 3,
-    iconName: "spoon",
-  },
-  {
-    id: 4,
-    iconName: "hospital",
-  },
-  {
-    id: 5,
-    iconName: "heart",
-  },
-  {
-    id: 6,
-    iconName: "martini-glass-citrus",
-  },
-];
-
-const ICON_LIST = Array.from({ length: 50 }, (_, i) => i + 1).map((num) => {
-  return { id: num, iconName: INITAIL_ICON_LIST[num % 6].iconName };
-});
+import { useSelector } from "react-redux";
 
 export default function SettingLedgerCategoryAdd() {
-  const [icons, setIcons] = useState([]);
   const [selectedIcon, setSelectedIcon] = useState(-1);
   const [categoryName, setCategoryName] = useState("");
   const [categoryLedgerCode, setCategoryLedgerCode] = useState(null);
-
   const [complete, setComplete] = useState(false);
+  const { icons } = useSelector((state) => state.clientInfo);
+  const [iconButtons, setIconButtons] = useState([]);
 
   const headerInfo = {
     left: <HeaderBackButton />,
@@ -64,19 +34,23 @@ export default function SettingLedgerCategoryAdd() {
   };
 
   useEffect(() => {
-    setIcons(
-      ICON_LIST.map((icon) => {
-        icon.action = () => {
-          setSelectedIcon(icon.id);
+    setComplete(selectedIcon > -1 && categoryLedgerCode);
+  }, [selectedIcon, categoryName, categoryLedgerCode]);
+
+  useEffect(() => {
+    setIconButtons(
+      icons.value.map((icon) => {
+        const iconButton = {
+          id: icon.iconId,
+          iconName: icon.iconName,
+          action: () => {
+            setSelectedIcon(icon.iconId);
+          },
         };
-        return icon;
+        return iconButton;
       })
     );
   }, []);
-
-  useEffect(() => {
-    setComplete(selectedIcon > -1 && categoryLedgerCode);
-  }, [selectedIcon, categoryName, categoryLedgerCode]);
 
   return (
     <Page headerInfo={headerInfo}>
@@ -106,7 +80,7 @@ export default function SettingLedgerCategoryAdd() {
         />
       </Paper>
       <Box sx={{ position: "relative", marginTop: "235px" }}>
-        <CategoryGrid categories={icons} selected={selectedIcon} />
+        <CategoryGrid categories={iconButtons} selected={selectedIcon} />
       </Box>
     </Page>
   );

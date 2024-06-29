@@ -13,6 +13,7 @@ import AppLoading from "components/AppLoading";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Signup from "pages/Signup";
 import MobileOnly from "pages/common/MobileOnly";
+import { isMobileDevice } from "util/clientUtil";
 
 function App() {
   const history = createBrowserHistory();
@@ -26,26 +27,7 @@ function App() {
   const [isMobile, setIsMobile] = useState(true);
 
   useEffect(() => {
-    const uagent = navigator.userAgent.toLowerCase();
-    const isTablet =
-      /ipad|xoom|sch-i800|(android(?!.*mobile))|playbook|tablet|kindle/i.test(
-        uagent
-      );
-    const isMobile =
-      /mobile|iphone|ipod|blackberry|windows\sce|palm|smartphone|iemobile|NOKIA/i.test(
-        uagent
-      );
-    const isSmallScreen = window.matchMedia("(max-width: 800px)").matches;
-    const isTouchDevice =
-      "maxTouchPoints" in navigator && navigator.maxTouchPoints > 0;
-    const isMobileDevice =
-      isTablet || isMobile || (isSmallScreen && isTouchDevice);
-
-    if (isMobileDevice) {
-      // mobile
-    } else {
-      setIsMobile(false);
-    }
+    setIsMobile(isMobileDevice());
   });
 
   useEffect(() => {

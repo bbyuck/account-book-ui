@@ -21,7 +21,10 @@ const initialState = {
   confirm: initialConfirm,
   loading: false,
   loadingReady: false,
-  icons: [],
+  icons: {
+    loaded: false,
+    value: [],
+  },
 };
 
 const clientInfoSlice = createSlice({
@@ -94,7 +97,8 @@ const clientInfoSlice = createSlice({
       state.loading = false;
     },
     setIcons(state = initialState, action) {
-      state.icons = action.payload;
+      state.icons.loaded = true;
+      state.icons.value = action.payload;
     },
   },
 });
