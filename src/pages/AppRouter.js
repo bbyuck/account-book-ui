@@ -16,7 +16,7 @@ export default function AppRouter() {
   );
 
   useEffect(() => {
-    if (!customColor) {
+    if (!customColor.loaded) {
       api
         .get("/api/v1/custom/color")
         .then((response) => {

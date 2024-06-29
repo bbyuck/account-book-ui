@@ -1,6 +1,6 @@
 import { Button, FormControlLabel, Link, Switch, styled } from "@mui/material";
 import "pages/style/Login.css";
-import http from "api";
+import api from "api";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
@@ -85,7 +85,7 @@ export default function Login() {
       autoLogin: autoLogin,
     };
 
-    http
+    api
       .post("/api/v1/authenticate", params)
       .then((response) => {
         saveJWT(response.data.data);

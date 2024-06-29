@@ -9,37 +9,37 @@ import { setPageTransition } from "store/slice/clientInfo";
 const CATEGORY_LIST = [
   {
     id: 1,
-    iconSrcPath: "credit-card",
-    name: "배달비dwqdwqdwq",
+    iconName: "credit-card",
+    name: "배달비두",
     ledgerCode: "E",
   },
   {
     id: 2,
-    iconSrcPath: "taxi",
+    iconName: "taxi",
     name: "택시비",
     ledgerCode: "E",
   },
   {
     id: 3,
-    iconSrcPath: "spoon",
+    iconName: "spoon",
     name: "식비",
     ledgerCode: "E",
   },
   {
     id: 4,
-    iconSrcPath: "hospital",
+    iconName: "hospital",
     name: "의료비",
     ledgerCode: "E",
   },
   {
     id: 5,
-    iconSrcPath: "heart",
+    iconName: "heart",
     name: "데이트",
     ledgerCode: "E",
   },
   {
     id: 6,
-    iconSrcPath: "martini-glass-citrus",
+    iconName: "martini-glass-citrus",
     name: "술값",
     ledgerCode: "E",
   },
@@ -57,10 +57,10 @@ export default function SettingLedgerCategory() {
 
   const add = {
     id: null,
-    iconSrcPath: "plus",
+    iconName: "plus",
     name: "추가",
     ledgerCode: "NONE",
-    fill: `#${customColor}`,
+    fill: `#${customColor.value}`,
     action: () => {
       goForward("/app/setting/ledger/category/add");
     },

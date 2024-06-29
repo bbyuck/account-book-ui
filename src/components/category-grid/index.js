@@ -46,7 +46,7 @@ export default function CategoryGrid({ categories, selected }) {
                     width: "100%",
                     backgroundColor:
                       selected && selected === category.id
-                        ? `#${customColor}`
+                        ? `#${customColor.value}`
                         : "transparent",
                     height: "51.75px",
                     display: "flex",
@@ -56,7 +56,7 @@ export default function CategoryGrid({ categories, selected }) {
                   elevation={3}
                 >
                   <Icon
-                    src={category.iconSrcPath}
+                    src={category.iconName}
                     fill={
                       category.fill
                         ? category.fill

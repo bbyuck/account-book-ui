@@ -13,32 +13,32 @@ import DeleteIcon from "@mui/icons-material/Delete";
 const INITAIL_ICON_LIST = [
   {
     id: 1,
-    iconSrcPath: "credit-card",
+    iconName: "credit-card",
   },
   {
     id: 2,
-    iconSrcPath: "taxi",
+    iconName: "taxi",
   },
   {
     id: 3,
-    iconSrcPath: "spoon",
+    iconName: "spoon",
   },
   {
     id: 4,
-    iconSrcPath: "hospital",
+    iconName: "hospital",
   },
   {
     id: 5,
-    iconSrcPath: "heart",
+    iconName: "heart",
   },
   {
     id: 6,
-    iconSrcPath: "martini-glass-citrus",
+    iconName: "martini-glass-citrus",
   },
 ];
 
 const ICON_LIST = Array.from({ length: 50 }, (_, i) => i + 1).map((num) => {
-  return { id: num, iconSrcPath: INITAIL_ICON_LIST[num % 6].iconSrcPath };
+  return { id: num, iconName: INITAIL_ICON_LIST[num % 6].iconName };
 });
 
 export default function SettingLedgerCategoryModify() {

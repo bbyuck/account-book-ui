@@ -20,7 +20,7 @@ export default function LedgerCalendar(props) {
     selected,
   } = props;
 
-  const customColor = useSelector((state) => state.userInfo.customColor);
+  const { customColor } = useSelector((state) => state.userInfo);
 
   /**
    * ============== util methods ==============
@@ -145,7 +145,7 @@ export default function LedgerCalendar(props) {
                       borderRadius: "10px",
                       backgroundColor:
                         selectedDay === day.day && selected
-                          ? `#${customColor}`
+                          ? `#${customColor.value}`
                           : "transparent",
                     }}
                     className={`calendar-date-cell`}

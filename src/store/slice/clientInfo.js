@@ -21,6 +21,7 @@ const initialState = {
   confirm: initialConfirm,
   loading: false,
   loadingReady: false,
+  icons: [],
 };
 
 const clientInfoSlice = createSlice({
@@ -92,6 +93,9 @@ const clientInfoSlice = createSlice({
       state.loadingReady = false;
       state.loading = false;
     },
+    setIcons(state = initialState, action) {
+      state.icons = action.payload;
+    },
   },
 });
 
@@ -108,5 +112,6 @@ export const {
   loadingEnd,
   loadingReady,
   resetClientStore,
+  setIcons,
 } = clientInfoSlice.actions;
 export default clientInfoSlice.reducer;

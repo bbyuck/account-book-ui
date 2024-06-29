@@ -34,10 +34,10 @@ export default function SettingLedger() {
   };
 
   const { customColor } = useSelector((state) => state.userInfo);
-  const [settingColor, setSettingColor] = useState(customColor);
+  const [settingColor, setSettingColor] = useState(customColor.value);
 
   const selectColor = (selectedColor, initialColor) => {
-    if (customColor === settingColor) {
+    if (customColor.value === settingColor) {
       return;
     }
     const params = {
@@ -47,7 +47,6 @@ export default function SettingLedger() {
     api
       .post("/api/v1/custom", params)
       .then((response) => {
-        // dispatch(openSuccessAlert(response.data.message));
         dispatch(setCustomColor(selectedColor.replace(/#/g, "")));
       })
       .catch((error) => {
