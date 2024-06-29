@@ -76,7 +76,7 @@ export default function AppRouter() {
       api
         .get("/api/v1/ledger/category")
         .then((response) => {
-          setCategories(response.data.data.ledgerCategoryList);
+          dispatch(setCategories(response.data.data.ledgerCategoryList));
         })
         .catch((error) => {});
     }
