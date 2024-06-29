@@ -50,9 +50,7 @@ export default function CoupleMenuList() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { coupleStatus, userCoupleStatus } = useSelector(
-    (state) => state.userInfo
-  );
+  const { couple } = useSelector((state) => state.userInfo);
 
   const goForward = (url) => {
     dispatch(setPageTransition("push"));
@@ -61,9 +59,9 @@ export default function CoupleMenuList() {
 
   return (
     <MenuList subheader={"커플"}>
-      {coupleStatus === "ACTIVE" ? (
+      {couple.coupleStatus === "ACTIVE" ? (
         <Connected />
-      ) : userCoupleStatus === "ACTIVE" ? (
+      ) : couple.userCoupleStatus === "ACTIVE" ? (
         <Wait />
       ) : (
         <NotConnectedYet action={goForward} />

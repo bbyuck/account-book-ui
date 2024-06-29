@@ -1,8 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  coupleStatus: null,
-  userCoupleStatus: null,
+  couple: {
+    loaded: false,
+    coupleStatus: null,
+    userCoupleStatus: null,
+  },
   customColor: {
     loaded: false,
     value: null,
@@ -22,9 +25,10 @@ const userInfoSlice = createSlice({
       state.customColor.loaded = true;
       state.customColor.value = action.payload;
     },
-    setCoupleStatus(state = initialState, action) {
-      state.coupleStatus = action.payload.coupleStatus;
-      state.userCoupleStatus = action.payload.userCoupleStatus;
+    setCouple(state = initialState, action) {
+      state.couple.loaded = true;
+      state.couple.coupleStatus = action.payload.coupleStatus;
+      state.couple.userCoupleStatus = action.payload.userCoupleStatus;
     },
     setCategories(state = initialState, action) {
       state.categories.loaded = true;
@@ -33,10 +37,6 @@ const userInfoSlice = createSlice({
   },
 });
 
-export const {
-  resetUserStore,
-  setCustomColor,
-  setCoupleStatus,
-  setCategories,
-} = userInfoSlice.actions;
+export const { resetUserStore, setCustomColor, setCouple, setCategories } =
+  userInfoSlice.actions;
 export default userInfoSlice.reducer;

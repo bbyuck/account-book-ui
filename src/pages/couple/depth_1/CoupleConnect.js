@@ -13,7 +13,7 @@ import {
   setPageTransition,
 } from "store/slice/clientInfo";
 import api from "api";
-import { setCoupleStatus } from "store/slice/userInfo";
+import { setCouple } from "store/slice/userInfo";
 import { useNavigate } from "react-router-dom";
 
 export default function CoupleConnect() {
@@ -24,9 +24,7 @@ export default function CoupleConnect() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { coupleStatus, userCoupleStatus } = useSelector(
-    (state) => state.userInfo
-  );
+  const { couple } = useSelector((state) => state.userInfo);
   const [targetEmail, setTargetEmail] = useState("");
   const [connectRequestConfirmOpen, setConnectRequestConfirmOpen] =
     useState(false);
@@ -54,26 +52,26 @@ export default function CoupleConnect() {
   };
 
   const cannotSendRequest = () => {
-    return coupleStatus !== "NONE" || userCoupleStatus !== "NONE";
+    return couple.coupleStatus !== "NONE" || couple.userCoupleStatus !== "NONE";
   };
 
   useEffect(() => {
-    if (coupleStatus === "ACTIVE") {
+    if (couple.coupleStatus === "ACTIVE") {
       dispatch(setPageTransition("pop"));
       navigate("/app/menu", { replace: true });
     }
 
-    if (userCoupleStatus === "ACTIVE") {
+    if (couple.userCoupleStatus === "ACTIVE") {
       dispatch(setPageTransition("pop"));
       navigate("/app/menu", { replace: true });
     }
-  }, [coupleStatus, userCoupleStatus]);
+  }, [couple]);
 
   const findCoupleStatus = () => {
     return api
       .get("/api/v1/couple/status")
       .then((response) => {
-        dispatch(setCoupleStatus(response.data.data));
+        dispatch(setCouple(response.data.data));
       })
       .catch((error) => {
         /**

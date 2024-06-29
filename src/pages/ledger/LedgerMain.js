@@ -18,7 +18,7 @@ export default function LedgerMain() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { selectedDate } = useSelector((state) => state.ledgerInfo);
-  const { coupleStatus } = useSelector((state) => state.userInfo);
+  const { couple } = useSelector((state) => state.userInfo);
 
   const [pageInit, setPageInit] = useState(true);
   const [monthlyData, setMonthlyData] = useState({});
@@ -71,12 +71,12 @@ export default function LedgerMain() {
   };
 
   useEffect(() => {
-    if (coupleStatus === "ACTIVE") {
+    if (couple.coupleStatus === "ACTIVE") {
       setTarget("COUPLE");
     } else {
       setTarget("NONE");
     }
-  }, [coupleStatus]);
+  }, [couple]);
 
   useEffect(() => {
     if (!pageInit) {

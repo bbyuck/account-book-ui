@@ -3,7 +3,7 @@ import { Route, Routes, useLocation } from "react-router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import api from "api";
-import { setCoupleStatus, setCustomColor } from "store/slice/userInfo";
+import { setCouple, setCustomColor } from "store/slice/userInfo";
 import SettingRouter from "pages/setting/SettingRouter";
 import Menu from "pages/menu/Menu";
 import CoupleRouter from "pages/couple/CoupleRouter";
@@ -11,9 +11,7 @@ import CoupleRouter from "pages/couple/CoupleRouter";
 export default function AppRouter() {
   const location = useLocation();
   const dispatch = useDispatch();
-  const { customColor, coupleStatus, userCoupleStatus } = useSelector(
-    (state) => state.userInfo
-  );
+  const { customColor, couple } = useSelector((state) => state.userInfo);
 
   useEffect(() => {
     if (!customColor.loaded) {
@@ -29,17 +27,17 @@ export default function AppRouter() {
   }, [customColor]);
 
   useEffect(() => {
-    if (!coupleStatus && !userCoupleStatus) {
+    if (!couple.loaded) {
       api
         .get("/api/v1/couple/status")
         .then((response) => {
-          dispatch(setCoupleStatus(response.data.data));
+          dispatch(setCouple(response.data.data));
         })
         .catch((error) => {
           /* do nothing */
         });
     }
-  }, [coupleStatus, userCoupleStatus]);
+  }, [couple]);
 
   return (
     <>
