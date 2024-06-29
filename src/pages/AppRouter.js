@@ -3,7 +3,7 @@ import { Route, Routes, useLocation } from "react-router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import api from "api";
-import { setCouple, setCustomColor } from "store/slice/userInfo";
+import { setCategories, setCouple, setCustomColor } from "store/slice/userInfo";
 import SettingRouter from "pages/setting/SettingRouter";
 import Menu from "pages/menu/Menu";
 import CoupleRouter from "pages/couple/CoupleRouter";
@@ -12,7 +12,9 @@ import { setIcons } from "store/slice/clientInfo";
 export default function AppRouter() {
   const location = useLocation();
   const dispatch = useDispatch();
-  const { customColor, couple } = useSelector((state) => state.userInfo);
+  const { customColor, couple, categories } = useSelector(
+    (state) => state.userInfo
+  );
   const { icons } = useSelector((state) => state.clientInfo);
 
   // useEffect(() => {
@@ -67,6 +69,14 @@ export default function AppRouter() {
         .get("/api/v1/icons")
         .then((response) => {
           dispatch(setIcons(response.data.data.icons));
+        })
+        .catch((error) => {});
+    }
+    if (!categories.loaded) {
+      api
+        .get("/api/v1/ledger/category")
+        .then((response) => {
+          setCategories(response.data.data.ledgerCategoryList);
         })
         .catch((error) => {});
     }

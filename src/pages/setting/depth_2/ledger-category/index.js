@@ -1,3 +1,4 @@
+import api from "api";
 import Page from "components/Page";
 import CategoryGrid from "components/category-grid";
 import HeaderBackButton from "components/input/HeaderBackButton";
@@ -6,47 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setPageTransition } from "store/slice/clientInfo";
 
-const CATEGORY_LIST = [
-  {
-    id: 1,
-    iconName: "credit-card",
-    name: "배달비두",
-    ledgerCode: "E",
-  },
-  {
-    id: 2,
-    iconName: "taxi",
-    name: "택시비",
-    ledgerCode: "E",
-  },
-  {
-    id: 3,
-    iconName: "spoon",
-    name: "식비",
-    ledgerCode: "E",
-  },
-  {
-    id: 4,
-    iconName: "hospital",
-    name: "의료비",
-    ledgerCode: "E",
-  },
-  {
-    id: 5,
-    iconName: "heart",
-    name: "데이트",
-    ledgerCode: "E",
-  },
-  {
-    id: 6,
-    iconName: "martini-glass-citrus",
-    name: "술값",
-    ledgerCode: "E",
-  },
-];
-
 export default function SettingLedgerCategory() {
-  const { customColor } = useSelector((state) => state.userInfo);
+  const { customColor, categories } = useSelector((state) => state.userInfo);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -65,17 +27,26 @@ export default function SettingLedgerCategory() {
       goForward("/app/setting/ledger/category/add");
     },
   };
-  const [categories, setCategories] = useState([add]);
+  const [categoryButtons, setCategoryButtons] = useState([add]);
 
   useEffect(() => {
-    setCategories(
-      CATEGORY_LIST.map((category) => {
-        category.action = () =>
-          goForward(`/app/setting/ledger/category/modify/${category.id}`);
-        return category;
-      }).concat(add)
+    setCategoryButtons(
+      categories.value
+        .map((category) => {
+          const categoryButton = {
+            id: category.ledgerCategoryId,
+            iconName: category.iconName,
+            ledgerCode: category.ledgerCode,
+            name: category.ledgerCategoryName,
+            action: () =>
+              goForward(`/app/setting/ledger/category/modify/${category.id}`),
+          };
+          console.log(categoryButton);
+          return categoryButton;
+        })
+        .concat(add)
     );
-  }, []);
+  }, [categories]);
 
   const headerInfo = {
     left: <HeaderBackButton />,
@@ -83,7 +54,7 @@ export default function SettingLedgerCategory() {
   };
   return (
     <Page headerInfo={headerInfo}>
-      <CategoryGrid categories={categories} />
+      <CategoryGrid categories={categoryButtons} />
     </Page>
   );
 }

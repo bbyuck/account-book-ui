@@ -8,7 +8,15 @@ import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import LedgerCodeSelect from "components/input/LedgerCodeSelect";
 import { Box, IconButton, Paper } from "@mui/material";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import api from "api";
+import {
+  openConfirm,
+  openErrorAlert,
+  setPageTransition,
+} from "store/slice/clientInfo";
+import { setCategories } from "store/slice/userInfo";
+import { useNavigate } from "react-router-dom";
 
 export default function SettingLedgerCategoryAdd() {
   const [selectedIcon, setSelectedIcon] = useState(-1);
@@ -17,17 +25,72 @@ export default function SettingLedgerCategoryAdd() {
   const [complete, setComplete] = useState(false);
   const { icons } = useSelector((state) => state.clientInfo);
   const [iconButtons, setIconButtons] = useState([]);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const addLedgerCategory = async () => {
+    const params = {
+      ledgerCategoryName: categoryName,
+      ledgerCode: categoryLedgerCode,
+      iconId: selectedIcon,
+    };
+
+    if (
+      !params.ledgerCategoryName ||
+      params.ledgerCategoryName.trim().length === 0
+    ) {
+      dispatch(openErrorAlert("카테고리 명은 필수입니다."));
+      return;
+    }
+
+    if (!params.ledgerCode) {
+      dispatch(openErrorAlert("어떤 가계부 항목의 카테고리인지 선택해주세요."));
+      return;
+    }
+
+    if (!params.iconId < 0) {
+      dispatch(openErrorAlert("카테고리의 아이콘을 선택해주세요."));
+      return;
+    }
+
+    await api
+      .post("/api/v1/ledger/category", params)
+      .then((response) => {
+        api
+          .get("/api/v1/ledger/category")
+          .then((response) => {
+            dispatch(setCategories(response.data.data.ledgerCategoryList));
+          })
+          .catch((error) => {
+            return false;
+          });
+
+        navigate(-1);
+      })
+      .catch((error) => {
+        return false;
+      });
+
+    return true;
+  };
+
+  const openAddLedgerCategoryConfirm = () => {
+    const confirmParam = {
+      title: "카테고리 추가",
+      message: "카테고리를 추가하시겠습니까?",
+      confirmLabel: "추가",
+      cancelLabel: "취소",
+      onConfirmed: addLedgerCategory,
+    };
+
+    dispatch(openConfirm(confirmParam));
+  };
 
   const headerInfo = {
     left: <HeaderBackButton />,
     center: <h2>카테고리 추가</h2>,
     right: (
-      <IconButton
-        onClick={() => {
-          alert("카테고리 추가 API 호출");
-        }}
-        disabled={!complete}
-      >
+      <IconButton onClick={openAddLedgerCategoryConfirm} disabled={!complete}>
         <AssignmentTurnedInIcon color={complete ? "primary" : "disabled"} />
       </IconButton>
     ),
