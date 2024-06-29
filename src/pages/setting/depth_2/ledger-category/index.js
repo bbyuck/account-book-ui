@@ -1,4 +1,3 @@
-import api from "api";
 import Page from "components/Page";
 import CategoryGrid from "components/category-grid";
 import HeaderBackButton from "components/input/HeaderBackButton";
@@ -32,16 +31,16 @@ export default function SettingLedgerCategory() {
   useEffect(() => {
     setCategoryButtons(
       categories.value
-        .map((category) => {
+        .map((category, index) => {
           const categoryButton = {
             id: category.ledgerCategoryId,
             iconName: category.iconName,
             ledgerCode: category.ledgerCode,
             name: category.ledgerCategoryName,
             action: () =>
-              goForward(`/app/setting/ledger/category/modify/${category.id}`),
+              // goForward(`/app/setting/ledger/category/modify/${category.id}`),
+              goForward(`/app/setting/ledger/category/modify/${index}`),
           };
-          console.log(categoryButton);
           return categoryButton;
         })
         .concat(add)

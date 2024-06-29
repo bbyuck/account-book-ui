@@ -40,7 +40,7 @@ export default function SettingRouter() {
       <Route
         key={location.pathname}
         element={<SettingLedgerCategoryModify />}
-        path="/ledger/category/modify/:ledgerCategoryId"
+        path="/ledger/category/modify/:selectedLedgerCategoryIndex"
       />
 
       <Route

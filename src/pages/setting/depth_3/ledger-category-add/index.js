@@ -17,6 +17,7 @@ import {
 } from "store/slice/clientInfo";
 import { setCategories } from "store/slice/userInfo";
 import { useNavigate } from "react-router-dom";
+import { validateInsertAndUpdate } from "util/validation/ledgerCategory";
 
 export default function SettingLedgerCategoryAdd() {
   const [selectedIcon, setSelectedIcon] = useState(-1);
@@ -35,22 +36,8 @@ export default function SettingLedgerCategoryAdd() {
       iconId: selectedIcon,
     };
 
-    if (
-      !params.ledgerCategoryName ||
-      params.ledgerCategoryName.trim().length === 0
-    ) {
-      dispatch(openErrorAlert("카테고리 명은 필수입니다."));
-      return;
-    }
-
-    if (!params.ledgerCode) {
-      dispatch(openErrorAlert("어떤 가계부 항목의 카테고리인지 선택해주세요."));
-      return;
-    }
-
-    if (!params.iconId < 0) {
-      dispatch(openErrorAlert("카테고리의 아이콘을 선택해주세요."));
-      return;
+    if (!validateInsertAndUpdate(params)) {
+      return false;
     }
 
     await api
@@ -61,9 +48,7 @@ export default function SettingLedgerCategoryAdd() {
           .then((response) => {
             dispatch(setCategories(response.data.data.ledgerCategoryList));
           })
-          .catch((error) => {
-            return false;
-          });
+          .catch((error) => {});
 
         navigate(-1);
       })
@@ -97,7 +82,12 @@ export default function SettingLedgerCategoryAdd() {
   };
 
   useEffect(() => {
-    setComplete(selectedIcon > -1 && categoryLedgerCode);
+    setComplete(
+      selectedIcon > -1 &&
+        categoryLedgerCode &&
+        categoryName &&
+        categoryName.trim().length > 0
+    );
   }, [selectedIcon, categoryName, categoryLedgerCode]);
 
   useEffect(() => {
