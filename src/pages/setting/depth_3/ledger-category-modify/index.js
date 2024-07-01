@@ -80,10 +80,6 @@ export default function SettingLedgerCategoryModify() {
     return true;
   };
 
-  const openCategoryConfirm = (confirmParam) => {
-    dispatch(openConfirm(confirmParam));
-  };
-
   const headerInfo = {
     left: <HeaderBackButton />,
     center: <h2>카테고리 수정</h2>,
@@ -91,26 +87,30 @@ export default function SettingLedgerCategoryModify() {
       <>
         <IconButton
           onClick={() =>
-            openCategoryConfirm({
-              title: "카테고리 삭제",
-              message: "카테고리를 삭제하시겠습니까?",
-              confirmLabel: "삭제",
-              cancelLabel: "취소",
-              onConfirmed: deleteLedgerCategory,
-            })
+            dispatch(
+              openConfirm({
+                title: "카테고리 삭제",
+                message: "카테고리를 삭제하시겠습니까?",
+                confirmLabel: "삭제",
+                cancelLabel: "취소",
+                onConfirmed: deleteLedgerCategory,
+              })
+            )
           }
         >
           <DeleteIcon color={"error"} />
         </IconButton>
         <HeaderDoneButton
           onClick={() =>
-            openCategoryConfirm({
-              title: "카테고리 수정",
-              message: "카테고리를 수정하시겠습니까?",
-              confirmLabel: "수정",
-              cancelLabel: "취소",
-              onConfirmed: updateLedgerCategory,
-            })
+            dispatch(
+              openConfirm({
+                title: "카테고리 수정",
+                message: "카테고리를 수정하시겠습니까?",
+                confirmLabel: "수정",
+                cancelLabel: "취소",
+                onConfirmed: updateLedgerCategory,
+              })
+            )
           }
           complete={complete}
         />
