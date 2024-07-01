@@ -56,7 +56,7 @@ export default function CategoryGrid({ categories, selected }) {
                   elevation={3}
                 >
                   <Icon
-                    src={category.iconName}
+                    name={category.iconName}
                     fill={
                       category.fill
                         ? category.fill

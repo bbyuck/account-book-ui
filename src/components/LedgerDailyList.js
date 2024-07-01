@@ -7,8 +7,29 @@ import {
   Paper,
 } from "@mui/material";
 import MenuList from "components/MenuList";
+import Icon from "components/icon";
 
 export default function LedgerDailyList({ ledgers, onItemSelect }) {
+  const renderCategory = (ledger) => {
+    return (
+      <Box sx={{ position: "absolute", top: 0 }}>
+        {ledger.category && ledger.category.ledgerCategoryId ? (
+          <>
+            <Icon
+              style={{
+                display: "inline-block",
+                paddingRight: "5px",
+              }}
+              name={ledger.category.iconName}
+              size={"15px"}
+            />
+            {ledger.category.ledgerCategoryName}
+          </>
+        ) : null}
+      </Box>
+    );
+  };
+
   return (
     <>
       {ledgers && ledgers.length > 0 ? (
@@ -28,7 +49,7 @@ export default function LedgerDailyList({ ledgers, onItemSelect }) {
                     sx={{
                       width: "96vw",
                       marginLeft: "2vw",
-                      height: "48px",
+                      height: "74px",
                       lineHeight: "48px",
                       marginTop: "5px",
                       marginBottom: "5px",
@@ -55,21 +76,26 @@ export default function LedgerDailyList({ ledgers, onItemSelect }) {
                         }}
                         className="ledger-daily-list-tag"
                       ></span>
-                      <ListItemText primary={ledger.description} />
-                      <ListItemText
-                        style={{
+
+                      {/* 카테고리 렌더링 */}
+                      {renderCategory(ledger)}
+
+                      <Box sx={{ position: "absolute", bottom: 0 }}>
+                        {ledger.description}
+                      </Box>
+                      <Box
+                        sx={{
                           position: "absolute",
                           right: "16px",
-                          marginLeft: "auto",
+                          bottom: 0,
                         }}
-                        primary={`${
-                          ledger.ledgerCode === "E"
-                            ? "- "
-                            : ledger.ledgerCode === "I"
-                            ? "+ "
-                            : ""
-                        }${ledger.amount.toLocaleString()}원`}
-                      />
+                      >{`${
+                        ledger.ledgerCode === "E"
+                          ? "- "
+                          : ledger.ledgerCode === "I"
+                          ? "+ "
+                          : ""
+                      }${ledger.amount.toLocaleString()}원`}</Box>
                     </ListItemButton>
                   </Paper>
                 </ListItem>
