@@ -3,7 +3,7 @@ import InputConfirm from "components/input/InputConfirm";
 import MenuList from "components/MenuList";
 import Page from "components/Page";
 import EmailInput from "components/input/EmailInput";
-import HeaderBackButton from "components/input/HeaderBackButton";
+import HeaderBackButton from "components/header/back-button";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {

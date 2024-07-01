@@ -5,7 +5,7 @@ import AppInputForm from "components/AppInputForm";
 import Page from "components/Page";
 import Subject from "components/Subject";
 import EmailInput from "components/input/EmailInput";
-import HeaderBackButton from "components/input/HeaderBackButton";
+import HeaderBackButton from "components/header/back-button";
 import NewPasswordInput from "components/input/NewPasswordInput";
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";

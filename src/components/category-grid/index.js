@@ -72,6 +72,10 @@ export default function CategoryGrid({ categories, selected }) {
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
+                      color:
+                        selected && selected === category.id
+                          ? "white"
+                          : "black",
                     }}
                   >
                     {category.name}

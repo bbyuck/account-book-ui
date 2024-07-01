@@ -12,18 +12,17 @@ import { fromLocaleStringToNumber } from "util/numberUtil";
 import api from "api";
 import { setPageTransition } from "store/slice/clientInfo";
 import { convertToLocalDateFormat } from "util/calendarUtil";
-import HeaderBackButton from "components/input/HeaderBackButton";
+import HeaderBackButton from "components/header/back-button";
+import CategoryGrid from "components/category-grid";
+import { Box, Paper } from "@mui/material";
+import HeaderDoneButton from "components/header/done-button";
 
 export default function LedgerRegister() {
   const navigate = useNavigate();
   const { selectedDate } = useSelector((state) => state.ledgerInfo);
+  const { categories } = useSelector((state) => state.userInfo);
   const [requiredInputCompleted, setRequiredInputCompleted] = useState(false);
   const dispatch = useDispatch();
-
-  const headerInfo = {
-    left: <HeaderBackButton />,
-    center: <h2>가계부 입력</h2>,
-  };
 
   /**
    * ================= 금액 ===================
@@ -53,18 +52,10 @@ export default function LedgerRegister() {
   /**
    * ================= 설명 ===================
    */
+  const [ledgerCategoryButtons, setLedgerCategoryButtons] = useState([]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
 
-  /**
-   * 필수 입력 조건
-   */
-  useEffect(() => {
-    setRequiredInputCompleted(ledgerCode ? true : false);
-  }, [ledgerCode]);
-
-  /**
-   * 필수 입력 조건 모두 입력시 저장
-   */
-  useEffect(() => {
+  const insertLedger = () => {
     if (requiredInputCompleted) {
       // TODO insert API call
 
@@ -81,6 +72,7 @@ export default function LedgerRegister() {
         ledgerCode: ledgerCode,
         ledgerAmount: fromLocaleStringToNumber(amount),
         ledgerDescription: description,
+        ledgerCategoryId: selectedCategoryId,
       };
 
       api
@@ -88,40 +80,94 @@ export default function LedgerRegister() {
         .then((response) => {
           sessionStorage.setItem("buttonBack", true);
           dispatch(setPageTransition("pop"));
-          navigate("/app/ledger", {
-            replace: true,
-          });
+          navigate(-1);
         })
-        .catch((error) => {
-          console.log(error);
-        });
+        .catch((error) => {});
     }
-  }, [requiredInputCompleted, dispatch]);
+  };
+
+  const headerInfo = {
+    left: <HeaderBackButton />,
+    center: <h2>가계부 입력</h2>,
+    right: (
+      <HeaderDoneButton
+        onClick={insertLedger}
+        complete={requiredInputCompleted}
+      />
+    ),
+  };
+
+  /**
+   * 필수 입력 조건
+   */
+  useEffect(() => {
+    setRequiredInputCompleted(
+      ledgerCode && fromLocaleStringToNumber(amount) > 0
+    );
+  }, [ledgerCode, amount]);
+
+  useEffect(() => {
+    setLedgerCategoryButtons(
+      categories.value
+        .filter((category) => category.ledgerCode === ledgerCode)
+        .map((category) => {
+          const categoryButton = {
+            id: category.ledgerCategoryId,
+            iconName: category.iconName,
+            ledgerCode: category.ledgerCode,
+            name: category.ledgerCategoryName,
+            action: () => setSelectedCategoryId(category.ledgerCategoryId),
+          };
+          return categoryButton;
+        })
+    );
+  }, [categories, ledgerCode]);
 
   return (
     <Page headerInfo={headerInfo}>
-      <DatePicker label={"날짜"} selectedDate={selectedDate} disabled />
+      <Paper
+        elevation={5}
+        sx={{
+          paddingBottom: "25px",
+          width: "100vw",
+          position: "fixed",
+          backgroundColor: "#fff",
+          zIndex: 2,
+        }}
+      >
+        <DatePicker label={"날짜"} selectedDate={selectedDate} disabled />
 
-      <MoneyInput
-        style={{ marginTop: "20px" }}
-        value={amount}
-        label={"금액을 입력해주세요."}
-        onChange={setAmount}
-        max={100000000}
-      />
+        <MoneyInput
+          style={{ marginTop: "20px" }}
+          value={amount}
+          label={"금액을 입력해주세요."}
+          onChange={setAmount}
+          max={100000000}
+        />
 
-      <DescriptionInput
-        label={"상세 내역을 입력해주세요."}
-        style={{ marginTop: "20px" }}
-        value={description}
-        onChange={setDescription}
-      />
+        <DescriptionInput
+          label={"상세 내역을 입력해주세요."}
+          style={{ marginTop: "20px" }}
+          value={description}
+          onChange={setDescription}
+        />
 
-      <LedgerCodeSelect
-        style={{ marginTop: "20px" }}
-        value={ledgerCode}
-        onSelect={setLedgerCode}
-      />
+        <LedgerCodeSelect
+          style={{ marginTop: "20px" }}
+          value={ledgerCode}
+          onSelect={(newValue) => {
+            setLedgerCode(newValue === ledgerCode ? null : newValue);
+            setSelectedCategoryId(null);
+          }}
+        />
+      </Paper>
+
+      <Box sx={{ position: "relative", marginTop: "350px" }}>
+        <CategoryGrid
+          categories={ledgerCategoryButtons}
+          selected={selectedCategoryId}
+        />
+      </Box>
     </Page>
   );
 }

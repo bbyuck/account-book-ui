@@ -7,7 +7,7 @@ import {
 import api from "api";
 import Page from "components/Page";
 import MenuList from "components/MenuList";
-import HeaderBackButton from "components/input/HeaderBackButton";
+import HeaderBackButton from "components/header/back-button";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { openConfirm, setPageTransition } from "store/slice/clientInfo";

@@ -1,23 +1,19 @@
 import AppInputBox from "components/AppInputBox";
 import Page from "components/Page";
 import CategoryGrid from "components/category-grid";
-import HeaderBackButton from "components/input/HeaderBackButton";
+import HeaderBackButton from "components/header/back-button";
 import TextInput from "components/input/text";
 import { useEffect, useState } from "react";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import LedgerCodeSelect from "components/input/LedgerCodeSelect";
-import { Box, IconButton, Paper } from "@mui/material";
-import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
+import { Box, Paper } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import api from "api";
-import {
-  openConfirm,
-  openErrorAlert,
-  setPageTransition,
-} from "store/slice/clientInfo";
+import { openConfirm } from "store/slice/clientInfo";
 import { setCategories } from "store/slice/userInfo";
 import { useNavigate } from "react-router-dom";
 import { validateInsertAndUpdate } from "util/validation/ledgerCategory";
+import HeaderDoneButton from "components/header/done-button";
 
 export default function SettingLedgerCategoryAdd() {
   const [selectedIcon, setSelectedIcon] = useState(-1);
@@ -75,9 +71,10 @@ export default function SettingLedgerCategoryAdd() {
     left: <HeaderBackButton />,
     center: <h2>카테고리 추가</h2>,
     right: (
-      <IconButton onClick={openAddLedgerCategoryConfirm} disabled={!complete}>
-        <AssignmentTurnedInIcon color={complete ? "primary" : "disabled"} />
-      </IconButton>
+      <HeaderDoneButton
+        onClick={openAddLedgerCategoryConfirm}
+        complete={complete}
+      />
     ),
   };
 

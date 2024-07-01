@@ -1,7 +1,7 @@
 import AppInputBox from "components/AppInputBox";
 import Page from "components/Page";
 import CategoryGrid from "components/category-grid";
-import HeaderBackButton from "components/input/HeaderBackButton";
+import HeaderBackButton from "components/header/back-button";
 import TextInput from "components/input/text";
 import { useEffect, useState } from "react";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
@@ -15,6 +15,7 @@ import api from "api";
 import { validateInsertAndUpdate } from "util/validation/ledgerCategory";
 import { setCategories } from "store/slice/userInfo";
 import { openConfirm } from "store/slice/clientInfo";
+import HeaderDoneButton from "components/header/done-button";
 
 export default function SettingLedgerCategoryModify() {
   const [selectedIcon, setSelectedIcon] = useState(-1);
@@ -101,7 +102,7 @@ export default function SettingLedgerCategoryModify() {
         >
           <DeleteIcon color={"error"} />
         </IconButton>
-        <IconButton
+        <HeaderDoneButton
           onClick={() =>
             openCategoryConfirm({
               title: "카테고리 수정",
@@ -111,10 +112,8 @@ export default function SettingLedgerCategoryModify() {
               onConfirmed: updateLedgerCategory,
             })
           }
-          disabled={!complete}
-        >
-          <AssignmentTurnedInIcon color={complete ? "primary" : "disabled"} />
-        </IconButton>
+          complete={complete}
+        />
       </>
     ),
   };

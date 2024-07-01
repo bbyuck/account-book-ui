@@ -1,6 +1,6 @@
 import Page from "components/Page";
 import CategoryGrid from "components/category-grid";
-import HeaderBackButton from "components/input/HeaderBackButton";
+import HeaderBackButton from "components/header/back-button";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";

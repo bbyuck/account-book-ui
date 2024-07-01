@@ -3,7 +3,7 @@ import api from "api";
 import AppInputBox from "components/AppInputBox";
 import AppInputForm from "components/AppInputForm";
 import Page from "components/Page";
-import HeaderBackButton from "components/input/HeaderBackButton";
+import HeaderBackButton from "components/header/back-button";
 import NewPasswordInput from "components/input/NewPasswordInput";
 import PasswordInput from "components/input/PasswordInput";
 import { useEffect, useRef, useState } from "react";

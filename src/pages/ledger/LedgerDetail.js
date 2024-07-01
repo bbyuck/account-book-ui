@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
 import "components/style/TextField.css";
-import api from "api";
+import http from "api";
 import MoneyInput from "components/input/MoneyInput";
 import DatePicker from "components/input/DatePicker";
 import DescriptionInput from "components/input/DescriptionInput";
@@ -49,7 +49,7 @@ export default function LedgerDetail() {
     }
 
     const apiUrl = `/api/v1/ledger/${ledgerId}`;
-    api
+    http
       .get(apiUrl)
       .then((response) => {
         setAmount(response.data.data.ledgerAmount.toLocaleString());
@@ -77,7 +77,7 @@ export default function LedgerDetail() {
       ledgerAmount: fromLocaleStringToNumber(amount),
       ledgerDescription: description,
     };
-    api
+    http
       .put(`/api/v1/ledger/${ledgerId}`, param)
       .then((response) => {
         sessionStorage.setItem("buttonBack", true);
@@ -109,7 +109,7 @@ export default function LedgerDetail() {
   };
 
   const deleteLedger = () => {
-    api
+    http
       .delete(`/api/v1/ledger/${ledgerId}`)
       .then((response) => {
         if (response.data.data.success) {
