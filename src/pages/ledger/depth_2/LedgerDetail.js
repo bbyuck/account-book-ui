@@ -1,8 +1,6 @@
-import { Box, Fab, IconButton, Paper, Zoom } from "@mui/material";
+import { Box, IconButton, Paper } from "@mui/material";
 import Page from "components/Page";
 import { useNavigate, useParams } from "react-router";
-
-import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -17,11 +15,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { setSelectedDetailDate } from "store/slice/ledgerInfo";
 import { convertToLocalDateFormat } from "util/calendarUtil";
 import { fromLocaleStringToNumber } from "util/numberUtil";
-import {
-  closeConfirm,
-  openConfirm,
-  setPageTransition,
-} from "store/slice/clientInfo";
+import { openConfirm, setPageTransition } from "store/slice/clientInfo";
 import HeaderBackButton from "components/header/back-button";
 import HeaderDoneButton from "components/header/done-button";
 import CategoryGrid from "components/category-grid";
@@ -81,37 +75,6 @@ export default function LedgerDetail() {
   const [ledgerCategoryButtons, setLedgerCategoryButtons] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
 
-  useEffect(() => {
-    dispatch(setSelectedDetailDate(selectedDate));
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (!ledgerId) {
-      alert("잘못된 접근입니다.");
-      sessionStorage.setItem("buttonBack", true);
-      dispatch(setPageTransition("pop"));
-      navigate("/app/ledger", {
-        replace: true,
-      });
-    }
-
-    const apiUrl = `/api/v1/ledger/${ledgerId}`;
-    api
-      .get(apiUrl)
-      .then((response) => {
-        setAmount(response.data.data.amount.toLocaleString());
-        setDescription(response.data.data.description);
-        setLedgerCode(response.data.data.ledgerCode);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-
-    /**
-     * TODO ledger detail get
-     */
-  }, [ledgerId, navigate, dispatch]);
-
   const updateLedger = async () => {
     if (fromLocaleStringToNumber(amount) === 0) {
       alert("가계부 금액은 0원 이상이어야 합니다.");
@@ -152,7 +115,35 @@ export default function LedgerDetail() {
     return true;
   };
 
-  const openLedgerConfirm = (params) => {};
+  const findLedger = () => {
+    const apiUrl = `/api/v1/ledger/${ledgerId}`;
+    api
+      .get(apiUrl)
+      .then((response) => {
+        setAmount(response.data.data.amount.toLocaleString());
+        setDescription(response.data.data.description);
+        setLedgerCode(response.data.data.ledgerCode);
+        setSelectedCategoryId(response.data.data.category.ledgerCategoryId);
+      })
+      .catch((e) => {});
+  };
+
+  useEffect(() => {
+    dispatch(setSelectedDetailDate(selectedDate));
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!ledgerId) {
+      alert("잘못된 접근입니다.");
+      sessionStorage.setItem("buttonBack", true);
+      dispatch(setPageTransition("pop"));
+      navigate("/app/ledger", {
+        replace: true,
+      });
+    }
+
+    findLedger();
+  }, [ledgerId, navigate, dispatch]);
 
   const headerInfo = {
     left: <HeaderBackButton />,
