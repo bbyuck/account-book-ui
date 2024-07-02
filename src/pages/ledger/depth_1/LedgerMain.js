@@ -1,7 +1,6 @@
 import LedgerCalendarCarousel from "components/LedgerCalendarCarousel";
 import { useEffect, useState } from "react";
 import { IconButton } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 import Page from "components/Page";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +12,7 @@ import { setPageTransition } from "store/slice/clientInfo";
 import GridViewIcon from "@mui/icons-material/GridView";
 import WcIcon from "@mui/icons-material/Wc";
 import BoyIcon from "@mui/icons-material/Boy";
+import HeaderAddButton from "components/header/add-button";
 
 export default function LedgerMain() {
   const navigate = useNavigate();
@@ -124,9 +124,7 @@ export default function LedgerMain() {
           </IconButton>
         )}
 
-        <IconButton onClick={() => goForward("/app/ledger/register")}>
-          <AddIcon color="primary" />
-        </IconButton>
+        <HeaderAddButton targetPage={"/app/ledger/register"} />
       </>
     ),
   };

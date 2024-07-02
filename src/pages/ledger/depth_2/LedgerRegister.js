@@ -20,7 +20,7 @@ import HeaderDoneButton from "components/header/done-button";
 export default function LedgerRegister() {
   const navigate = useNavigate();
   const { selectedDate } = useSelector((state) => state.ledgerInfo);
-  const { categories } = useSelector((state) => state.userInfo);
+  const { categories, customColor } = useSelector((state) => state.userInfo);
   const [requiredInputCompleted, setRequiredInputCompleted] = useState(false);
   const dispatch = useDispatch();
 
@@ -106,6 +106,22 @@ export default function LedgerRegister() {
     );
   }, [ledgerCode, amount]);
 
+  const addButton = {
+    id: null,
+    iconName: "plus",
+    name: "추가",
+    ledgerCode: "NONE",
+    fill: `#${customColor.value}`,
+    action: () => {
+      goForward("/app/setting/ledger/category/add");
+    },
+  };
+
+  const goForward = (url) => {
+    dispatch(setPageTransition("push"));
+    navigate(url);
+  };
+
   useEffect(() => {
     setLedgerCategoryButtons(
       categories.value
@@ -120,6 +136,7 @@ export default function LedgerRegister() {
           };
           return categoryButton;
         })
+        .concat(addButton)
     );
   }, [categories, ledgerCode]);
 

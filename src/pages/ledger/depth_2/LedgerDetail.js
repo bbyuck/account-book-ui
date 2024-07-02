@@ -28,7 +28,7 @@ export default function LedgerDetail() {
   const { selectedDate, selectedDetailDate } = useSelector(
     (state) => state.ledgerInfo
   );
-  const { categories } = useSelector((state) => state.userInfo);
+  const { categories, customColor } = useSelector((state) => state.userInfo);
   const [requiredInputCompleted, setRequiredInputCompleted] = useState(false);
 
   /**
@@ -187,6 +187,22 @@ export default function LedgerDetail() {
     ),
   };
 
+  const addButton = {
+    id: null,
+    iconName: "plus",
+    name: "추가",
+    ledgerCode: "NONE",
+    fill: `#${customColor.value}`,
+    action: () => {
+      goForward("/app/setting/ledger/category/add");
+    },
+  };
+
+  const goForward = (url) => {
+    dispatch(setPageTransition("push"));
+    navigate(url);
+  };
+
   useEffect(() => {
     setLedgerCategoryButtons(
       categories.value
@@ -201,6 +217,7 @@ export default function LedgerDetail() {
           };
           return categoryButton;
         })
+        .concat(addButton)
     );
   }, [categories, ledgerCode]);
 
@@ -263,28 +280,6 @@ export default function LedgerDetail() {
           selected={selectedCategoryId}
         />
       </Box>
-
-      {/* <Zoom
-        in={true}
-        timeout={200}
-        style={{
-          transitionDelay: "200ms",
-        }}
-        unmountOnExit
-      >
-        <Fab
-          sx={{
-            position: "absolute",
-            bottom: 25,
-            right: 25,
-          }}
-          aria-label={"Delete"}
-          color="error"
-          onClick={deleteButtonClickHandler}
-        >
-          <DeleteIcon />
-        </Fab>
-      </Zoom> */}
     </Page>
   );
 }
