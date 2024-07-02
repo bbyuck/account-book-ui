@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { setPageTransition } from "store/slice/clientInfo";
 
 export default function SettingLedgerCategory() {
-  const { customColor, categories } = useSelector((state) => state.userInfo);
+  const { categories } = useSelector((state) => state.userInfo);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -18,32 +18,38 @@ export default function SettingLedgerCategory() {
     navigate(url);
   };
 
-  // const add = {
-  //   id: null,
-  //   iconName: "plus",
-  //   name: "추가",
-  //   ledgerCode: "NONE",
-  //   fill: `#${customColor.value}`,
-  //   action: () => {
-  //     goForward("/app/setting/ledger/category/add");
-  //   },
-  // };
-  const [categoryButtons, setCategoryButtons] = useState([]);
+  const [saveCategoryButtons, setSaveCategoryButtons] = useState([]);
+  const [incomeCategoryButtons, setIncomeCategoryButtons] = useState([]);
+  const [expenditureCategoryButtons, setExpenditureCategoryButtons] = useState(
+    []
+  );
+
+  const buttonMapper = (category, index) => {
+    const categoryButton = {
+      id: category.ledgerCategoryId,
+      iconName: category.iconName,
+      ledgerCode: category.ledgerCode,
+      name: category.ledgerCategoryName,
+      action: () => goForward(`/app/setting/ledger/category/modify/${index}`),
+    };
+    return categoryButton;
+  };
 
   useEffect(() => {
-    setCategoryButtons(
-      categories.value.map((category, index) => {
-        const categoryButton = {
-          id: category.ledgerCategoryId,
-          iconName: category.iconName,
-          ledgerCode: category.ledgerCode,
-          name: category.ledgerCategoryName,
-          action: () =>
-            // goForward(`/app/setting/ledger/category/modify/${category.id}`),
-            goForward(`/app/setting/ledger/category/modify/${index}`),
-        };
-        return categoryButton;
-      })
+    setSaveCategoryButtons(
+      categories.value
+        .filter((category) => category.ledgerCode === "S")
+        .map(buttonMapper)
+    );
+    setIncomeCategoryButtons(
+      categories.value
+        .filter((category) => category.ledgerCode === "I")
+        .map(buttonMapper)
+    );
+    setExpenditureCategoryButtons(
+      categories.value
+        .filter((category) => category.ledgerCode === "E")
+        .map(buttonMapper)
     );
   }, [categories]);
 
@@ -54,11 +60,22 @@ export default function SettingLedgerCategory() {
   };
   return (
     <Page headerInfo={headerInfo}>
-      <CategoryGrid
-        categories={categoryButtons}
-        emptyLabelTitle={"카테고리가 없습니다."}
-        emptyLabelBody={"우측 상단 + 버튼을 눌러 추가해주세요."}
-      />
+      {categories.length === 0 ? (
+        <CategoryGrid
+          categories={[]}
+          emptyLabelTitle={"카테고리가 없습니다."}
+          emptyLabelBody={"우측 상단 + 버튼을 눌러 추가해주세요."}
+        />
+      ) : (
+        <>
+          <CategoryGrid categories={saveCategoryButtons} header={"저축"} />
+          <CategoryGrid categories={incomeCategoryButtons} header={"수입"} />
+          <CategoryGrid
+            categories={expenditureCategoryButtons}
+            header={"지출"}
+          />
+        </>
+      )}
     </Page>
   );
 }
