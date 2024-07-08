@@ -1,12 +1,12 @@
-import Page from "components/Page";
+import Page from "components/page/index";
 import { useNavigate } from "react-router";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import DatePicker from "components/input/DatePicker";
-import MoneyInput from "components/input/MoneyInput";
-import DescriptionInput from "components/input/DescriptionInput";
-import LedgerCodeSelect from "components/input/LedgerCodeSelect";
+import DatePicker from "components/input/date-picker";
+import MoneyInput from "components/input/money";
+import DescriptionInput from "components/input/description";
+import LedgerCodeSelect from "components/input/ledger-code-select";
 import { fromLocaleStringToNumber } from "util/numberUtil";
 
 import api from "api";

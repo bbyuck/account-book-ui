@@ -1,8 +1,8 @@
 import { ListItem, ListItemButton, ListItemText } from "@mui/material";
-import InputConfirm from "components/input/InputConfirm";
-import MenuList from "components/MenuList";
-import Page from "components/Page";
-import EmailInput from "components/input/EmailInput";
+import InputConfirm from "components/input/input-confirm";
+import MenuList from "components/menu-list";
+import Page from "components/page/index";
+import EmailInput from "components/input/email";
 import HeaderBackButton from "components/header/back-button";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";

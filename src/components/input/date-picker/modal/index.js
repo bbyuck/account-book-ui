@@ -2,7 +2,7 @@ import { Box, Button, Modal } from "@mui/material";
 import { useEffect, useState } from "react";
 import Picker from "react-mobile-picker";
 import { getLastDayOfTheMonth } from "util/calendarUtil";
-import "components/style/DatePickerModal.css";
+import "./index.css";
 
 export default function DatePickerModal({
   open,

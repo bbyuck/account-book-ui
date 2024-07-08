@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { getLastDayOfTheMonth } from "util/calendarUtil";
-import "components/style/LedgerCalendar.css";
+import "./index.css";
 import { namesOfDay } from "store/slice/ledgerInfo";
 import { useSelector } from "react-redux";
 

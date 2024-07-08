@@ -5,10 +5,10 @@ import {
   ListItemText,
 } from "@mui/material";
 import api from "api";
-import ListItemNoButton from "components/ListItemNoButton";
-import Page from "components/Page";
-import MenuList from "components/MenuList";
-import ColorPicker from "components/input/ColorPicker";
+import ListItemNoButton from "components/list-item-no-button";
+import Page from "components/page/index";
+import MenuList from "components/menu-list";
+import ColorPicker from "components/input/color-picker";
 import HeaderBackButton from "components/header/back-button";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";

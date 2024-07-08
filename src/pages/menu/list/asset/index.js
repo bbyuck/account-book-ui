@@ -4,7 +4,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import MenuList from "components/MenuList";
+import MenuList from "components/menu-list";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { MuiColorInput } from "mui-color-input";
 
-import "components/style/ColorPicker.css";
+import "./index.css";
 import styled from "@emotion/styled";
 
 const MuiColorInputStyled = styled(MuiColorInput)`

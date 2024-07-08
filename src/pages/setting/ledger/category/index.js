@@ -1,5 +1,5 @@
 import { IconButton } from "@mui/material";
-import Page from "components/Page";
+import Page from "components/page/index";
 import CategoryGrid from "components/category-grid";
 import HeaderAddButton from "components/header/add-button";
 import HeaderBackButton from "components/header/back-button";

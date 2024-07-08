@@ -1,4 +1,4 @@
-import AppHeader from "./AppHeader";
+import AppHeader from "components/header";
 
 export default function Page({
   className,

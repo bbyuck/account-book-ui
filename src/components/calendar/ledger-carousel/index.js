@@ -1,9 +1,9 @@
 import { Carousel } from "react-responsive-carousel";
-import "components/style/CalendarCarousel.css";
+import "./index.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useState } from "react";
-import LedgerCalendar from "components/LedgerCalendar";
-import LedgerCalendarHeader from "components/LedgerCalendarHeader";
+import LedgerCalendar from "./inner-calendar";
+import LedgerCarouselHeader from "./header";
 import { getLastDayOfTheMonth } from "util/calendarUtil";
 
 export default function LedgerCalendarCarousel({
@@ -79,7 +79,7 @@ export default function LedgerCalendarCarousel({
   return (
     <>
       <div className="carousel-wrapper">
-        <LedgerCalendarHeader
+        <LedgerCarouselHeader
           income={monthlyData ? monthlyData.totalIncome : 0}
           expenditure={monthlyData ? monthlyData.totalExpenditure : 0}
           save={monthlyData ? monthlyData.totalSave : 0}

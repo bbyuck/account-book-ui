@@ -1,16 +1,16 @@
 import { Box, IconButton, Paper } from "@mui/material";
-import Page from "components/Page";
+import Page from "components/page/index";
 import { useNavigate, useParams } from "react-router";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
-import "components/style/TextField.css";
+import "./index.css";
 import api from "api";
-import MoneyInput from "components/input/MoneyInput";
-import DatePicker from "components/input/DatePicker";
-import DescriptionInput from "components/input/DescriptionInput";
-import LedgerCodeSelect from "components/input/LedgerCodeSelect";
+import MoneyInput from "components/input/money";
+import DatePicker from "components/input/date-picker";
+import DescriptionInput from "components/input/description";
+import LedgerCodeSelect from "components/input/ledger-code-select";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { setSelectedDetailDate } from "store/slice/ledgerInfo";
 import { convertToLocalDateFormat } from "util/calendarUtil";

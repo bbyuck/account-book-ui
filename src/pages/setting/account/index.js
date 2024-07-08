@@ -5,8 +5,8 @@ import {
   ListItemText,
 } from "@mui/material";
 import api from "api";
-import Page from "components/Page";
-import MenuList from "components/MenuList";
+import Page from "components/page/index";
+import MenuList from "components/menu-list";
 import HeaderBackButton from "components/header/back-button";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";

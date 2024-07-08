@@ -1,6 +1,6 @@
-import "components/style/LedgerCalendarHeader.css";
+import "./index.css";
 
-export default function LedgerCalendarHeader({ income, expenditure, save }) {
+export default function LedgerCarouselHeader({ income, expenditure, save }) {
   return (
     <div className="subheader-wrapper">
       <div

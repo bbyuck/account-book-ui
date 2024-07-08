@@ -1,4 +1,4 @@
-import "components/style/AppHeader.css";
+import "./index.css";
 
 export default function AppHeader({ left, center, right }) {
   return (

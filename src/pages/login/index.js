@@ -1,5 +1,5 @@
 import { Button, FormControlLabel, Link, Switch, styled } from "@mui/material";
-import "pages/style/Login.css";
+import "./index.css";
 import api from "api";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -12,12 +12,12 @@ import {
 import { saveJWT } from "util/authUtil";
 import { resetAuthStore, syncAuth } from "store/slice/authInfo";
 import { useNavigate } from "react-router-dom";
-import Page from "components/Page";
-import AppInputForm from "components/AppInputForm";
-import AppInputBox from "components/AppInputBox";
-import Subject from "components/Subject";
-import PasswordInput from "components/input/PasswordInput";
-import EmailInput from "components/input/EmailInput";
+import Page from "components/page/index";
+import AppInputForm from "components/input/input-form";
+import AppInputBox from "components/input/input-box";
+import Subject from "components/landing-subject";
+import PasswordInput from "components/input/password";
+import EmailInput from "components/input/email";
 import { resetLedgerStore } from "store/slice/ledgerInfo";
 import { resetUserStore } from "store/slice/userInfo";
 

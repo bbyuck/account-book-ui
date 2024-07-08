@@ -1,12 +1,12 @@
-import LedgerCalendarCarousel from "components/LedgerCalendarCarousel";
+import LedgerCalendarCarousel from "components/calendar/ledger-carousel";
 import { useEffect, useState } from "react";
 import { IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import Page from "components/Page";
+import Page from "components/page/index";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedDate } from "store/slice/ledgerInfo";
 import api from "api";
-import LedgerDailyList from "components/LedgerDailyList";
+import LedgerDailyList from "components/ledger-daily-list";
 import { setPageTransition } from "store/slice/clientInfo";
 // import SettingsIcon from "@mui/icons-material/Settings";
 import GridViewIcon from "@mui/icons-material/GridView";

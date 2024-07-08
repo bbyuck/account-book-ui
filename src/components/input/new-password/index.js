@@ -1,7 +1,5 @@
-import { TextField } from "@mui/material";
-import AppInputBox from "components/AppInputBox";
-import { getByteLength } from "util/stringUtil";
-import PasswordInput from "components/input/PasswordInput";
+import AppInputBox from "components/input/input-box";
+import PasswordInput from "components/input/password";
 
 export default function NewPasswordInput({
   newPassword,

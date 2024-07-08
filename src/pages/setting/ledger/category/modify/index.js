@@ -1,13 +1,12 @@
-import AppInputBox from "components/AppInputBox";
-import Page from "components/Page";
+import AppInputBox from "components/input/input-box";
+import Page from "components/page/index";
 import CategoryGrid from "components/category-grid";
 import HeaderBackButton from "components/header/back-button";
 import TextInput from "components/input/text";
 import { useEffect, useState } from "react";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
-import LedgerCodeSelect from "components/input/LedgerCodeSelect";
+import LedgerCodeSelect from "components/input/ledger-code-select";
 import { Box, IconButton, Paper } from "@mui/material";
-import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";

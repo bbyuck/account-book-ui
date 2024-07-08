@@ -1,11 +1,11 @@
 import { Button } from "@mui/material";
 import api from "api";
-import AppInputBox from "components/AppInputBox";
-import AppInputForm from "components/AppInputForm";
-import Page from "components/Page";
+import AppInputBox from "components/input/input-box";
+import AppInputForm from "components/input/input-form";
+import Page from "components/page/index";
 import HeaderBackButton from "components/header/back-button";
-import NewPasswordInput from "components/input/NewPasswordInput";
-import PasswordInput from "components/input/PasswordInput";
+import NewPasswordInput from "components/input/new-password";
+import PasswordInput from "components/input/password";
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";

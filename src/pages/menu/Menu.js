@@ -1,6 +1,6 @@
 import { Divider, IconButton } from "@mui/material";
 
-import Page from "components/Page";
+import Page from "components/page/index";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setPageTransition } from "store/slice/clientInfo";

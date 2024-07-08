@@ -1,22 +1,17 @@
-import { Button, FormControlLabel, FormGroup, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import api from "api";
-import AppInputBox from "components/AppInputBox";
-import AppInputForm from "components/AppInputForm";
-import Page from "components/Page";
-import Subject from "components/Subject";
-import EmailInput from "components/input/EmailInput";
+import AppInputBox from "components/input/input-box";
+import AppInputForm from "components/input/input-form";
+import Page from "components/page/index";
+import Subject from "components/landing-subject";
+import EmailInput from "components/input/email";
 import HeaderBackButton from "components/header/back-button";
-import NewPasswordInput from "components/input/NewPasswordInput";
+import NewPasswordInput from "components/input/new-password";
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import {
-  closeAlert,
-  openErrorAlert,
-  openSuccessAlert,
-  setPageTransition,
-} from "store/slice/clientInfo";
-import { getByteLength } from "util/stringUtil";
+import { useNavigate } from "react-router-dom";
+import { openErrorAlert, setPageTransition } from "store/slice/clientInfo";
+import "./index.css";
 
 export default function Signup() {
   const headerInfo = {

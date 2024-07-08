@@ -4,12 +4,12 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import MenuList from "components/MenuList";
+import MenuList from "components/menu-list";
 import HandshakeIcon from "@mui/icons-material/Handshake";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setPageTransition } from "store/slice/clientInfo";
-import ListItemNoButton from "components/ListItemNoButton";
+import ListItemNoButton from "components/list-item-no-button";
 
 const Connected = () => {
   return (

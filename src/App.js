@@ -4,12 +4,12 @@ import Login from "pages/login/index";
 
 import AppRouter from "pages/AppRouter";
 import { cloneElement, useEffect, useState } from "react";
-import AppAlert from "components/AppAlert";
+import AppAlert from "components/alert";
 import { useDispatch, useSelector } from "react-redux";
 import { setPageTransition } from "store/slice/clientInfo";
 import { createBrowserHistory } from "history";
-import AppConfirm from "components/AppConfirm";
-import AppLoading from "components/AppLoading";
+import AppConfirm from "components/confirm";
+import AppLoading from "components/loading";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Signup from "pages/signup/index";
 import MobileOnly from "pages/common/mobile-only";

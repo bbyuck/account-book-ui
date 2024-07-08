@@ -3,10 +3,9 @@ import {
   IconButton,
   ListItem,
   ListItemButton,
-  ListItemText,
   Paper,
 } from "@mui/material";
-import MenuList from "components/MenuList";
+import MenuList from "components/menu-list";
 import Icon from "components/icon";
 
 export default function LedgerDailyList({ ledgers, onItemSelect }) {

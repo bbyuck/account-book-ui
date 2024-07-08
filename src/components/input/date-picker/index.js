@@ -1,7 +1,7 @@
 import { Box, TextField } from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import DatePickerModal from "components/input/DatePickerModal";
-import "components/style/DatePicker.css";
+import DatePickerModal from "./modal";
+import "./index.css";
 
 export default function DatePicker({
   label,
