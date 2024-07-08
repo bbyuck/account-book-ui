@@ -17,32 +17,6 @@ export default function AppRouter() {
   );
   const { icons } = useSelector((state) => state.clientInfo);
 
-  // useEffect(() => {
-  //   if (!customColor.loaded) {
-  //     api
-  //       .get("/api/v1/custom/color")
-  //       .then((response) => {
-  //         dispatch(setCustomColor(response.data.data.color));
-  //       })
-  //       .catch((error) => {
-  //         /* do nothing */
-  //       });
-  //   }
-  // }, [customColor]);
-
-  // useEffect(() => {
-  //   if (!couple.loaded) {
-  //     api
-  //       .get("/api/v1/couple/status")
-  //       .then((response) => {
-  //         dispatch(setCouple(response.data.data));
-  //       })
-  //       .catch((error) => {
-  //         /* do nothing */
-  //       });
-  //   }
-  // }, [couple]);
-
   const initialLoad = () => {
     if (!customColor.loaded) {
       api

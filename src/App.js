@@ -1,6 +1,6 @@
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
-import Login from "pages/Login";
+import Login from "pages/login/index";
 
 import AppRouter from "pages/AppRouter";
 import { cloneElement, useEffect, useState } from "react";
@@ -11,8 +11,8 @@ import { createBrowserHistory } from "history";
 import AppConfirm from "components/AppConfirm";
 import AppLoading from "components/AppLoading";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import Signup from "pages/Signup";
-import MobileOnly from "pages/common/MobileOnly";
+import Signup from "pages/signup/index";
+import MobileOnly from "pages/common/mobile-only";
 import { isMobileDevice } from "util/clientUtil";
 
 function App() {

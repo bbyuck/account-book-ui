@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setPageTransition } from "store/slice/clientInfo";
 import HomeIcon from "@mui/icons-material/Home";
-import SettingMenuList from "pages/menu/list/SettingMenuList";
-import AssetMenuList from "pages/menu/list/AssetMenuList";
-import CoupleMenuList from "./list/CoupleMenuList";
+import SettingMenuList from "pages/menu/list/setting";
+import AssetMenuList from "pages/menu/list/asset";
+import CoupleMenuList from "pages/menu/list/couple";
 
 export default function Menu() {
   const navigate = useNavigate();

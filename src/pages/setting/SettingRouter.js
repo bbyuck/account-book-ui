@@ -1,5 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import NavigateToMain from "pages/NavigateToMain";
+import NavigateToMain from "pages/common/navigate-to-main";
 import SettingAccount from "pages/setting/account";
 import SettingPasswordChange from "pages/setting/account/password-change";
 import SettingLedger from "pages/setting/ledger";

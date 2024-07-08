@@ -1,6 +1,6 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import NavigateToMain from "pages/NavigateToMain";
-import CoupleConnect from "pages/couple/depth_1/CoupleConnect";
+import NavigateToMain from "pages/common/navigate-to-main";
+import CoupleConnect from "pages/couple/connect";
 
 export default function CoupleRouter() {
   const location = useLocation();

@@ -1,4 +1,4 @@
-import { Button, FormGroup, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import api from "api";
 import AppInputBox from "components/AppInputBox";
 import AppInputForm from "components/AppInputForm";
@@ -6,18 +6,16 @@ import Page from "components/Page";
 import HeaderBackButton from "components/header/back-button";
 import NewPasswordInput from "components/input/NewPasswordInput";
 import PasswordInput from "components/input/PasswordInput";
-import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { syncAuth } from "store/slice/authInfo";
 import {
   closeConfirm,
   openConfirm,
   openErrorAlert,
-  openSuccessAlert,
 } from "store/slice/clientInfo";
 import { removeJWT } from "util/authUtil";
-import { getByteLength } from "util/stringUtil";
 
 export default function SettingPasswordChange() {
   const [password, setPassword] = useState("");

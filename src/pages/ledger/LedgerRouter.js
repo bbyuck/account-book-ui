@@ -2,7 +2,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import LedgerMain from "pages/ledger/main";
 import LedgerRegister from "pages/ledger/register";
 import LedgerModify from "pages/ledger/modify";
-import NavigateToMain from "pages/NavigateToMain";
+import NavigateToMain from "pages/common/navigate-to-main";
 
 export default function LedgerRouter() {
   const location = useLocation();
