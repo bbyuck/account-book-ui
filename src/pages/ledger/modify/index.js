@@ -20,7 +20,7 @@ import HeaderBackButton from "components/header/back-button";
 import HeaderDoneButton from "components/header/done-button";
 import CategoryGrid from "components/category-grid";
 
-export default function LedgerUpdate() {
+export default function LedgerModify() {
   const navigate = useNavigate();
   const { ledgerId } = useParams();
   // testData

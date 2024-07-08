@@ -1,11 +1,11 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import NavigateToMain from "pages/NavigateToMain";
-import SettingAccount from "pages/setting/depth_1/SettingAccount";
-import SettingPasswordChange from "pages/setting/depth_2/SettingPasswordChange";
-import SettingLedger from "pages/setting/depth_1/SettingLedger";
-import SettingLedgerCategory from "pages/setting/depth_2/ledger-category";
-import SettingLedgerCategoryAdd from "./depth_3/ledger-category-add";
-import SettingLedgerCategoryModify from "./depth_3/ledger-category-modify";
+import SettingAccount from "pages/setting/account";
+import SettingPasswordChange from "pages/setting/account/password-change";
+import SettingLedger from "pages/setting/ledger";
+import SettingLedgerCategory from "pages/setting/ledger/category";
+import SettingLedgerCategoryAdd from "pages/setting/ledger/category/add";
+import SettingLedgerCategoryModify from "pages/setting/ledger/category/modify";
 
 export default function SettingRouter() {
   const location = useLocation();
