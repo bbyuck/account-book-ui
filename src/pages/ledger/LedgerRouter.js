@@ -1,7 +1,7 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import LedgerMain from "pages/ledger/depth_1/LedgerMain";
-import LedgerRegister from "pages/ledger/depth_2/LedgerRegister";
-import LedgerDetail from "pages/ledger/depth_2/LedgerDetail";
+import LedgerMain from "pages/ledger/main";
+import LedgerRegister from "pages/ledger/register";
+import LedgerUpdate from "pages/ledger/update";
 import NavigateToMain from "pages/NavigateToMain";
 
 export default function LedgerRouter() {
@@ -17,7 +17,7 @@ export default function LedgerRouter() {
       />
       <Route
         key={location.pathname}
-        element={<LedgerDetail />}
+        element={<LedgerUpdate />}
         path="/detail/:ledgerId"
       />
       <Route
