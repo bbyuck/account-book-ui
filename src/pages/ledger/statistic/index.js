@@ -40,20 +40,23 @@ export default function LedgerStatistic() {
     month: selectedDate.month,
   });
 
+  const [series, setSeries] = useState([44, 55, 41, 17, 15]);
+
   const [options, setOptions] = useState({
     chart: {
-      id: "apexchart-example",
+      type: "donut",
     },
-    xaxis: {
-      categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
-    },
+    responsive: [
+      {
+        breakpoint: 480,
+        options: {
+          legend: {
+            show: false,
+          },
+        },
+      },
+    ],
   });
-  const [series, setSeries] = useState([
-    {
-      name: "series-1",
-      data: [30, 40, 35, 50, 49, 60, 70, 91, 125],
-    },
-  ]);
 
   const headerInfo = {
     left: <HeaderBackButton />,
@@ -61,7 +64,7 @@ export default function LedgerStatistic() {
   };
   return (
     <Page headerInfo={headerInfo}>
-      <Chart options={options} series={series} type="line" height={320} />
+      <Chart options={options} series={series} type="donut" height={320} />
     </Page>
   );
 }
