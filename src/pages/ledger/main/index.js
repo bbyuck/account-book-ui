@@ -13,6 +13,7 @@ import GridViewIcon from "@mui/icons-material/GridView";
 import WcIcon from "@mui/icons-material/Wc";
 import BoyIcon from "@mui/icons-material/Boy";
 import HeaderAddButton from "components/header/add-button";
+import EqualizerSharpIcon from "@mui/icons-material/EqualizerSharp";
 
 export default function LedgerMain() {
   const navigate = useNavigate();
@@ -107,9 +108,14 @@ export default function LedgerMain() {
 
   const headerInfo = {
     left: (
-      <IconButton>
-        <GridViewIcon onClick={() => goForward("/app/menu")} />
-      </IconButton>
+      <>
+        <IconButton onClick={() => goForward("/app/menu")}>
+          <GridViewIcon />
+        </IconButton>
+        <IconButton onClick={() => goForward("/app/ledger/statistic")}>
+          <EqualizerSharpIcon />
+        </IconButton>
+      </>
     ),
     center: <h2>{`${selectedMonth.year}년 ${selectedMonth.month}월`}</h2>,
     right: (
