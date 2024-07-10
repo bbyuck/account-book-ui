@@ -105,7 +105,7 @@ export default function Signup() {
       headerInfo={headerInfo}
       innerContnentsStyle={{
         height: "100%",
-        top: "0px",
+        top: "30px",
       }}
     >
       <div className="login-page-wrapper">
