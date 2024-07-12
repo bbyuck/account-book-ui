@@ -15,9 +15,9 @@ import {
   loadingReady,
   openSuccessAlert,
 } from "store/slice/clientInfo";
-import { Mutex } from "api/mutex";
+import { TokenReissueMutex } from "api/mutex";
 
-const mutex = new Mutex();
+const mutex = new TokenReissueMutex();
 const isAuthenticationError = (status) => {
   return status === 401 || status === 403;
 };
@@ -38,7 +38,6 @@ api.interceptors.request.use(
     store.dispatch(loadingReady());
     setTimeout(() => store.dispatch(loadingStart()), 200);
 
-    // config.headers[Authorization] = getTokenFromSession();
     if (haveAccessToken()) {
       config.headers.Authorization = `Bearer ${getAccessToken()}`;
     }
@@ -84,23 +83,29 @@ api.interceptors.response.use(
 const reissueToken = async (config) => {
   await mutex.acquire();
 
-  const refreshToken = getRefreshToken();
-  api
-    .post("/api/v1/reissue/token", null, {
-      headers: {
-        "Refresh-Token": refreshToken,
-      },
-    })
-    .then((response) => {
-      saveJWT(response.data.data);
-      return api(config);
-    })
-    .catch((refreshError) => {
-      console.log(`refreshError = ${refreshError}`);
-      logout();
-    });
-
-  mutex.release();
+  if (mutex.tokenReissueSuccess) {
+    mutex.release();
+    return api(config);
+  } else {
+    const refreshToken = getRefreshToken();
+    api
+      .post("/api/v1/reissue/token", null, {
+        headers: {
+          "Refresh-Token": refreshToken,
+        },
+      })
+      .then((response) => {
+        mutex.success();
+        mutex.release();
+        saveJWT(response.data.data);
+        return api(config);
+      })
+      .catch((refreshError) => {
+        console.log(`refreshError = ${refreshError}`);
+        mutex.clear();
+        logout();
+      });
+  }
 };
 
 const logout = () => {
