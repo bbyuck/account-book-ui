@@ -92,7 +92,6 @@ export default function Login() {
         dispatch(syncAuth());
       })
       .catch((error) => {
-        console.log(error);
         dispatch(openErrorAlert(error.response.data.message));
       });
   };

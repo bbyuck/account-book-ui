@@ -64,7 +64,6 @@ export default function LedgerMain() {
       })
       .catch((e) => {
         setMonthlyData(null);
-        console.log(e);
       })
       .finally(() => {
         document.getElementById("page-contents-wrapper").scroll(0, 0);

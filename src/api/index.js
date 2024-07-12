@@ -15,8 +15,9 @@ import {
   loadingReady,
   openSuccessAlert,
 } from "store/slice/clientInfo";
-import { syncAuth } from "store/slice/authInfo";
+import { Mutex } from "api/mutex";
 
+const mutex = new Mutex();
 const isAuthenticationError = (status) => {
   return status === 401 || status === 403;
 };
@@ -61,54 +62,51 @@ api.interceptors.response.use(
   },
   async (err) => {
     store.dispatch(loadingEnd());
-    let tokenRefreshed = false;
     const isReissueTokenRequest = err.config.url === "/api/v1/reissue/token";
 
-    if (
-      err.response.data &&
-      err.response.data.error &&
-      err.response.data.code === "ERR_AUTH_005" &&
-      !isReissueTokenRequest
-    ) {
-      /**
-       * 토큰 만료 -> refresh token 요청
-       */
-      const refreshToken = getRefreshToken();
-      tokenRefreshed = await api
-        .post("/api/v1/reissue/token", null, {
-          headers: {
-            "Refresh-Token": refreshToken,
-          },
-        })
-        .then((response) => {
-          saveJWT(response.data.data);
-          return true;
-        })
-        .catch((refreshError) => {
-          console.log(refreshError);
-          return false;
-        });
-
-      if (tokenRefreshed) {
-        // console.log("token refreshed");
-        return api(err.config);
+    if (isAuthenticationError(err.response.status)) {
+      if (err.response.data.code === "ERR_AUTH_005" && !isReissueTokenRequest) {
+        /**
+         * 토큰 만료 -> refresh token 요청
+         */
+        reissueToken(err.config);
+      } else if (!window.location.pathname.endsWith("login")) {
+        logout();
       }
+    } else {
+      store.dispatch(openErrorAlert(err.response.data.message));
     }
-
-    if (
-      isAuthenticationError(err.response.status) &&
-      !tokenRefreshed &&
-      !window.location.pathname.endsWith("login")
-    ) {
-      removeJWT();
-      sessionStorage.setItem("logout", true);
-      window.location.replace(`${process.env.PUBLIC_URL}/login`);
-    }
-
-    store.dispatch(openErrorAlert(err.response.data.message));
 
     return Promise.reject(err);
   }
 );
+
+const reissueToken = async (config) => {
+  await mutex.acquire();
+
+  const refreshToken = getRefreshToken();
+  api
+    .post("/api/v1/reissue/token", null, {
+      headers: {
+        "Refresh-Token": refreshToken,
+      },
+    })
+    .then((response) => {
+      saveJWT(response.data.data);
+      return api(config);
+    })
+    .catch((refreshError) => {
+      console.log(`refreshError = ${refreshError}`);
+      logout();
+    });
+
+  mutex.release();
+};
+
+const logout = () => {
+  removeJWT();
+  sessionStorage.setItem("logout", true);
+  window.location.replace(`${process.env.PUBLIC_URL}/login`);
+};
 
 export default api;

@@ -18,7 +18,6 @@ export default function InputConfirm({
 }) {
   const handleConfirm = async () => {
     if (await onConfirmed()) {
-      console.log("confirmed?");
       setOpen(false);
     }
   };

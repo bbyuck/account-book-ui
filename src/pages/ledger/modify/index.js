@@ -93,9 +93,7 @@ export default function LedgerModify() {
       .then((response) => {
         navigate(-1);
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => {});
 
     return true;
   };
@@ -108,9 +106,7 @@ export default function LedgerModify() {
           navigate(-1);
         }
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => {});
 
     return true;
   };
