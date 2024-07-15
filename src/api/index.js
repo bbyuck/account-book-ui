@@ -37,7 +37,6 @@ api.interceptors.request.use(
      */
     store.dispatch(loadingReady());
     setTimeout(() => store.dispatch(loadingStart()), 200);
-
     if (haveAccessToken()) {
       config.headers.Authorization = `Bearer ${getAccessToken()}`;
     }
@@ -68,7 +67,9 @@ api.interceptors.response.use(
         /**
          * 토큰 만료 -> refresh token 요청
          */
-        reissueToken(err.config);
+        return reissueToken(err.config).then(() => {
+          return api.request(err.config);
+        });
       } else if (!window.location.pathname.endsWith("login")) {
         logout();
       }
@@ -80,32 +81,39 @@ api.interceptors.response.use(
   }
 );
 
-const reissueToken = async (config) => {
-  await mutex.acquire();
-
-  if (mutex.tokenReissueSuccess) {
-    mutex.release();
-    return api(config);
-  } else {
-    const refreshToken = getRefreshToken();
-    api
-      .post("/api/v1/reissue/token", null, {
-        headers: {
-          "Refresh-Token": refreshToken,
-        },
+const reissueToken = () => {
+  return new Promise((resolve, reject) => {
+    mutex
+      .acquire()
+      .then(() => {
+        if (mutex.tokenReissueSuccess) {
+          mutex.release();
+          resolve();
+        } else {
+          const refreshToken = getRefreshToken();
+          api
+            .post("/api/v1/reissue/token", null, {
+              headers: {
+                "Refresh-Token": refreshToken,
+              },
+            })
+            .then((response) => {
+              mutex.success();
+              mutex.release();
+              saveJWT(response.data.data);
+              resolve();
+            })
+            .catch((refreshError) => {
+              mutex.clear();
+              logout();
+              reject(refreshError);
+            });
+        }
       })
-      .then((response) => {
-        mutex.success();
-        mutex.release();
-        saveJWT(response.data.data);
-        return api(config);
-      })
-      .catch((refreshError) => {
-        console.log(`refreshError = ${refreshError}`);
-        mutex.clear();
-        logout();
+      .catch((error) => {
+        reject(error);
       });
-  }
+  });
 };
 
 const logout = () => {

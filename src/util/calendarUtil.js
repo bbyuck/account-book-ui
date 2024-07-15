@@ -19,4 +19,8 @@ const convertToLocalDateFormat = ({ year, month, day }) => {
   )}`;
 };
 
-export { getLastDayOfTheMonth, convertToLocalDateFormat };
+const convertToYearMonth = (value) => {
+  return `${value.year}${String(value.month).padStart(2, "0")}`;
+};
+
+export { getLastDayOfTheMonth, convertToLocalDateFormat, convertToYearMonth };

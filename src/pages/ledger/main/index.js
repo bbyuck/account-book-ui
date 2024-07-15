@@ -14,6 +14,7 @@ import WcIcon from "@mui/icons-material/Wc";
 import BoyIcon from "@mui/icons-material/Boy";
 import HeaderAddButton from "components/header/add-button";
 import EqualizerSharpIcon from "@mui/icons-material/EqualizerSharp";
+import { convertToYearMonth } from "util/calendarUtil";
 
 export default function LedgerMain() {
   const navigate = useNavigate();
@@ -51,15 +52,11 @@ export default function LedgerMain() {
 
     /* TODO -> 월별 가계부 조회 API 호출 */
     const params = {
-      ym: `${selectedMonth.year}${String(selectedMonth.month).padStart(
-        2,
-        "0"
-      )}`,
+      ym: convertToYearMonth(selectedMonth),
     };
     api
       .get(apiUrl, { params })
       .then((response) => {
-        setMonthlyData(null);
         setMonthlyData(response.data.data);
       })
       .catch((e) => {
