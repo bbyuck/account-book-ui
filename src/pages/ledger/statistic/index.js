@@ -7,13 +7,13 @@ import Chart from "react-apexcharts";
 import api from "api";
 import { convertToYearMonth } from "util/calendarUtil";
 
-const StatisticTabs = ({ value, onChange, codes }) => {
+const StatisticTabs = ({ value, onChange, codes, sx }) => {
   const handleChange = (event, newValue) => {
     onChange(newValue);
   };
 
   return (
-    <Box sx={{ bgcolor: "background.paper" }}>
+    <Box sx={{ bgcolor: "background.paper", ...sx }}>
       <Tabs
         value={value}
         onChange={handleChange}
@@ -60,7 +60,6 @@ export default function LedgerStatistic() {
     month: selectedDate.month,
   });
   const [selectedLedgerCode, setSelectedLedgerCode] = useState(0);
-  const [series, setSeries] = useState([]);
   const [statistic, setStatistic] = useState({
     amountsPerCategory: [],
     expenditure: 0,
@@ -69,21 +68,23 @@ export default function LedgerStatistic() {
     topCount: 0,
   });
 
-  const [options, setOptions] = useState({
+  const initialOptions = {
     chart: {
       type: "donut",
     },
-    responsive: [
-      {
-        breakpoint: 480,
-        options: {
-          legend: {
-            show: false,
-          },
-        },
-      },
-    ],
-  });
+    legend: {
+      show: false,
+    },
+    responsive: [{ breakpoint: 480 }],
+    labels: ["hello", "world", "test"],
+    title: {
+      text: "카테고리 별 금액",
+      align: "center",
+    },
+  };
+
+  const [series, setSeries] = useState([]);
+  const [options, setOptions] = useState({});
 
   const headerInfo = {
     left: <HeaderBackButton />,
@@ -102,13 +103,32 @@ export default function LedgerStatistic() {
     api
       .get("/api/v1/ledger/statistic/monthly/categorization", { params })
       .then((response) => {
-        // console.log(response.data.data);
-        setStatistic(response.data.data);
-        setSeries(
-          response.data.data.amountsPerCategory.map((amountPerCategory) => {
-            return amountPerCategory.amount;
-          })
+        const searchedStatistic = response.data.data;
+        setStatistic(searchedStatistic);
+
+        let newLabels = [];
+        let newSeries = [];
+        const etcLabel = "기타";
+        let etcAmount = 0;
+
+        searchedStatistic.amountsPerCategory.forEach(
+          (amountPerCategory, index) => {
+            if (index < searchedStatistic.topCount) {
+              newLabels.push(amountPerCategory.category.ledgerCategoryName);
+              newSeries.push(amountPerCategory.amount);
+            } else {
+              etcAmount += amountPerCategory.amount;
+            }
+          }
         );
+        newLabels.push(etcLabel);
+        newSeries.push(etcAmount);
+
+        setSeries(newSeries);
+        setOptions({
+          ...initialOptions,
+          labels: newLabels,
+        });
       })
       .catch((error) => {});
   }, [selectedLedgerCode, selectedMonth]);
@@ -116,12 +136,36 @@ export default function LedgerStatistic() {
   return (
     <Page headerInfo={headerInfo}>
       <StatisticTabs
+        sx={{
+          position: "fixed",
+          width: "100vw",
+        }}
         codes={codes}
         value={selectedLedgerCode}
         onChange={setSelectedLedgerCode}
       />
-      <Box sx={{ marginTop: "35px", marginBottom: "35px" }}>
-        <Chart options={options} series={series} type="donut" height={320} />
+      <Box
+        sx={{
+          height: "calc(100% - 50px)",
+          display: "flex",
+          width: "100%",
+          height: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
+      >
+        {series.length > 0 ? (
+          <Chart
+            style={{ position: "absolute", top: "100px" }}
+            options={options}
+            series={series}
+            type="donut"
+            height={320}
+          />
+        ) : (
+          <Box>입력된 가계부가 없습니다.</Box>
+        )}
       </Box>
     </Page>
   );
