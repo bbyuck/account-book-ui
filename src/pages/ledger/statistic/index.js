@@ -60,8 +60,14 @@ export default function LedgerStatistic() {
     month: selectedDate.month,
   });
   const [selectedLedgerCode, setSelectedLedgerCode] = useState(0);
-
-  const [series, setSeries] = useState([44, 55, 41, 17, 15]);
+  const [series, setSeries] = useState([]);
+  const [statistic, setStatistic] = useState({
+    amountsPerCategory: [],
+    expenditure: 0,
+    income: 0,
+    save: 0,
+    topCount: 0,
+  });
 
   const [options, setOptions] = useState({
     chart: {
@@ -96,7 +102,13 @@ export default function LedgerStatistic() {
     api
       .get("/api/v1/ledger/statistic/monthly/categorization", { params })
       .then((response) => {
-        console.log(response.data.data);
+        // console.log(response.data.data);
+        setStatistic(response.data.data);
+        setSeries(
+          response.data.data.amountsPerCategory.map((amountPerCategory) => {
+            return amountPerCategory.amount;
+          })
+        );
       })
       .catch((error) => {});
   }, [selectedLedgerCode, selectedMonth]);
