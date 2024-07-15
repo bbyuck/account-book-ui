@@ -112,9 +112,24 @@ export default function LedgerStatistic() {
         const etcLabel = "기타";
         let etcAmount = 0;
 
+        const total =
+          params.ledgerCode === "S"
+            ? searchedStatistic.save
+            : params.ledgerCode === "I"
+            ? searchedStatistic.income
+            : params.ledgerCode === "E"
+            ? searchedStatistic.expenditure
+            : searchedStatistic.save +
+              searchedStatistic.income +
+              searchedStatistic.expenditure;
+
         searchedStatistic.amountsPerCategory.forEach(
           (amountPerCategory, index) => {
-            if (index < searchedStatistic.topCount) {
+            // 2% 초과 || category index가 맥스값보다 작으면
+            if (
+              (amountPerCategory.amount * 100) / total > 2 ||
+              index < searchedStatistic.topCount
+            ) {
               newLabels.push(amountPerCategory.category.ledgerCategoryName);
               newSeries.push(amountPerCategory.amount);
             } else {
@@ -122,10 +137,8 @@ export default function LedgerStatistic() {
             }
           }
         );
-        if (
-          searchedStatistic.amountsPerCategory.length >
-          searchedStatistic.topCount
-        ) {
+
+        if (etcAmount > 0) {
           newLabels.push(etcLabel);
           newSeries.push(etcAmount);
         }
