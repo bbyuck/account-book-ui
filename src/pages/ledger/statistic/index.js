@@ -87,6 +87,18 @@ export default function LedgerStatistic() {
         donut: {
           labels: {
             show: true,
+            name: {
+              show: true,
+            },
+            value: {
+              show: true,
+              fontSize: "22px",
+              fontWeight: "bold",
+              color: "black",
+              formatter: (val) => {
+                return `${Number(val).toLocaleString()} 원`;
+              },
+            },
             total: {
               show: true,
               label: "Total",
