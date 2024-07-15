@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import Chart from "react-apexcharts";
 import api from "api";
 import { convertToYearMonth } from "util/calendarUtil";
+import StatisticCategoryList from "components/statistic-category-list";
 
 const StatisticTabs = ({ value, onChange, codes, sx }) => {
   const handleChange = (event, newValue) => {
@@ -161,13 +162,17 @@ export default function LedgerStatistic() {
         }}
       >
         {series.length > 0 ? (
-          <Chart
-            style={{ position: "absolute", top: "100px" }}
-            options={options}
-            series={series}
-            type="donut"
-            height={320}
-          />
+          <Box sx={{ width: "100%", position: "absolute", top: "100px" }}>
+            <Chart
+              options={options}
+              series={series}
+              type="donut"
+              height={320}
+            />
+            <StatisticCategoryList
+              amountsPerCategory={statistic.amountsPerCategory}
+            />
+          </Box>
         ) : (
           <Box>입력된 가계부가 없습니다.</Box>
         )}
