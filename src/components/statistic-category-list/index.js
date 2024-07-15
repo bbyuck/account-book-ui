@@ -36,10 +36,10 @@ export default function StatisticCategoryList({ amountsPerCategory }) {
       {amountsPerCategory && amountsPerCategory.length > 0 ? (
         <Box sx={{ marginBottom: "10px" }}>
           <MenuList>
-            {amountsPerCategory.map((amountPerCategory) => {
+            {amountsPerCategory.map((amountPerCategory, index) => {
               return (
                 <ListItem
-                  key={`statistic-category-${amountPerCategory.category.categoryId}`}
+                  key={`statistic-category-${index}`}
                   secondaryAction={
                     <IconButton edge="end" aria-label="comments"></IconButton>
                   }

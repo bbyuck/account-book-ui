@@ -14,7 +14,7 @@ const StatisticTabs = ({ value, onChange, codes, sx }) => {
   };
 
   return (
-    <Box sx={{ bgcolor: "background.paper", ...sx }}>
+    <Box sx={{ bgcolor: "background.paper", zIndex: 1, ...sx }}>
       <Tabs
         value={value}
         onChange={handleChange}
@@ -79,8 +79,33 @@ export default function LedgerStatistic() {
     responsive: [{ breakpoint: 480 }],
     labels: ["hello", "world", "test"],
     title: {
-      text: "카테고리 별 금액",
+      text: "",
       align: "center",
+    },
+    plotOptions: {
+      pie: {
+        donut: {
+          labels: {
+            show: true,
+            total: {
+              show: true,
+              label: "Total",
+              fontSize: "22px",
+              fontWeight: "bold",
+              color: "black",
+              formatter: (w) => {
+                const total = w.globals.seriesTotals.reduce(
+                  (accumulator, currentValue) => {
+                    return accumulator + currentValue;
+                  },
+                  0
+                );
+                return `${total.toLocaleString()} 원`;
+              },
+            },
+          },
+        },
+      },
     },
   };
 
@@ -112,35 +137,44 @@ export default function LedgerStatistic() {
         const etcLabel = "기타";
         let etcAmount = 0;
 
-        const total =
-          params.ledgerCode === "S"
-            ? searchedStatistic.save
-            : params.ledgerCode === "I"
-            ? searchedStatistic.income
-            : params.ledgerCode === "E"
-            ? searchedStatistic.expenditure
-            : searchedStatistic.save +
-              searchedStatistic.income +
-              searchedStatistic.expenditure;
+        // const total =
+        //   params.ledgerCode === "S"
+        //     ? searchedStatistic.save
+        //     : params.ledgerCode === "I"
+        //     ? searchedStatistic.income
+        //     : params.ledgerCode === "E"
+        //     ? searchedStatistic.expenditure
+        //     : searchedStatistic.save +
+        //       searchedStatistic.income +
+        //       searchedStatistic.expenditure;
 
-        searchedStatistic.amountsPerCategory.forEach(
-          (amountPerCategory, index) => {
-            // 2% 초과 || category index가 맥스값보다 작으면
-            if (
-              (amountPerCategory.amount * 100) / total > 2 ||
-              index < searchedStatistic.topCount
-            ) {
-              newLabels.push(amountPerCategory.category.ledgerCategoryName);
-              newSeries.push(amountPerCategory.amount);
-            } else {
-              etcAmount += amountPerCategory.amount;
+        if (!codes[selectedLedgerCode].value) {
+          // 저축, 수입, 지출 순
+          newLabels = codes
+            .filter((code) => code.value !== null)
+            .map((code) => code.label);
+          newSeries = [
+            searchedStatistic.save,
+            searchedStatistic.income,
+            searchedStatistic.expenditure,
+          ];
+        } else {
+          searchedStatistic.amountsPerCategory.forEach(
+            (amountPerCategory, index) => {
+              // topCount 개수를 넘기기 전까지
+              if (index < searchedStatistic.topCount) {
+                newLabels.push(amountPerCategory.category.ledgerCategoryName);
+                newSeries.push(amountPerCategory.amount);
+              } else {
+                etcAmount += amountPerCategory.amount;
+              }
             }
-          }
-        );
+          );
 
-        if (etcAmount > 0) {
-          newLabels.push(etcLabel);
-          newSeries.push(etcAmount);
+          if (etcAmount > 0) {
+            newLabels.push(etcLabel);
+            newSeries.push(etcAmount);
+          }
         }
 
         setSeries(newSeries);
