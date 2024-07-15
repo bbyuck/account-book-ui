@@ -121,8 +121,13 @@ export default function LedgerStatistic() {
             }
           }
         );
-        newLabels.push(etcLabel);
-        newSeries.push(etcAmount);
+        if (
+          searchedStatistic.amountsPerCategory.length >
+          searchedStatistic.topCount
+        ) {
+          newLabels.push(etcLabel);
+          newSeries.push(etcAmount);
+        }
 
         setSeries(newSeries);
         setOptions({
