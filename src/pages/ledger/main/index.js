@@ -102,6 +102,16 @@ export default function LedgerMain() {
     navigate(url);
   };
 
+  const coupleButtonOnClickHandler = () => {
+    if (couple.coupleStatus === "ACTIVE") {
+      // target기반 요청
+      findMonthlyLedger(target === "COUPLE" ? "PERSONAL" : "COUPLE");
+    } else {
+      // connect page로
+      goForward("/app/couple/connect");
+    }
+  };
+
   const headerInfo = {
     left: (
       <>
@@ -116,15 +126,13 @@ export default function LedgerMain() {
     center: <h2>{`${selectedMonth.year}년 ${selectedMonth.month}월`}</h2>,
     right: (
       <>
-        {target === "NONE" ? null : target === "COUPLE" ? (
-          <IconButton onClick={() => findMonthlyLedger("PERSONAL")}>
+        <IconButton onClick={coupleButtonOnClickHandler}>
+          {target === "COUPLE" ? (
             <WcIcon color="primary" />
-          </IconButton>
-        ) : (
-          <IconButton onClick={() => findMonthlyLedger("COUPLE")}>
+          ) : (
             <BoyIcon color="primary" />
-          </IconButton>
-        )}
+          )}
+        </IconButton>
 
         <HeaderAddButton targetPage={"/app/ledger/register"} />
       </>
