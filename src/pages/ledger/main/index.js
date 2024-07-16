@@ -127,10 +127,10 @@ export default function LedgerMain() {
     right: (
       <>
         <IconButton onClick={coupleButtonOnClickHandler}>
-          {target === "COUPLE" ? (
-            <WcIcon color="primary" />
-          ) : (
+          {target === "PERSONAL" ? (
             <BoyIcon color="primary" />
+          ) : (
+            <WcIcon color="primary" />
           )}
         </IconButton>
 
