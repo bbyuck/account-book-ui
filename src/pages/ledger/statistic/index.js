@@ -101,17 +101,21 @@ export default function LedgerStatistic() {
             },
             total: {
               show: true,
-              label: "Total",
+              label: codes[selectedLedgerCode].value ? "Total" : "잔액",
               fontSize: "22px",
               fontWeight: "bold",
               color: "black",
               formatter: (w) => {
-                const total = w.globals.seriesTotals.reduce(
-                  (accumulator, currentValue) => {
-                    return accumulator + currentValue;
-                  },
-                  0
-                );
+                const total = codes[selectedLedgerCode].value
+                  ? w.globals.seriesTotals.reduce(
+                      (accumulator, currentValue) => {
+                        return accumulator + currentValue;
+                      },
+                      0
+                    )
+                  : w.globals.seriesTotals[1] -
+                    w.globals.seriesTotals[0] -
+                    w.globals.seriesTotals[2];
                 return `${total.toLocaleString()} 원`;
               },
             },
@@ -129,10 +133,7 @@ export default function LedgerStatistic() {
     center: <h2>{`${selectedMonth.year}년 ${selectedMonth.month}월`}</h2>,
   };
 
-  useEffect(() => {
-    /**
-     * 통계 정보 조회
-     */
+  const findMonthlyCategorizationStatistic = () => {
     const params = {
       ym: convertToYearMonth(selectedMonth),
       ledgerCode: codes[selectedLedgerCode].value,
@@ -149,18 +150,10 @@ export default function LedgerStatistic() {
         const etcLabel = "기타";
         let etcAmount = 0;
 
-        // const total =
-        //   params.ledgerCode === "S"
-        //     ? searchedStatistic.save
-        //     : params.ledgerCode === "I"
-        //     ? searchedStatistic.income
-        //     : params.ledgerCode === "E"
-        //     ? searchedStatistic.expenditure
-        //     : searchedStatistic.save +
-        //       searchedStatistic.income +
-        //       searchedStatistic.expenditure;
-
-        if (!codes[selectedLedgerCode].value) {
+        if (
+          !codes[selectedLedgerCode].value &&
+          searchedStatistic.amountsPerCategory.length > 0
+        ) {
           // 저축, 수입, 지출 순
           newLabels = codes
             .filter((code) => code.value !== null)
@@ -196,6 +189,13 @@ export default function LedgerStatistic() {
         });
       })
       .catch((error) => {});
+  };
+
+  useEffect(() => {
+    /**
+     * 통계 정보 조회
+     */
+    findMonthlyCategorizationStatistic();
   }, [selectedLedgerCode, selectedMonth]);
 
   return (
