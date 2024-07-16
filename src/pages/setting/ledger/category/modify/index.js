@@ -81,7 +81,7 @@ export default function SettingLedgerCategoryModify() {
 
   const headerInfo = {
     left: <HeaderBackButton />,
-    center: <h2>카테고리 수정</h2>,
+    center: "카테고리 수정",
     right: (
       <>
         <IconButton

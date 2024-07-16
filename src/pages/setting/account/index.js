@@ -19,7 +19,7 @@ export default function SettingAccount() {
 
   const headerInfo = {
     left: <HeaderBackButton />,
-    center: <h2>계정 설정</h2>,
+    center: "계정 설정",
   };
 
   const openLogoutConfirm = () => {

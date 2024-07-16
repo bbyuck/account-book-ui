@@ -88,7 +88,7 @@ export default function LedgerRegister() {
 
   const headerInfo = {
     left: <HeaderBackButton />,
-    center: <h2>가계부 입력</h2>,
+    center: "가계부 입력",
     right: (
       <HeaderDoneButton
         onClick={insertLedger}

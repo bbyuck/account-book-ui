@@ -7,6 +7,7 @@ import Chart from "react-apexcharts";
 import api from "api";
 import { convertToYearMonth } from "util/calendarUtil";
 import StatisticCategoryList from "components/statistic-category-list";
+import DatePickerModal from "components/input/date-picker/modal";
 
 const StatisticTabs = ({ value, onChange, codes, sx }) => {
   const handleChange = (event, newValue) => {
@@ -35,7 +36,7 @@ const StatisticTabs = ({ value, onChange, codes, sx }) => {
   );
 };
 
-export default function LedgerStatistic() {
+export default function LedgerMonthlyStatistic() {
   const codes = [
     {
       label: "전체",
@@ -130,7 +131,7 @@ export default function LedgerStatistic() {
 
   const headerInfo = {
     left: <HeaderBackButton />,
-    center: <h2>{`${selectedMonth.year}년 ${selectedMonth.month}월`}</h2>,
+    center: `${selectedMonth.year}년 ${selectedMonth.month}월`,
   };
 
   const findMonthlyCategorizationStatistic = () => {

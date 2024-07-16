@@ -55,7 +55,7 @@ export default function SettingLedgerCategory() {
 
   const headerInfo = {
     left: <HeaderBackButton />,
-    center: <h2>카테고리 설정</h2>,
+    center: "카테고리 설정",
     right: <HeaderAddButton targetPage={"/app/setting/ledger/category/add"} />,
   };
   return (

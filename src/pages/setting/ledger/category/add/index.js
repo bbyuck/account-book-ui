@@ -69,7 +69,7 @@ export default function SettingLedgerCategoryAdd() {
 
   const headerInfo = {
     left: <HeaderBackButton />,
-    center: <h2>카테고리 추가</h2>,
+    center: "카테고리 추가",
     right: (
       <HeaderDoneButton
         onClick={openAddLedgerCategoryConfirm}

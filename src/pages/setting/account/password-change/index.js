@@ -40,7 +40,7 @@ export default function SettingPasswordChange() {
 
   const headerInfo = {
     left: <HeaderBackButton />,
-    center: <h2>비밀번호 변경</h2>,
+    center: "비밀번호 변경",
   };
 
   const clientSidePasswordValidation = () => {

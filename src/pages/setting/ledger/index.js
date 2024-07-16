@@ -26,7 +26,7 @@ export default function SettingLedger() {
 
   const headerInfo = {
     left: <HeaderBackButton />,
-    center: <h2>가계부 설정</h2>,
+    center: "가계부 설정",
   };
   const goForward = (url) => {
     dispatch(setPageTransition("push"));

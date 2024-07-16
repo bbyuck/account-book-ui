@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 export default function CoupleConnect() {
   const headerInfo = {
     left: <HeaderBackButton />,
-    center: <h2>커플 연결</h2>,
+    center: "커플 연결",
   };
   const dispatch = useDispatch();
   const navigate = useNavigate();

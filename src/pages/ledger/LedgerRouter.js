@@ -3,7 +3,8 @@ import LedgerMain from "pages/ledger/main";
 import LedgerRegister from "pages/ledger/register";
 import LedgerModify from "pages/ledger/modify";
 import NavigateToMain from "pages/common/navigate-to-main";
-import LedgerStatistic from "pages/ledger/statistic";
+import LedgerMonthlyStatistic from "pages/ledger/statistic/monthly";
+import LedgerAnnualStatistic from "pages/ledger/statistic/annual";
 
 export default function LedgerRouter() {
   const location = useLocation();
@@ -19,12 +20,17 @@ export default function LedgerRouter() {
       <Route
         key={location.pathname}
         element={<LedgerModify />}
-        path="/detail/:ledgerId"
+        path="/modify/:ledgerId"
       />
       <Route
         key={location.pathname}
-        element={<LedgerStatistic />}
-        path="/statistic"
+        element={<LedgerMonthlyStatistic />}
+        path="/monthly/statistic"
+      />
+      <Route
+        key={location.pathname}
+        element={<LedgerAnnualStatistic />}
+        path="/annual/statistic"
       />
       <Route
         key={location.pathname}

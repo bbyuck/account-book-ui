@@ -143,7 +143,7 @@ export default function LedgerModify() {
 
   const headerInfo = {
     left: <HeaderBackButton />,
-    center: <h2>가계부 수정</h2>,
+    center: "가계부 수정",
     right: (
       <>
         <IconButton
