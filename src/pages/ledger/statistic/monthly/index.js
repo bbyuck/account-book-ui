@@ -7,7 +7,6 @@ import Chart from "react-apexcharts";
 import api from "api";
 import { convertToYearMonth } from "util/calendarUtil";
 import StatisticCategoryList from "components/statistic-category-list";
-import DatePickerModal from "components/input/date-picker/modal";
 
 const StatisticTabs = ({ value, onChange, codes, sx }) => {
   const handleChange = (event, newValue) => {
