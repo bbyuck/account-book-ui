@@ -126,7 +126,7 @@ export default function LedgerMonthlyStatistic() {
   };
 
   const [series, setSeries] = useState([]);
-  const [options, setOptions] = useState({});
+  const [options, setOptions] = useState(initialOptions);
 
   const headerInfo = {
     left: <HeaderBackButton />,

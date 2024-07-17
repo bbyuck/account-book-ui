@@ -2,29 +2,38 @@ import { Box } from "@mui/material";
 import api from "api";
 import HeaderBackButton from "components/header/back-button";
 import Page from "components/page";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Chart from "react-apexcharts";
 
 export default function LedgerAnnualStatistic() {
+  const [targetYear, setTargetYear] = useState(new Date().getFullYear());
+  const [statistic, setStatistic] = useState({});
+  const [series, setSeries] = useState([
+    {
+      name: "수입",
+      data: Array.from({ length: 12 }, (_, i) => 0),
+    },
+    {
+      name: "지출",
+      data: Array.from({ length: 12 }, (_, i) => 0),
+    },
+    {
+      name: "저축",
+      data: Array.from({ length: 12 }, (_, i) => 0),
+    },
+    {
+      name: "잔액",
+      data: Array.from({ length: 12 }, (_, i) => 0),
+    },
+  ]);
   const headerInfo = {
     left: <HeaderBackButton />,
+    center: `${targetYear}년`,
   };
+  const chartRef = useRef(null);
+  const [scrollTimeout, setScrollTimeout] = useState(null);
 
   const initialOptions = {
-    series: [
-      {
-        name: "수입",
-        data: [44, 55, 57, 56, 61, 58, 63, 60, 66, 44, 55, 57],
-      },
-      {
-        name: "지출",
-        data: [76, 0, 101, 98, 87, 105, 91, 114, 94, 98, 87, 105],
-      },
-      {
-        name: "저축",
-        data: [0, 41, 36, 26, 45, 48, 52, 53, 41, 45, 48, 52],
-      },
-    ],
     chart: {
       type: "bar",
       height: 400,
@@ -46,20 +55,14 @@ export default function LedgerAnnualStatistic() {
       show: false,
     },
     xaxis: {
-      categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
+      categories: Array.from({ length: 12 }, (_, i) => i + 1).map(
+        (monthValue) => `${monthValue}월`
+      ),
+      axisBorder: { show: false },
+      axisTicks: { show: false },
+    },
+    yaxis: {
+      show: false,
     },
     grid: {
       show: false,
@@ -69,8 +72,9 @@ export default function LedgerAnnualStatistic() {
       horizontalAlign: "left",
       fontSize: "17px",
       fontWeight: "bold",
+      offsetX: chartRef.current ? chartRef.current.scrollLeft : 0,
     },
-    yaxis: { show: false },
+
     fill: {
       opacity: 1,
     },
@@ -84,37 +88,93 @@ export default function LedgerAnnualStatistic() {
   };
   const [options, setOptions] = useState(initialOptions);
 
-  useEffect(() => {
+  const findStatistic = () => {
     const params = {
-      startYear: 2024,
+      startYear: targetYear,
       startMonth: 1,
-      endYear: 2024,
+      endYear: targetYear,
       endMonth: 12,
     };
 
-    api
+    return api
       .get("/api/v1/ledger/statistic/period/categorization", { params })
       .then((response) => {
-        console.log(response.data.data);
+        const searchedStatistic = response.data.data;
+        setStatistic(searchedStatistic);
+        setSeries([
+          {
+            name: "수입",
+            data: searchedStatistic.monthlyAmounts.map(
+              (monthlyAmount) => monthlyAmount.monthlyIncome
+            ),
+          },
+          {
+            name: "지출",
+            data: searchedStatistic.monthlyAmounts.map(
+              (monthlyAmount) => monthlyAmount.monthlyExpenditure
+            ),
+          },
+          {
+            name: "저축",
+            data: searchedStatistic.monthlyAmounts.map(
+              (monthlyAmount) => monthlyAmount.monthlySave
+            ),
+          },
+          {
+            name: "잔액",
+            data: searchedStatistic.monthlyAmounts.map(
+              (monthlyAmount) =>
+                monthlyAmount.monthlyIncome -
+                monthlyAmount.monthlyExpenditure -
+                monthlyAmount.monthlySave
+            ),
+          },
+        ]);
       })
       .catch((error) => {});
-  }, []);
+  };
+
+  useEffect(() => {
+    findStatistic();
+  }, [targetYear]);
+
+  const moveLegend = () => {
+    if (chartRef.current) {
+      const scrollLeft = chartRef.current.scrollLeft;
+      setOptions({
+        ...options,
+        legend: { offsetX: scrollLeft },
+      });
+    }
+  };
+
+  const handleScroll = () => {
+    if (scrollTimeout) {
+      clearTimeout(scrollTimeout);
+    }
+
+    setScrollTimeout(
+      setTimeout(() => {
+        moveLegend();
+      }, 50)
+    );
+  };
 
   return (
     <Page headerInfo={headerInfo}>
       <Box
-        sx={{
-          width: "1500px",
-        }}
+        sx={{ width: "100%", overflowX: "auto", marginTop: "50px" }}
+        ref={chartRef}
+        onScroll={handleScroll}
       >
-        <Chart
-          options={options}
-          series={options.series}
-          type="bar"
-          height={320}
-        />
+        <Box
+          sx={{
+            width: "2000px",
+          }}
+        >
+          <Chart options={options} series={series} type="bar" height={400} />
+        </Box>
       </Box>
-      테스트 text
     </Page>
   );
 }

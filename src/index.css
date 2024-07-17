@@ -32,6 +32,7 @@ body > #root {
 #page-contents-wrapper {
   position: relative;
   overflow-y: scroll;
+  overflow-x: hidden;
   top: 70px;
   height: calc(100svh - 55px);
 }
