@@ -27,14 +27,11 @@ body > #root {
   height: 100%;
   width: 100vw;
   position: absolute;
-  overflow: hidden;
 }
 
 #page-contents-wrapper {
   position: relative;
   overflow-y: scroll;
-  overflow-x: hidden;
-  width: 100%;
   top: 70px;
   height: calc(100svh - 55px);
 }

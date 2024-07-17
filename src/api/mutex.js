@@ -31,6 +31,6 @@ export class TokenReissueMutex {
   }
 
   clear() {
-    this.queue.clear();
+    this.queue = [];
   }
 }
