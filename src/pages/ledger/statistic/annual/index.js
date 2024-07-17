@@ -36,7 +36,6 @@ export default function LedgerAnnualStatistic() {
   const initialOptions = {
     chart: {
       type: "bar",
-      height: 400,
       toolbar: {
         show: false,
       },
@@ -44,7 +43,7 @@ export default function LedgerAnnualStatistic() {
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: "55%",
+        columnWidth: "40%",
         borderRadius: 8,
       },
     },
@@ -163,16 +162,29 @@ export default function LedgerAnnualStatistic() {
   return (
     <Page headerInfo={headerInfo}>
       <Box
-        sx={{ width: "100%", overflowX: "auto", marginTop: "50px" }}
+        sx={{
+          width: "100%",
+          height: "calc(100% - 50px)",
+          paddingTop: "50px",
+          overFlowY: "hidden",
+          overflowX: "auto",
+        }}
         ref={chartRef}
         onScroll={handleScroll}
       >
         <Box
           sx={{
-            width: "2000px",
+            width: "300vw",
+            height: "100%",
           }}
         >
-          <Chart options={options} series={series} type="bar" height={400} />
+          <Chart
+            style={{ height: "100%" }}
+            options={options}
+            series={series}
+            type="bar"
+            height={400}
+          />
         </Box>
       </Box>
     </Page>
