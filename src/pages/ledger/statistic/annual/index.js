@@ -43,7 +43,7 @@ export default function LedgerAnnualStatistic() {
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: "40%",
+        columnWidth: "60%",
         borderRadius: 8,
       },
     },
@@ -155,7 +155,7 @@ export default function LedgerAnnualStatistic() {
     setScrollTimeout(
       setTimeout(() => {
         moveLegend();
-      }, 50)
+      }, 30)
     );
   };
 
@@ -174,7 +174,7 @@ export default function LedgerAnnualStatistic() {
       >
         <Box
           sx={{
-            width: "300vw",
+            width: "200vw",
             height: "100%",
           }}
         >
