@@ -14,7 +14,7 @@ const StatisticTabs = ({ value, onChange, codes, sx }) => {
   };
 
   return (
-    <Box sx={{ bgcolor: "background.paper", zIndex: 1, ...sx }}>
+    <Box sx={{ bgcolor: "background.paper", zIndex: 99, ...sx }}>
       <Tabs
         value={value}
         onChange={handleChange}
@@ -82,8 +82,16 @@ export default function LedgerMonthlyStatistic() {
       text: "",
       align: "center",
     },
+    tooltip: {
+      y: {
+        formatter: function (val) {
+          return `${val.toLocaleString()} 원`;
+        },
+      },
+    },
     plotOptions: {
       pie: {
+        expandOnClick: false,
         donut: {
           labels: {
             show: true,
@@ -109,7 +117,9 @@ export default function LedgerMonthlyStatistic() {
                 const total = codes[selectedLedgerCode].value
                   ? w.globals.seriesTotals.reduce(
                       (accumulator, currentValue) => {
-                        return accumulator + currentValue;
+                        return `${Number(
+                          accumulator + currentValue
+                        ).toLocaleString()} 원`;
                       },
                       0
                     )
