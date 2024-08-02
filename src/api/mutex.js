@@ -7,6 +7,7 @@ export class TokenReissueMutex {
 
   success() {
     this.tokenReissueSuccess = true;
+    sessionStorage.setItem("tokenReissueTime", Date.now());
   }
 
   acquire() {

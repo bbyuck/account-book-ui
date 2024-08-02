@@ -86,7 +86,15 @@ const reissueToken = () => {
     mutex
       .acquire()
       .then(() => {
-        if (mutex.tokenReissueSuccess) {
+        const tokenReissueTime = sessionStorage.getItem("tokenReissueTime");
+        const now = Date.now();
+        const twentyMinutes = 20 * 60 * 1000;
+
+        if (
+          mutex.tokenReissueSuccess ||
+          // token이 현재 session에서 reissue 된 적 있으며, reissue된 지 20분 이내일 경우 reissue를 하지 않음.
+          (tokenReissueTime && now - tokenReissueTime <= twentyMinutes)
+        ) {
           mutex.release();
           resolve();
         } else {
