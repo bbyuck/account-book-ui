@@ -1,3 +1,6 @@
+import store from "store";
+import { setTokenReissueTime } from "store/slice/authInfo";
+
 export class TokenReissueMutex {
   constructor() {
     this.locked = false;
@@ -7,7 +10,7 @@ export class TokenReissueMutex {
 
   success() {
     this.tokenReissueSuccess = true;
-    sessionStorage.setItem("tokenReissueTime", Date.now());
+    store.dispatch(setTokenReissueTime(Date.now()));
   }
 
   acquire() {

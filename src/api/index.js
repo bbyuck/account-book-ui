@@ -86,7 +86,11 @@ const reissueToken = () => {
     mutex
       .acquire()
       .then(() => {
-        const tokenReissueTime = sessionStorage.getItem("tokenReissueTime");
+        // const tokenReissueTime = sessionStorage.getItem("tokenReissueTime");
+
+        const state = store.getState();
+        const { tokenReissueTime } = state.authInfo;
+
         const now = Date.now();
         const twentyMinutes = 20 * 60 * 1000;
 
