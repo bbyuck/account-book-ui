@@ -11,10 +11,11 @@ export const isAutoLogin = () => {
 };
 
 export const haveAccessToken = () => {
-  return localStorage.getItem(ACCESS_TOKEN_KEY) ||
-    sessionStorage.getItem(ACCESS_TOKEN_KEY)
-    ? true
-    : false;
+  if (isAutoLogin()) {
+    return localStorage(ACCESS_TOKEN_KEY) ? true : false;
+  } else {
+    return sessionStorage(ACCESS_TOKEN_KEY) ? true : false;
+  }
 };
 
 export const haveRefreshToken = () => {
