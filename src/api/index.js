@@ -63,15 +63,17 @@ api.interceptors.response.use(
     const isReissueTokenRequest = err.config.url === "/api/v1/reissue/token";
 
     if (isAuthenticationError(err.response.status)) {
-      if (err.response.data.code === "ERR_AUTH_005" && !isReissueTokenRequest) {
+      if (err.response.data.code === "ERR_AUTH_005") {
+        if (isReissueTokenRequest) {
+          logout();
+          return;
+        }
         /**
          * 토큰 만료 -> refresh token 요청
          */
-        return reissueToken(err.config).then(() => {
+        return reissueToken(err).then(() => {
           return api.request(err.config);
         });
-      } else if (!window.location.pathname.endsWith("login")) {
-        logout();
       }
     } else {
       store.dispatch(openErrorAlert(err.response.data.message));
@@ -81,7 +83,7 @@ api.interceptors.response.use(
   }
 );
 
-const reissueToken = () => {
+const reissueToken = (err) => {
   return new Promise((resolve, reject) => {
     mutex
       .acquire()
