@@ -61,13 +61,13 @@ api.interceptors.response.use(
   async (err) => {
     store.dispatch(loadingEnd());
     const isReissueTokenRequest = err.config.url === "/api/v1/reissue/token";
+    if (isReissueTokenRequest) {
+      logout();
+      return;
+    }
 
     if (isAuthenticationError(err.response.status)) {
       if (err.response.data.code === "ERR_AUTH_005") {
-        if (isReissueTokenRequest) {
-          logout();
-          return;
-        }
         /**
          * 토큰 만료 -> refresh token 요청
          */
