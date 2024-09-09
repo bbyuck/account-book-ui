@@ -9,7 +9,7 @@ import {
   resetClientStore,
   setPageTransition,
 } from "store/slice/clientInfo";
-import { saveJWT } from "util/authUtil";
+import { removeJWT, saveJWT } from "util/authUtil";
 import { resetAuthStore, syncAuth } from "store/slice/authInfo";
 import { useNavigate } from "react-router-dom";
 import Page from "components/page/index";
@@ -97,19 +97,20 @@ export default function Login() {
   };
 
   useEffect(() => {
-    const logout = sessionStorage.getItem("logout");
-    if (logout) {
-      const logoutMessage = sessionStorage.getItem("logoutMessage");
-      dispatch(resetAuthStore());
-      dispatch(resetLedgerStore());
-      dispatch(resetUserStore());
-      dispatch(resetClientStore());
+    removeJWT();
 
-      if (logoutMessage) {
-        dispatch(openSuccessAlert(logoutMessage));
-        sessionStorage.removeItem("logoutMessage");
-      }
+    const logoutMessage = sessionStorage.getItem("logoutMessage");
+    dispatch(resetAuthStore());
+    dispatch(resetLedgerStore());
+    dispatch(resetUserStore());
+    dispatch(resetClientStore());
 
+    if (logoutMessage) {
+      dispatch(openSuccessAlert(logoutMessage));
+      sessionStorage.removeItem("logoutMessage");
+    }
+
+    if (sessionStorage.getItem("logout")) {
       sessionStorage.removeItem("logout");
     }
   }, []);

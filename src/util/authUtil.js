@@ -12,9 +12,9 @@ export const isAutoLogin = () => {
 
 export const haveAccessToken = () => {
   if (isAutoLogin()) {
-    return localStorage(ACCESS_TOKEN_KEY) ? true : false;
+    return localStorage.getItem(ACCESS_TOKEN_KEY) ? true : false;
   } else {
-    return sessionStorage(ACCESS_TOKEN_KEY) ? true : false;
+    return sessionStorage.getItem(ACCESS_TOKEN_KEY) ? true : false;
   }
 };
 
