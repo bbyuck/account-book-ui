@@ -3,11 +3,9 @@ const REFRESH_TOKEN_KEY = "refreshToken";
 const AUTO_LOGIN_KEY = "autoLogin";
 
 export const isAutoLogin = () => {
-  return !localStorage.getItem(AUTO_LOGIN_KEY)
-    ? false
-    : localStorage.getItem(AUTO_LOGIN_KEY) === "false"
-    ? false
-    : true;
+  console.log(localStorage.getItem(AUTO_LOGIN_KEY));
+  const autoLogin = localStorage.getItem(AUTO_LOGIN_KEY);
+  return autoLogin === null ? false : JSON.parse(autoLogin);
 };
 
 export const haveAccessToken = () => {
